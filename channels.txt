@@ -1,0 +1,68 @@
+------------------------------------------------------------------------------
+|Operation | Nil channel   | Closed Channel | Not closed, non-nil channel    |
+------------------------------------------------------------------------------
+| Close    | panic         | panic          | ok                             |
+------------------------------------------------------------------------------
+| Send     | block forever | panic          | block (no space) or send       |
+------------------------------------------------------------------------------
+| Receive  | block forever | never block    | block (no messages) or receive |
+------------------------------------------------------------------------------
+
+По-умолчанию, отправление и получение блокируются, пока оба отправителя и получателя готовы.
+Это свойство позволило нам ждать в конце нашей программы сообщения "ping" без использования
+какой-либо другой синхронизации.
+
+
+По умолчанию каналы не буферизованы, это означает, что они будут принимать отправления (chan <-),
+только если есть соответствующий прием (<- chan), готовый принять отправленное значение.
+Буферизованные каналы принимают ограниченное количество значений без соответствующего приемника для этих значений.
+
+Буферезированные каналы - чтение и запись не блокируются
+
+Отправка в буферизированный канал блокируется только тогда, когда буфер заполнен.
+А чтение блокируется только тогда, когда буфер пустой.
+
+Буферизированный канал с размером 1 значит, что запись в канал не блокируется, если в нем есть
+незанятое место. Однако как только мы запишем туда одно сообщение, которое еще
+никто не прочитал, то повторная попытка записи будет заблокирована.
+
+Также чтение из канала блокируется, если в него никто не пишет, и в буфере канала нет данных.
+
+------------------------------------------------------------------------------
+
+Рекомендации
+ - закрываем канал там же, где его создали
+ - читающие го-рутины никогда не должны пытаться закрыть канал
+
+------------------------------------------------------------------------------
+
+* Unbuffered—The sender goroutine blocks until the receiver goroutine is ready.
+* Buffered—The sender goroutine blocks only when the buffer is full.
+
+
+A send on a channel happens before the corresponding receive from that channel completes. In the next example, a parent goroutine increments a variable
+before a send, while another goroutine reads it after a channel read.
+
+------------------------------------------------------------------------------
+
+Using an unbuffered channel (sometimes called a synchronous channel), the sender will block until the receiver receives data from the channel.
+
+With a buffered channel, a sender can send messages while the channel isn’t full.
+Once the channel is full, it will block until a receiver goroutine receives a message.
+
+------------------------------------------------------------------------------
+
+* An unbuffered channel enables synchronization. We have the guarantee that two goroutines will be in a known state: one receiving and another sending a message.
+* A buffered channel doesn’t provide any strong synchronization. Indeed, a producer goroutine can send a message and then continue its execution if the
+channel isn’t full. The only guarantee is that a goroutine won’t receive a message before it is sent. But this is only a guarantee because of causality (you don’t
+drink your coffee before you prepare it).
+
+------------------------------------------------------------------------------
+
+If we need synchronization, we must use unbuffered channels.
+There are other cases where unbuffered channels are preferable: for example, in the case of a notification channel where the notification is handled via a channel closure (close(ch)).
+
+Buffered
+Here’s a list of possible cases where we should use another size:
+* While using a worker pooling-like pattern, meaning spinning a fixed number of goroutines that need to send data to a shared channel. In that case, we can tie the channel size to the number of goroutines created.
+* When using channels for rate-limiting problems. For example, if we need to enforce resource utilization by bounding the number of requests, we should set up the channel size according to the limit.

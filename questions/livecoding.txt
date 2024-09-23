@@ -1,0 +1,5 @@
+1. Contains Duplicate
+https://leetcode.com/problems/contains-duplicate/description/
+
+2. Fibonacci Number
+https://leetcode.com/problems/fibonacci-number/description/

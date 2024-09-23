@@ -1,0 +1,8 @@
+Интерфейсы под капотом
+https://blog.stackademic.com/interfaces-in-golang-a-deeper-look-4a0931481c00
+https://golangbyexample.com/inner-working-interface-golang/
+https://cmc.gitbook.io/go-internals/chapter-ii-interfaces
+https://github.com/golang/go/blob/bf86aec25972f3a100c3aa58a6abcbcc35bdea49/src/runtime/runtime2.go#L143-L146
+
+есть ли потокобезопасные структуры данных в го
+usafe pointer

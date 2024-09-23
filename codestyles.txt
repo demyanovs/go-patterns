@@ -1,0 +1,4 @@
+1. Getters without Get
+Good/bad
+2. Interfaces with variables names
+3.
