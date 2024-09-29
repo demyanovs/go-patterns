@@ -1,0 +1,9 @@
+Сравнение интерфейса с нил
+
+Two interface values are equal if they have identical dynamic types and equal dynamic values or if both have value nil.
+
+https://blog.stackademic.com/interfaces-in-golang-a-deeper-look-4a0931481c00
+https://golangbyexample.com/inner-working-interface-golang/
+https://github.com/golang/go/blob/bf86aec25972f3a100c3aa58a6abcbcc35bdea49/src/runtime/runtime2.go#L143-L146
+
+ https://www.youtube.com/watch?v=eOyxRI8FQm4

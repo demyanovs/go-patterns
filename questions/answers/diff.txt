@@ -1,0 +1,3 @@
+Understanding Allocations in Go
+https://www.ardanlabs.com/blog/2017/05/language-mechanics-on-escape-analysis.html
+https://medium.com/eureka-engineering/understanding-allocations-in-go-stack-heap-memory-9a2631b5035d

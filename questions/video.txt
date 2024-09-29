@@ -1,0 +1,9 @@
+GoLang Slice в деталях, простым языком
+https://www.youtube.com/watch?v=10LW7NROfOQ
+
+Как на самом деле устроен тип Map в Golang? | Golang под капотом
+https://www.youtube.com/watch?v=P_SXTUiA-9Y
+
+Как на самом деле устроены каналы в Golang? | Golang channels internals
+https://www.youtube.com/watch?v=ZTJcaP4G4JM
+https://www.youtube.com/watch?v=Tp5xhTMFuLU
