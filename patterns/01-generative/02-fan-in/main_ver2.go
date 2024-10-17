@@ -10,7 +10,8 @@ import (
 Fan-in multiplexes multiple input channels into a single output channel.
 
 Applicability
-Services that have some number of workers that all generate output may find it useful to combine all of the workers' outputs to be processed as a single unified stream.
+Services that have some number of workers that all generate output may find it useful to combine
+all of the workers' outputs to be processed as a single unified stream.
 
 Participants
 Sources
@@ -20,7 +21,7 @@ Destination
 An output channel of the sa,e  type as Sources. Created and provided by Funnel.
 
 Funnel
-Accepts Sources and immediately returns Destination. Any input from amy Sources will be output by Destination.
+Accepts Sources and immediately returns Destination. Any input from any Sources will be output by Destination.
 */
 
 func main() {

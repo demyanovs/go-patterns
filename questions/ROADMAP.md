@@ -1,6 +1,7 @@
 # gRPC !
 
 # Data structures
+     * Типы данных в го
     [*] Устройство slice
         [*] Как работает append?
         [*] Default value for a slice?
@@ -10,8 +11,9 @@
         [*] Какой порядок обхода ключей map? 
         [*] В каком порядке выводит map функция fmt.Println? (всегда отсортированный список по ключам)
         [*] Почему стандартный порядок обхода ключей именно такой? (Зависит от многих факторов - какая хэш ф-ция использовалась, были ли эвакуации (итератор ходит по бакетам - старым и новым))
-        [*] Можно ли взять адрес от элемента map? Почему? (Может произойти эвакуация данных и в ссылка изменится)
+        [*] Можно ли взять адрес от элемента map? Почему? (Нет, Может произойти эвакуация данных в новые бакеты и в ссылка изменится)
         [*] Зачем нужна sync map, если обычную map можно обернуть в мьютекс?
+        [*] Доступ к элементам осуществляется за О(1) в идеальном случае.
     [*] Устройство string
     [*] есть ли потокобезопасные структуры данных в го? Map? (Go не имеет предопределенных lock-free структур данных в стандартной библиотеке)
 
@@ -34,69 +36,85 @@
 
 # Примитивы синхронизации
     [*] sync.WaitGroup
-    * sync.Mutex
-    * Что такое мьютекс, как он устроен, работает.
+    * sync.Mutex. Что такое мьютекс, как он устроен, работает.
     [*] errgroup (https://www.codingexplorations.com/blog/mastering-concurrency-in-go-with-errgroup-simplifying-goroutine-management)
     * Что происходит с го рутиной, когда она вызывает метод Лок.
     * Что такое дэллоки, лайв Локи.
 
 # Модели многозадачности: кооперативная и вытесняющая.
-Какую модель многозадачности использует планировщик го.
-Что происходит с го рутиной, когда она вызывает сискол.
+    * Какую модель многозадачности использует планировщик го. (preemptive)
+    * Что происходит с го рутиной, когда она вызывает сискол.
 
 # Параллельные вычисления
-    * Data race vs race condition
+    [*] Data race vs race condition. 
+        A data race occurs when multiple goroutines simultaneously access the same memory location and at least one of them is writing.
+        A race condition is a behavior that depends on uncontrolled events (such as goroutine execution, how fast a message is published to a channel, or how long a call to a database lasts).
 
+# Memory model
+    [*] Stack vs heap
 
 ## Разные вопросы
-Как работает Scheduler https://www.ardanlabs.com/blog/2018/08/scheduling-in-go-part1.html
-Как работает Garbage collector 
-По какой модели устроен. Какие фазы. На каких фазах происходит полная остановка программы.
+    [*] Как работает Scheduler https://www.ardanlabs.com/blog/2018/08/scheduling-in-go-part1.html
+    [*] Как работает Garbage collector 
+    [*] По какой модели устроен. Какие фазы. На каких фазах происходит полная остановка программы.
 
-Сравнение интерфейса с нил
-Что такое контекст.
+# Паттерны
+    [*] Pipe
+    [*] Fan in
+    [*] Fan out
+    [*] Worker pool
 
-Data race vs race condition
-* Gorouting
-* Stack vs heap
-
+    * Semaphore
+    * Rate limiter
+    * Cache using timeAfter
+    
 
 ## Транзакции и уровни изоляции
 
 ## HTTP vs HTTPS / HTTP2
+GraphQL
 
 TCP UDP
-Deadlock
 
-# Паттерны
-Pipe
-Fan in 
-fan out
-Worker pool
+
 
 # Speed
+
 
 # Database
 
 # System design
-* Event-driven design
-* Saga pattern
-* CQRS
-* Event sourcing
-* ACID
-* CAP
-* Rate limiter
-* Cache
-* Pub/Sub
-* Load balancer
+    * Event-driven design
+    * Saga pattern
+    * CQRS
+    * Event sourcing
+    * Circuit breaker
+    * Service discovery
+
+
+# Load balancer
     * https://selectel.ru/blog/load-balancer-review/
     * https://habr.com/ru/companies/vk/articles/347026/
-* Circuit breaker
-* Service discovery
+
+
+
+    * ACID
+    * CAP
+    * SOLID
+    * DRY
+    * KISS
+
+
+* Pub/Sub
+
+
+
+
 * Leader election
 * Consistent hashing
 * Sharding
 * REST vs GraphQL
+
 
 # Kubernetes
 
