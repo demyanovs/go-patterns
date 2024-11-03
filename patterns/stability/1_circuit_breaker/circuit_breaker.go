@@ -42,7 +42,7 @@ func Breaker(circuit Circuit, failureThreshold uint) Circuit {
 			}
 		}
 
-		m.RUnlock() // Release read lock
+		m.RUnlock() // Unlock read lock
 
 		response, err := circuit(ctx) // Issue request proper
 

@@ -6,12 +6,15 @@ import (
 )
 
 type mutexType chan struct{}
+
 type mutex struct {
 	s mutexType
 }
 
 func NewMutex() mutex {
-	return mutex{s: make(mutexType, 1)}
+	return mutex{
+		s: make(mutexType, 1),
+	}
 }
 
 func (m mutex) Lock() {

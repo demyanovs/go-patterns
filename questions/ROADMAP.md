@@ -4,8 +4,8 @@
      * Типы данных в го
     [*] Устройство slice
         [*] Как работает append?
-        [*] Default value for a slice?
-        [*] Slice/arrays comparable? (Array values are comparable if values of the array element type are comparable. Two array values are equal if their corresponding elements are equal.)
+        [*] Default value for a slice/map? (nil)
+        [*] Slice/arrays comparable? (Array values are comparable if values of the array element type are comparable. Two array values are equal if their corresponding elements are equal).
     [*] Устройство map 
         [*] Разрешение коллизий: метод открытой адресации, метод цепочек
         [*] Какой порядок обхода ключей map? 
@@ -15,7 +15,7 @@
         [*] Зачем нужна sync map, если обычную map можно обернуть в мьютекс?
         [*] Доступ к элементам осуществляется за О(1) в идеальном случае.
     [*] Устройство string
-    [*] есть ли потокобезопасные структуры данных в го? Map? (Go не имеет предопределенных lock-free структур данных в стандартной библиотеке)
+    [*] есть ли потокобезопасные структуры данных в го? Map? (Go не имеет предопределенных lock-free структур данных в стандартной библиотеке). sync.Pool потокобезопасный (но дорогой), но не гарантирует хранение данных, GC может удалить их.
 
 # Error
     * Error is vs Error as
@@ -26,6 +26,8 @@
 # Горутины
     [*] Почему го рутины легковесны. Сравнение го рутины и потока ОС.
     [*] Что такое контекст свитч, стек, куча. Где аллоцируется стек, где куча.
+    [*] Почему контекст свитч горутин быстрее.
+
 
 # Каналы
     [*] Что такое каналы (https://www.youtube.com/watch?v=ZTJcaP4G4JM)
@@ -53,21 +55,40 @@
 # Memory model
     [*] Stack vs heap
 
-## Разные вопросы
-    [*] Как работает Scheduler https://www.ardanlabs.com/blog/2018/08/scheduling-in-go-part1.html
-    [*] Как работает Garbage collector 
-    [*] По какой модели устроен. Какие фазы. На каких фазах происходит полная остановка программы.
+# Scheduler https://www.ardanlabs.com/blog/2018/08/scheduling-in-go-part1.html
+    GMP model.
+    P - Virtual Cores
+    M - Machine. OS Thread, is assigned to a P. Managed by OS, OS is responsible for placing the Tread on a core.
+    G - Goroutine. Every Go programm is also givent an initial Gourotine (G). 
+        Gourintes are application level threads. They are managed by the Go runtime. G are context-switched on and off an M.
+        GRQ (Global Run Queue) / LRQ
+        Each P has its own LRQ. When a G is created, it is placed on the local run queue of the P that created it.
+        GRQ is for Goroutines that are not assigned to a P yet.
+        When a P runs out of Gs in its local run queue, it will attempt to steal Gs from other P's run queues.
+        Net poller is responsible for asynchronous system calls. The net poller has OS Thread and it's handling an efficient event loop.
+
+# Garbage collector
+    [*] По какой модели устроен. Какие фазы. На каких фазах происходит полная остановка программы. (STW на стадии подготовки перед маркировкой, и на стадии завершения маркировки. Во время самой маркировки исполнение кода не останавливается). [GOGC, GOMEMLIMIT]. https://blog.golang.org/ismmkeynote
+
 
 # Паттерны
     [*] Pipe
     [*] Fan in
     [*] Fan out
     [*] Worker pool
+    [ ] Queuing
 
     * Semaphore
     * Rate limiter
     * Cache using timeAfter
-    
+    * Circuit breaker
+    [*] Retry
+
+## Разные вопросы
+
+# Алгоритмы
+    [ ] Quick sort
+    [ ] Binary search
 
 ## Транзакции и уровни изоляции
 
@@ -90,6 +111,7 @@ TCP UDP
     * Event sourcing
     * Circuit breaker
     * Service discovery
+    * Kafka гаранитии доставки сообщений
 
 
 # Load balancer
