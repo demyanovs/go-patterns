@@ -75,7 +75,7 @@
     [*] Pipe
     [*] Fan in
     [*] Fan out
-    [*] Worker pool
+    [*] Worker pool 
     [ ] Queuing
 
     * Semaphore
@@ -90,7 +90,7 @@
     [ ] Quick sort
     [ ] Binary search
 
-## Транзакции и уровни изоляции
+## 
 
 ## HTTP vs HTTPS / HTTP2
 GraphQL
@@ -103,6 +103,7 @@ TCP UDP
 
 
 # Database
+    [] Транзакции и уровни изоляции в базе
 
 # System design
     * Event-driven design
@@ -111,7 +112,7 @@ TCP UDP
     * Event sourcing
     * Circuit breaker
     * Service discovery
-    * Kafka гаранитии доставки сообщений
+    * Kafka гаранитии доставки сообщений https://docs.confluent.io/kafka/design/delivery-semantics.html
 
 
 # Load balancer

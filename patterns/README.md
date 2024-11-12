@@ -9,9 +9,10 @@
 2. [Semaphore (rate limiter)](02-sync/02-semaphore/main.go)
 
 # Parallel Computing
-1. [Worker pool](./03-parallel-computing/01-worker-pool/main.go)
+1. [Worker pool](./03-parallel-computing/01-worker-pool/main3.go)
 2. [Queuing](./03-parallel-computing/02-queuing/main.go)
 3. [Parallel for loop](./03-parallel-computing/03-parallel-for-loop/main.go)
+4. Error group
 
 # Delayed Computing
 1. [Futures (Promise)](./04-delayed-computing/01-futures/main.go)
@@ -23,3 +24,5 @@
 3. Cache
 4. [Configurable object](00-general_design/configurable_object/main.go)
 5. [Functional options](00-general_design/functional_options/main.go)
+6. Error group. Several requests, if one fails, all fail.
+7. RW map
