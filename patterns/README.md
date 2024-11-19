@@ -12,7 +12,7 @@
 1. [Worker pool](./03-parallel-computing/01-worker-pool/main3.go)
 2. [Queuing](./03-parallel-computing/02-queuing/main.go)
 3. [Parallel for loop](./03-parallel-computing/03-parallel-for-loop/main.go)
-4. Error group
+4. [Error group](./03-parallel-computing/05-errorgroup/main.go)
 
 # Delayed Computing
 1. [Futures (Promise)](./04-delayed-computing/01-futures/main.go)
