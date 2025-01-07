@@ -11,3 +11,17 @@ package solid
 // - Для различных кроновых или kafka задач
 
 // пример нарушения SRP в книжке рассматривает ситуацию, когда требования к одному куску кода поступают одновременно и от отдела бухгалтерии и от отдела работы с персоналом - и, разумеется, требования одних не учитывают (а то и конфликтуют с) требования других.
+
+type Report interface {
+	Print() string
+}
+
+type AccountantReport struct {
+}
+
+func (r AccountantReport) Print() string {
+	return "Accountant report"
+}
+
+type HRReport struct {
+}

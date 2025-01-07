@@ -76,7 +76,7 @@
     [*] Fan in
     [*] Fan out
     [*] Worker pool 
-    [ ] Queuing
+    [*] Queuing
 
     * Semaphore
     * Rate limiter
@@ -122,7 +122,18 @@ TCP UDP
 
 
     * ACID
-    * CAP
+    * CAP (Consistency, Availability, Partition Tolerance) (Согласованность, Доступность, Устойчивость к разделению)
+        Когда система распределная она должна выбирать медлу согласованностью и доступностью.
+    * PACELC-теорема
+        if PARTIIONED:
+            choose (
+                AVAILABILITY,
+                CONSISTENCY
+            ) ELSE:
+            choose (
+                LATENCY,
+                CONSISTENCY
+            )
     * SOLID
     * DRY
     * KISS

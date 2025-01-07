@@ -1,27 +1,32 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
-	// Slice
-	var myArr [3]int
+	fmt.Println(3 % 5)
+	//fizzBuzz(15)
+}
 
-	var mySlice []int
-	var mySlice2 []string
-	mySlice3 := make([]string, 0)
+func fizzBuzz(n int32) {
+	for i := 1; i <= int(n); i++ {
+		// Write your code here
+		if i%3 == 0 && i%5 == 0 {
+			fmt.Println("FizzBuzz")
+			continue
+		}
 
-	fmt.Printf("Arr equal %#v\n", myArr)
+		if n%3 == 0 && n%5 != 0 {
+			fmt.Println("Fizz")
+			continue
+		}
 
-	fmt.Printf("Sl1 equal %#v\n", mySlice == nil)
-	fmt.Printf("Sl2 equal %#v\n", mySlice2 == nil)
-	fmt.Printf("Sl3 equal %#v\n", mySlice3 == nil)
+		if i%3 != 0 && i%5 == 0 {
+			fmt.Println("Buzz")
+			continue
+		}
 
-	// Map
-	//m := make(map[string]int)
-	var m map[string]int
-
-	//m["key"] = 42
-	//fmt.Printf("Map %#v\n", m)
-
-	fmt.Printf("m equal nil %#v\n", m == nil)
+		fmt.Println(i)
+	}
 }

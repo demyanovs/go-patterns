@@ -1,5 +1,9 @@
 package main
 
+/*
+Error group with limit is analogous to the worker pool pattern.
+*/
+
 import (
 	"fmt"
 	"time"

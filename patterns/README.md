@@ -18,11 +18,12 @@
 1. [Futures (Promise)](./04-delayed-computing/01-futures/main.go)
 2. Lazy evaluation
 
-# General Patterns
+# Stability Paterns
 1. Circuit breaker
 2. [Retry/timeout](stability/retry/main.go) / [Retry/timeout ver 2](stability/retry_ver2/main.go)
-3. Cache
-4. [Configurable object](00-general_design/configurable_object/main.go)
-5. [Functional options](00-general_design/functional_options/main.go)
-6. Error group. Several requests, if one fails, all fail.
-7. RW map
+
+# General Patterns
+1. Cache
+2. [Configurable object](00-general/configurable_object/main.go)
+3. [Functional options](00-general/functional_options/main.go)
+4. RW map
