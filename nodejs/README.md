@@ -49,5 +49,13 @@ or some long read file operation will block for a while.
 # OSI
 https://www.youtube.com/watch?v=5F1MA9JCfjM
 
+7. Прикладной (application)
+6. Представления (presentation)    (Данные (data) | Преобразование данных)
+5. Сеансовый (session)
+4. Транспортный (transport) (Сегменты (segment) | Контроль над передачей данных)
+3. Сетевой (network) (Пакеты (packet) | Определение маршрута и логическая адресация)
+2. Канальный (data link) (Биты (bit)/ Кадры (frame) | Физическая адресация)
+1. Физический (physical) (Биты (bit) | Работа со средой передачи, сигналами и двоичными данными)
+
 ## REST
 tell what to do (GET, POST) in headers what to do and it's transport and not message.

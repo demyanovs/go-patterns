@@ -1,7 +1,7 @@
 # gRPC !
 
 # Data structures
-     * Типы данных в го
+    [*] Типы данных в го (Целочисленные, с плавающей точкой, комплексные числа, bool, Строки)
     [*] Устройство slice
         [*] Как работает append?
         [*] Default value for a slice/map? (nil)
@@ -18,7 +18,12 @@
     [*] есть ли потокобезопасные структуры данных в го? Map? (Go не имеет предопределенных lock-free структур данных в стандартной библиотеке). sync.Pool потокобезопасный (но дорогой), но не гарантирует хранение данных, GC может удалить их.
 
 # Error
-    * Error is vs Error as
+    * Error is vs Error as (
+        errors.Is is used to determine if an error is a specific kind. 
+        It's particularly useful when dealing with wrapped errors.
+        errors.As is used to convert one error type to another. 
+        It's especially useful when you want to extract more information from a custom error.
+)
 
 # Interfaces
     [*] Сравнение интерфейса с nil (false, more answers/interfaces.txt)
@@ -58,7 +63,7 @@
 # Scheduler https://www.ardanlabs.com/blog/2018/08/scheduling-in-go-part1.html
     GMP model.
     P - Virtual Cores
-    M - Machine. OS Thread, is assigned to a P. Managed by OS, OS is responsible for placing the Tread on a core.
+    M - Machine. OS Thread, is assigned to a P. Managed by OS, OS is responsible for placing the Thread on a core.
     G - Goroutine. Every Go programm is also givent an initial Gourotine (G). 
         Gourintes are application level threads. They are managed by the Go runtime. G are context-switched on and off an M.
         GRQ (Global Run Queue) / LRQ
@@ -68,7 +73,9 @@
         Net poller is responsible for asynchronous system calls. The net poller has OS Thread and it's handling an efficient event loop.
 
 # Garbage collector
-    [*] По какой модели устроен. Какие фазы. На каких фазах происходит полная остановка программы. (STW на стадии подготовки перед маркировкой, и на стадии завершения маркировки. Во время самой маркировки исполнение кода не останавливается). [GOGC, GOMEMLIMIT]. https://blog.golang.org/ismmkeynote
+    [*] По какой модели устроен. Какие фазы. На каких фазах происходит полная остановка программы. 
+        (STW на стадии подготовки перед маркировкой, и на стадии завершения маркировки. 
+        Во время самой маркировки исполнение кода не останавливается). [GOGC, GOMEMLIMIT]. https://blog.golang.org/ismmkeynote
 
 
 # Паттерны
@@ -119,8 +126,6 @@ TCP UDP
     * https://selectel.ru/blog/load-balancer-review/
     * https://habr.com/ru/companies/vk/articles/347026/
 
-
-
     * ACID
     * CAP (Consistency, Availability, Partition Tolerance) (Согласованность, Доступность, Устойчивость к разделению)
         Когда система распределная она должна выбирать медлу согласованностью и доступностью.
@@ -140,8 +145,6 @@ TCP UDP
 
 
 * Pub/Sub
-
-
 
 
 * Leader election

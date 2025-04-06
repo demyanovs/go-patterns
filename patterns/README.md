@@ -6,7 +6,7 @@
 
 # Sync
 1. [Mutex (rate limiter)](02-sync/01-mutex/main.go)
-2. [Semaphore (rate limiter)](02-sync/02-semaphore/main.go)
+2. [Semaphore (rate limiter)](02-sync/02-semaphore/main2.go)
 
 # Parallel Computing
 1. [Worker pool](./03-parallel-computing/01-worker-pool/main3.go)
