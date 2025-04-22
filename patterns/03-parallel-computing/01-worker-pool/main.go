@@ -19,7 +19,7 @@ func main() {
 	results := make(chan int, totalJobs)
 
 	for w := 1; w <= totalWorkers; w++ {
-		go worker(w, jobs, results)
+		go worker2(w, jobs, results)
 	}
 
 	// Send jobs
@@ -37,7 +37,7 @@ func main() {
 	close(results)
 }
 
-func worker(id int, jobs <-chan int, results chan<- int) {
+func worker2(id int, jobs <-chan int, results chan<- int) {
 	var wg sync.WaitGroup
 	for j := range jobs {
 		wg.Add(1)

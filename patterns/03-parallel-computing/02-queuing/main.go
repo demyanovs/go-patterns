@@ -6,32 +6,6 @@ import (
 	"time"
 )
 
-/*
-Очередь
-Позволяет принимать на обработку до N сообщений одновременно не дожидаясь их обработки
-*/
-
-const N = 3
-const MESSAGES = 1000000
-
-func main() {
-	var wg sync.WaitGroup
-
-	fmt.Println("Queue of length N:", N)
-	queue := make(chan struct{}, N)
-
-	wg.Add(MESSAGES)
-
-	for w := 1; w <= MESSAGES; w++ {
-		process(w, queue, &wg)
-	}
-
-	wg.Wait()
-
-	close(queue)
-	fmt.Println("Processing completed")
-}
-
 func process(payload int, queue chan struct{}, wg *sync.WaitGroup) {
 	queue <- struct{}{}
 
@@ -41,8 +15,36 @@ func process(payload int, queue chan struct{}, wg *sync.WaitGroup) {
 		fmt.Printf("Start processing of %d\n", payload)
 		time.Sleep(time.Millisecond * 500)
 		fmt.Printf("Completed processing of %d\n", payload)
-		fmt.Printf("\nQUEUE LENGTH: %d\n", len(queue))
+		fmt.Printf("Queue length: %d\n\n", len(queue))
 
 		<-queue
 	}()
 }
+
+func main() {
+	const numWorkers = 3
+	const numMessages = 1000
+
+	var wg sync.WaitGroup
+
+	fmt.Println("Queue of length numWorkers:", numWorkers)
+
+	// Buffered channel as semaphore
+	queue := make(chan struct{}, numWorkers)
+
+	wg.Add(numMessages)
+
+	for w := 1; w <= numMessages; w++ {
+		process(w, queue, &wg)
+	}
+
+	wg.Wait()
+
+	close(queue)
+	fmt.Println("Processing completed")
+}
+
+/*
+Очередь
+Позволяет принимать на обработку до N сообщений одновременно не дожидаясь их обработки.
+*/

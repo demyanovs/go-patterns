@@ -28,14 +28,14 @@ func main() {
 	in := generateWork(work, &wg)
 
 	wg.Add(3)
-	fanOut(in, "Alice", &wg)
-	fanOut(in, "Jack", &wg)
-	fanOut(in, "Bob", &wg)
+	fanOut2(in, "Alice", &wg)
+	fanOut2(in, "Jack", &wg)
+	fanOut2(in, "Bob", &wg)
 
 	wg.Wait()
 }
 
-func fanOut(in <-chan int, name string, wg *sync.WaitGroup) {
+func fanOut2(in <-chan int, name string, wg *sync.WaitGroup) {
 	go func() {
 		defer wg.Done()
 

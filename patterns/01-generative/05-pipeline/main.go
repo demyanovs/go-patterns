@@ -15,9 +15,9 @@ import (
 func main() {
 	in := generateWork([]int{0, 1, 2, 3, 4, 5, 6, 7, 8})
 
-	out := filterOdd(in) // оставляем только четные числа
-	out = square(out)    // возводим в квадрат
-	out = half(out)      // и делим пополам
+	out := filterOdd(in) // even numbers
+	out = square(out)    // square
+	out = half(out)      // and we divide it in half
 
 	for value := range out {
 		fmt.Println(value)

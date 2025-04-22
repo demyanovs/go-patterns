@@ -11,52 +11,12 @@ type Result struct {
 	State bool
 }
 
-const MAX_GOUROUTINE = 3
-const TOTAL_JOBS = 10
+const (
+	maxGoroutines = 3
+	totalJobs     = 10
+)
 
-func main() {
-	var results []Result
-	var wg sync.WaitGroup
-
-	// Create a buffered channel to collect results
-	resultChan := make(chan Result, TOTAL_JOBS)
-
-	// Create a semaphore to limit concurrent goroutines
-	// This prevents us from opening too many connections at once
-	semaphore := make(chan struct{}, MAX_GOUROUTINE) // Limit to 100 concurrent scans
-
-	// Launch goroutines for each port
-	for i := 1; i <= TOTAL_JOBS; i++ {
-		wg.Add(1)
-		go func(i int) {
-			defer wg.Done()
-
-			// Acquire semaphore
-			semaphore <- struct{}{}
-			defer func() { <-semaphore }() // Release semaphore
-
-			result := process2(i)
-			resultChan <- result
-		}(i)
-	}
-
-	// Close channel when all goroutines complete
-	go func() {
-		wg.Wait()
-		close(resultChan)
-	}()
-
-	// Collect results from channel
-	for result := range resultChan {
-		if result.State {
-			results = append(results, result)
-		}
-	}
-
-	fmt.Println("Results:", results)
-}
-
-func process2(id int) Result {
+func process(id int) Result {
 	fmt.Printf("[%s]: running task %d\n", time.Now().Format("15:04:05"), id)
 	time.Sleep(time.Second)
 
@@ -64,4 +24,45 @@ func process2(id int) Result {
 		Port:  id,
 		State: true,
 	}
+}
+
+func main() {
+	var wg sync.WaitGroup
+
+	results := make([]Result, 0, totalJobs)
+	resultChan := make(chan Result, totalJobs)
+
+	// Semaphore to limit concurrent goroutines
+	semaphore := make(chan struct{}, maxGoroutines)
+
+	for i := 1; i <= totalJobs; i++ {
+		wg.Add(1)
+		go func(id int) {
+			defer wg.Done()
+
+			// Acquire semaphore
+			semaphore <- struct{}{}
+			defer func() {
+				<-semaphore // Release semaphore
+			}()
+
+			result := process(id)
+			resultChan <- result
+		}(i)
+	}
+
+	// Close the result channel once all tasks are done
+	go func() {
+		wg.Wait()
+		close(resultChan)
+	}()
+
+	// Collect results
+	for res := range resultChan {
+		if res.State {
+			results = append(results, res)
+		}
+	}
+
+	fmt.Println("Results:", results)
 }

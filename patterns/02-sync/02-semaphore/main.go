@@ -42,7 +42,7 @@ func main() {
 		sem.Lock(1)
 		go func(v int) {
 			defer sem.Unlock(1)
-			process(v)
+			process3(v)
 			if v == TOTAL {
 				done <- true
 			}
@@ -50,7 +50,7 @@ func main() {
 	}
 	<-done
 }
-func process(id int) {
+func process3(id int) {
 	fmt.Printf("[%s]: running task %d\n", time.Now().Format("15:04:05"), id)
 	time.Sleep(time.Second)
 }
