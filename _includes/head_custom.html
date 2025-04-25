@@ -1,0 +1,37 @@
+<link rel="icon" type="image/x-icon" href="{{ '/assets/images/favicon.ico' | relative_url }}">
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const logo = document.querySelector(".site-logo");
+        if (logo) {
+            const siteTitle = document.createElement("span");
+            siteTitle.textContent = "Go Patterns"; // Your site title here
+            siteTitle.className = "site-title-custom";
+            logo.after(siteTitle);
+        }
+    });
+</script>
+<style>
+    .site-title-custom {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-left: 0.5rem;
+        vertical-align: middle;
+        color: var(--sidebar-color);
+    }
+
+    .site-logo {
+        vertical-align: middle;
+        max-height: 52px;
+    }
+</style>
+
+<style>
+    .site-logo::after {
+        content: "Go Patterns";
+        font-weight: 600;
+        font-size: 1.4rem;
+        margin-left: 4.9rem;
+        color: var(--sidebar-color);
+    }
+</style>
