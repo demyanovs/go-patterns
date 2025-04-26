@@ -9,7 +9,7 @@ permalink: /delayed-computing/future
 
 # Future (Promise)
 
-The **Future ** pattern allows starting a computation in the background and retrieve the result later, 
+The **Future** pattern allows starting a computation in the background and retrieve the result later, 
 allowing other work to continue in the meantime.
 
 ```mermaid

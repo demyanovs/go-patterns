@@ -36,7 +36,7 @@ graph LR
 - Fan-In
 - Worker Pool
 
-## Example 1: General Implementation
+## Example
 
 ```go
 package main

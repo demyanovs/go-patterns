@@ -7,7 +7,7 @@ grand_parent: Concurrency Patterns
 permalink: /parallel-computing/parallel-for-loop
 ---
 
-# Parallel for loopParallel For Loop
+# Parallel For Loop
 
 **Parallel For Loop** pattern is useful when you need to perform many computations over a stream of input data, and each computation is independent of the others — a scenario similar to vectorization.
 

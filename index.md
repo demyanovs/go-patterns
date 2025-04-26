@@ -12,7 +12,7 @@ Designed for clarity, learning, and collaboration.
 Inspired by effective Go idioms and concurrency best practices.
 
 Explore categories:
-- [Concurrency Patterns]({{ site.baseurl }}/generative)
+- [Concurrency Patterns]({{ site.baseurl }}/concurrency)
   - [Generative]({{ site.baseurl }}/generative)
     - [Generator]({{ site.baseurl }}/generative/generator)
     - [Fan In]({{ site.baseurl }}/generative/fan-in)

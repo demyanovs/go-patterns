@@ -17,7 +17,7 @@ Limits concurrency by reusing a fixed number of goroutines to process tasks.
 ## 2. [Queuing]({{ site.baseurl }}/parallel-computing/queuing)
 Buffers tasks for controlled, sequential or concurrent processing.
 
-## 3. [Parallel for loop]({{ site.baseurl }}/parallel-computing/parallel-for-loop)
+## 3. [Parallel For Loop]({{ site.baseurl }}/parallel-computing/parallel-for-loop)
 Runs loop iterations concurrently using goroutines.
 
 ## 4. [ErrGroup]({{ site.baseurl }}/parallel-computing/errgroup)
