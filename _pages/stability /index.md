@@ -22,6 +22,9 @@ Prevents operations from running indefinitely by enforcing time limits.
 Controls the rate of requests to prevent system overload.
 
 ## 5. Caching
-Reduce repeated expensive computations or I/O.
+Reduces repeated expensive computations or I/O.
+ - [With Map and sync.RWMutex]({{ site.baseurl }}/stability/caching-with-map-and-rwmutex)
+ - [With sync.Map]({{ site.baseurl }}/stability/caching-with-sync-map)
+ - [With Automatic Cleanup]({{ site.baseurl }}/stability/caching-with-expiration)
 
 ![Concurrency Patterns]({{ site.baseurl }}/assets/images/stability_patterns_01.png)

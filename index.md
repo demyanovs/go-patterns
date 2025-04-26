@@ -38,4 +38,7 @@ Explore categories:
   - Retry
   - Timeout
   - Rate Limiter
-  - Caching
+  - [Caching]({{ site.baseurl }}/stability/caching)
+    - [With Map and sync.RWMutex]({{ site.baseurl }}/stability/caching-with-map-and-rwmutex)
+    - [With sync.Map]({{ site.baseurl }}/stability/caching-with-sync-map)
+    - [With Automatic Cleanup]({{ site.baseurl }}/stability/caching-with-expiration)
