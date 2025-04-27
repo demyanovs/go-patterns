@@ -273,362 +273,355 @@
     "relUrl": "/stability#3-timeout"
   },"39": {
     "doc": "Stability Patterns",
-    "title": "4. Rate Limiting",
-    "content": "Controls the rate of requests to prevent system overload. ",
-    "url": "/go-patterns/stability#4-rate-limiting",
-    
-    "relUrl": "/stability#4-rate-limiting"
-  },"40": {
-    "doc": "Stability Patterns",
     "title": "5. Caching",
     "content": "Reduces repeated expensive computations or I/O. | With Map and sync.RWMutex | With sync.Map | With Automatic Cleanup | . ",
     "url": "/go-patterns/stability#5-caching",
     
     "relUrl": "/stability#5-caching"
-  },"41": {
+  },"40": {
     "doc": "Delayed Computing",
     "title": "Delayed Computing",
     "content": " ",
     "url": "/go-patterns/delayed-computing",
     
     "relUrl": "/delayed-computing"
-  },"42": {
+  },"41": {
     "doc": "Delayed Computing",
     "title": "1. Future (Promise)",
     "content": "Represents a value that will be available at some point in the future, allowing asynchronous computation. ",
     "url": "/go-patterns/delayed-computing#1-future-promise",
     
     "relUrl": "/delayed-computing#1-future-promise"
-  },"43": {
+  },"42": {
     "doc": "Parallel Computing",
     "title": "Parallel Computing Patterns",
     "content": "Patterns that involve running multiple independent tasks concurrently to improve performance. ",
     "url": "/go-patterns/parallel-computing#parallel-computing-patterns",
     
     "relUrl": "/parallel-computing#parallel-computing-patterns"
-  },"44": {
+  },"43": {
     "doc": "Parallel Computing",
     "title": "1. Worker Pool",
     "content": "Limits concurrency by reusing a fixed number of goroutines to process tasks. ",
     "url": "/go-patterns/parallel-computing#1-worker-pool",
     
     "relUrl": "/parallel-computing#1-worker-pool"
-  },"45": {
+  },"44": {
     "doc": "Parallel Computing",
     "title": "2. Queuing",
     "content": "Buffers tasks for controlled, sequential or concurrent processing. ",
     "url": "/go-patterns/parallel-computing#2-queuing",
     
     "relUrl": "/parallel-computing#2-queuing"
-  },"46": {
+  },"45": {
     "doc": "Parallel Computing",
     "title": "3. Parallel For Loop",
     "content": "Runs loop iterations concurrently using goroutines. ",
     "url": "/go-patterns/parallel-computing#3-parallel-for-loop",
     
     "relUrl": "/parallel-computing#3-parallel-for-loop"
-  },"47": {
+  },"46": {
     "doc": "Parallel Computing",
     "title": "4. ErrGroup",
     "content": "Runs goroutines in parallel with error handling and cancellation. ",
     "url": "/go-patterns/parallel-computing#4-errgroup",
     
     "relUrl": "/parallel-computing#4-errgroup"
-  },"48": {
+  },"47": {
     "doc": "Parallel Computing",
     "title": "Parallel Computing",
     "content": " ",
     "url": "/go-patterns/parallel-computing",
     
     "relUrl": "/parallel-computing"
-  },"49": {
+  },"48": {
     "doc": "Generative Patterns",
     "title": "Generative Patterns",
     "content": "Patterns focused on spawning new goroutines, often involving channels or dynamic generation. ",
     "url": "/go-patterns/generative",
     
     "relUrl": "/generative"
-  },"50": {
+  },"49": {
     "doc": "Generative Patterns",
     "title": "1. Generator",
     "content": "Simple value producer using goroutines and channels. ",
     "url": "/go-patterns/generative#1-generator",
     
     "relUrl": "/generative#1-generator"
-  },"51": {
+  },"50": {
     "doc": "Generative Patterns",
     "title": "2. Fan In",
     "content": "Merging multiple inputs into one output. ",
     "url": "/go-patterns/generative#2-fan-in",
     
     "relUrl": "/generative#2-fan-in"
-  },"52": {
+  },"51": {
     "doc": "Generative Patterns",
     "title": "3. Fan Out",
     "content": "Splitting one input to multiple outputs. ",
     "url": "/go-patterns/generative#3-fan-out",
     
     "relUrl": "/generative#3-fan-out"
-  },"53": {
+  },"52": {
     "doc": "Generative Patterns",
     "title": "4. Pipeline",
     "content": "Series of stages connected by channels. ",
     "url": "/go-patterns/generative#4-pipeline",
     
     "relUrl": "/generative#4-pipeline"
-  },"54": {
+  },"53": {
     "doc": "Synchronization",
     "title": "Synchronization Patterns",
     "content": "Patterns involving coordinating shared state between goroutines. ",
     "url": "/go-patterns/sync#synchronization-patterns",
     
     "relUrl": "/sync#synchronization-patterns"
-  },"55": {
+  },"54": {
     "doc": "Synchronization",
     "title": "1. Mutex",
     "content": "Ensures exclusive access to a resource by one goroutine at a time. ",
     "url": "/go-patterns/sync#1-mutex",
     
     "relUrl": "/sync#1-mutex"
-  },"56": {
+  },"55": {
     "doc": "Synchronization",
     "title": "2. Semaphore",
     "content": "Controls the number of goroutines allowed to access a resource at once. ",
     "url": "/go-patterns/sync#2-semaphore",
     
     "relUrl": "/sync#2-semaphore"
-  },"57": {
+  },"56": {
     "doc": "Synchronization",
     "title": "Synchronization",
     "content": " ",
     "url": "/go-patterns/sync",
     
     "relUrl": "/sync"
-  },"58": {
+  },"57": {
     "doc": "Concurrency Patterns",
     "title": "Concurrency Patterns",
     "content": "Patterns address managing multiple tasks concurrently, leveraging its built-in goroutines and channels for efficient parallelism. Explore categories: . | Generative . | Generator | Fan In | Fan Out | Pipeline | . | Synchronization . | Mutex | Semaphore | . | Parallel Computing . | Worker Pool | Queuing | Parallel For Loop | Error Group | . | Delayed Computing . | Future (Promise) | . | . ",
     "url": "/go-patterns/concurrency",
     
     "relUrl": "/concurrency"
-  },"59": {
+  },"58": {
     "doc": "Creational Patterns",
     "title": "Creational Patterns",
     "content": "Patterns focus on flexible and controlled object creation, often using interfaces, functions, and struct composition rather than traditional class-based inheritance. ",
     "url": "/go-patterns/creational",
     
     "relUrl": "/creational"
-  },"60": {
+  },"59": {
     "doc": "Creational Patterns",
     "title": "1. Functional Options",
     "content": "Uses variadic option functions to configure an object. ",
     "url": "/go-patterns/creational#1-functional-options",
     
     "relUrl": "/creational#1-functional-options"
-  },"61": {
+  },"60": {
     "doc": "Creational Patterns",
     "title": "2. Configuration Struct + Factory",
     "content": "Mimics traditional builders with method chaining. ",
     "url": "/go-patterns/creational#2-configuration-struct--factory",
     
     "relUrl": "/creational#2-configuration-struct--factory"
-  },"62": {
+  },"61": {
     "doc": "Creational Patterns",
     "title": "3. Configurable Object",
     "content": "Allows an object to be created with default values and then configured step-by-step through setter methods. ",
     "url": "/go-patterns/creational#3-configurable-object",
     
     "relUrl": "/creational#3-configurable-object"
-  },"63": {
+  },"62": {
     "doc": "Creational Patterns",
     "title": "4. Fluent Interfaces",
     "content": "Chaining method calls on the same object, often seen in SQL builders or HTTP clients. ",
     "url": "/go-patterns/creational#4-fluent-interfaces",
     
     "relUrl": "/creational#4-fluent-interfaces"
-  },"64": {
+  },"63": {
     "doc": "Home",
     "title": "Welcome to Go Patterns",
     "content": "Welcome to the collection of idiomatic Go design patterns! This site gathers a variety of Go patterns, each with clear, practical code examples. Designed for clarity, learning, and collaboration. Inspired by effective Go idioms and concurrency best practices. Explore categories: . | Concurrency Patterns . | Generative . | Generator | Fan In | Fan Out | Pipeline | . | Synchronization Patterns . | Mutex (Rate Limiting) | Semaphore (Rate Limiting) | . | Parallel Computing Patterns . | Worker Pool | Queuing | Parallel For Loop | ErrGroup | . | Delayed Computing Patterns . | Future | . | . | Creational Patterns . | Functional Options | Configuration Struct + Factory | Configurable Object | Fluent Interfaces | . | Stability Patterns . | Circuit Breaker | Retry | Timeout | Caching . | With Map and sync.RWMutex | With sync.Map | With Automatic Cleanup | . | . | . ",
     "url": "/go-patterns/#welcome-to-go-patterns",
     
     "relUrl": "/#welcome-to-go-patterns"
-  },"65": {
+  },"64": {
     "doc": "Home",
     "title": "Home",
     "content": " ",
     "url": "/go-patterns/",
     
     "relUrl": "/"
-  },"66": {
+  },"65": {
     "doc": "Caching with Map and sync.RWMutex",
     "title": "Caching with Map and sync.RWMutex",
     "content": "A simple and efficient caching technique in Go where a map is used to store key-value pairs, and a sync.RWMutex protects concurrent access. RLock is used for reads to allow multiple readers simultaneously, and Lock is used for writes to ensure exclusive access when modifying the cache. ",
     "url": "/go-patterns/stability/caching/with-map-and-rwmutex",
     
     "relUrl": "/stability/caching/with-map-and-rwmutex"
-  },"67": {
+  },"66": {
     "doc": "Caching with Map and sync.RWMutex",
     "title": "Example",
     "content": "package main import ( \"fmt\" \"sync\" ) type Cache struct { data map[string]string mu sync.RWMutex } func NewCache() *Cache { return &amp;Cache{ data: make(map[string]string), } } func (c *Cache) Get(key string) (string, bool) { c.mu.RLock() defer c.mu.RUnlock() val, found := c.data[key] return val, found } func (c *Cache) Set(key, value string) { c.mu.Lock() defer c.mu.Unlock() c.data[key] = value } func main() { cache := NewCache() cache.Set(\"username\", \"gopher\") if val, found := cache.Get(\"username\"); found { fmt.Println(\"Found:\", val) } else { fmt.Println(\"Not found\") } } . ",
     "url": "/go-patterns/stability/caching/with-map-and-rwmutex#example",
     
     "relUrl": "/stability/caching/with-map-and-rwmutex#example"
-  },"68": {
+  },"67": {
     "doc": "Mutex (Rate Limiting)",
     "title": "Mutex (Rate Limiting)",
     "content": "The Mutex pattern is used to ensure that only one goroutine can access a shared resource at a time, preventing data races and ensuring thread safety. In Go, this can be implemented using channels as semaphores, where the mutex allows goroutines to “lock” a critical section and “unlock” it once done. ",
     "url": "/go-patterns/sync/mutex",
     
     "relUrl": "/sync/mutex"
-  },"69": {
+  },"68": {
     "doc": "Mutex (Rate Limiting)",
     "title": "Applicability",
     "content": ". | Shared Resource Protection. Ensures only one goroutine accesses a shared resource at a time, preventing race conditions. | Critical Section Management. Serializes access to a block of code, ensuring safe execution in concurrent environments. | Custom Locking. Implements lightweight or custom locks using channels, without relying on sync.Mutex. | Concurrency Control. Manages high concurrent access to shared resources, avoiding performance issues. | Deadlock Prevention. Helps avoid deadlocks by managing resource access order in complex systems. | . ",
     "url": "/go-patterns/sync/mutex#applicability",
     
     "relUrl": "/sync/mutex#applicability"
-  },"70": {
+  },"69": {
     "doc": "Mutex (Rate Limiting)",
     "title": "Example",
     "content": "package main import ( \"fmt\" \"sync\" ) type Mutex struct { s chan struct{} } func NewMutex() *Mutex { return &amp;Mutex{ s: make(chan struct{}, 1), } } func (m *Mutex) Lock() { m.s &lt;- struct{}{} } func (m *Mutex) Unlock() { &lt;-m.s } const numGoroutines = 1000 func main() { m := NewMutex() counter := 0 var wg sync.WaitGroup wg.Add(numGoroutines) for i := 0; i &lt; numGoroutines; i++ { go func() { m.Lock() defer m.Unlock() counter++ wg.Done() }() } wg.Wait() fmt.Printf(\"Mutex counter: %d\\n\", counter) } . ",
     "url": "/go-patterns/sync/mutex#example",
     
     "relUrl": "/sync/mutex#example"
-  },"71": {
+  },"70": {
     "doc": "Parallel For Loop",
     "title": "Parallel For Loop",
     "content": "Parallel For Loop pattern is useful when you need to perform many computations over a stream of input data, and each computation is independent of the others — a scenario similar to vectorization. You have a slice of inputs and want to process each item in parallel to speed up execution. Since each operation is isolated and has no side effects on others, you can safely run them concurrently using goroutines. graph LR A[\"Create Jobs\"] --&gt; B[jobs chan] subgraph Worker Pool [Workers] C[Worker 1] D[Worker 2] E[Worker N] end B --&gt; C B --&gt; D B --&gt; E C --&gt; F[results chan] D --&gt; F E --&gt; F F --&gt; G[Collect Results] . ",
     "url": "/go-patterns/parallel-computing/parallel-for-loop",
     
     "relUrl": "/parallel-computing/parallel-for-loop"
-  },"72": {
+  },"71": {
     "doc": "Parallel For Loop",
     "title": "Applicability",
     "content": "Independent Computations. Ideal for scenarios where each iteration of the loop is independent of the others. Each task can run concurrently without affecting the others’ results. CPU-bound Tasks. Suitable for computationally expensive operations (e.g., data processing, mathematical calculations) where each operation can be parallelized to improve performance. I/O-bound Operations. Works well for tasks that are waiting for external resources (e.g., network requests, file processing). Each task can run concurrently, improving throughput without blocking. Large Data Sets. When you have large datasets (arrays, slices, etc.), the pattern helps divide the work among multiple goroutines, speeding up the process by utilizing multiple CPU cores. Multiple Tasks with Similar Complexity. Effective when all iterations are of similar complexity and execution time, as the workload is evenly distributed among the goroutines. Non-blocking Parallelism. Ideal when you want to avoid blocking the main thread, and the results can be computed concurrently without needing to synchronize frequently during the process. Time-sensitive Operations. Useful when you need to optimize time-sensitive tasks (e.g., real-time data processing), where parallelism can significantly reduce processing time. Scalable Systems. When designing systems that need to scale efficiently across multiple cores, machines, or services, this pattern helps with the parallelization of tasks. Batch Processing. Well-suited for scenarios where tasks can be grouped into smaller batches, allowing each batch to be processed in parallel to optimize overall throughput. ",
     "url": "/go-patterns/parallel-computing/parallel-for-loop#applicability",
     
     "relUrl": "/parallel-computing/parallel-for-loop#applicability"
-  },"73": {
+  },"72": {
     "doc": "Parallel For Loop",
     "title": "Example",
     "content": "package main import ( \"fmt\" \"time\" ) type empty struct{} const DATA_SIZE = 4 func calculate(val int) int { time.Sleep(time.Millisecond * 500) return val * 2 } func main() { data := make([]int, 0, DATA_SIZE) for i := 0; i &lt; DATA_SIZE; i++ { data = append(data, i+10) } results := make([]int, DATA_SIZE) semaphore := make(chan empty, DATA_SIZE) fmt.Printf(\"Before: %v\\n\", data) start := time.Now() for i, xi := range data { go func(i int, xi int) { results[i] = calculate(xi) semaphore &lt;- empty{} }(i, xi) } for i := 0; i &lt; DATA_SIZE; i++ { &lt;-semaphore } fmt.Printf(\" After: %v\\n\", results) fmt.Printf(\" Elapsed: %s\\n\", time.Since(start)) } . ",
     "url": "/go-patterns/parallel-computing/parallel-for-loop#example",
     
     "relUrl": "/parallel-computing/parallel-for-loop#example"
-  },"74": {
+  },"73": {
     "doc": "Pipeline",
     "title": "Pipeline",
     "content": "Pipeline is a sequence of stages connected by channels. It breaks down a task into discrete stages connected by channels, where each stage runs as a goroutine and passes data to the next. graph LR input((Input Channel)) --&gt; stage1[Stage 1] stage1 --&gt; ch1((Channel 1)) ch1 --&gt; stage2[Stage 2] stage2 --&gt; ch2((Channel 2)) ch2 --&gt; stage3[Stage 3] stage3 --&gt; output((Output Channel)) . ",
     "url": "/go-patterns/generative/pipeline",
     
     "relUrl": "/generative/pipeline"
-  },"75": {
+  },"74": {
     "doc": "Pipeline",
     "title": "Applicability",
     "content": ". | Data Processing Pipelines. Multiple microservices or log producers are writing logs concurrently. | Image or Video Processing. A frame goes through stages like decoding → resizing → filtering → encoding. | Compilers or Interpreters. Lexing → Parsing → Analyzing → Code generation. | . ",
     "url": "/go-patterns/generative/pipeline#applicability",
     
     "relUrl": "/generative/pipeline#applicability"
-  },"76": {
+  },"75": {
     "doc": "Pipeline",
     "title": "Code Example",
     "content": "package main import ( \"fmt\" \"math\" ) func main() { in := generateWork([]int{0, 1, 2, 3, 4, 5, 6, 7, 8}) out := filterOdd(in) // even numbers out = square(out) // square out = half(out) // divide in half for value := range out { fmt.Println(value) } } func filterOdd(in &lt;-chan int) &lt;-chan int { out := make(chan int) go func() { defer close(out) for i := range in { if i%2 == 0 { out &lt;- i } } }() return out } func square(in &lt;-chan int) &lt;-chan int { out := make(chan int) go func() { defer close(out) for i := range in { value := math.Pow(float64(i), 2) out &lt;- int(value) } }() return out } func half(in &lt;-chan int) &lt;-chan int { out := make(chan int) go func() { defer close(out) for i := range in { value := i / 2 out &lt;- value } }() return out } func generateWork(work []int) &lt;-chan int { ch := make(chan int) go func() { defer close(ch) for _, w := range work { ch &lt;- w } }() return ch } . ",
     "url": "/go-patterns/generative/pipeline#code-example",
     
     "relUrl": "/generative/pipeline#code-example"
-  },"77": {
+  },"76": {
     "doc": "Queuing",
     "title": "Queuing",
     "content": "The Queuing pattern allows you to accept up to N messages for processing simultaneously without waiting for them to be processed. A buffered channel is commonly used as a semaphore to throttle the number of active goroutines, providing backpressure and preventing resource exhaustion. This pattern separates the submission of work from its execution, helping manage load and ensuring the system remains responsive under high demand. graph TD jobGen[\"Generate Tasks\"] --&gt; sem[Acquire Semaphore Slot] sem --&gt; spawn[Start Goroutine] subgraph Goroutine spawn --&gt; work[Process Task] work --&gt; release[Release Semaphore Slot] end release --&gt; wait[Wait for All Tasks] wait --&gt; finish[Processing Complete] . ",
     "url": "/go-patterns/parallel-computing/queuing",
     
     "relUrl": "/parallel-computing/queuing"
-  },"78": {
+  },"77": {
     "doc": "Queuing",
     "title": "Applicability",
     "content": ". | Throttling Concurrency. When you need to limit the number of concurrent goroutines (e.g., for controlling resource usage or preventing overloading external systems). | Job Queuing. For managing tasks that need to be processed in parallel, such as background jobs or worker pools, with a fixed number of workers. | Rate Limiting. When you need to apply rate limits to the number of concurrent operations (e.g., API calls, database queries). | Preventing Resource Exhaustion. To ensure that the system does not spawn too many goroutines and exhaust available resources like memory or CPU. | Decoupling Producers and Consumers. When you want to decouple the generation of work (producers) from its processing (consumers), allowing for better load balancing and control. | Load Balancing. When tasks are processed in parallel, and you want to manage the load effectively across workers to ensure no one worker is overwhelmed. | . ",
     "url": "/go-patterns/parallel-computing/queuing#applicability",
     
     "relUrl": "/parallel-computing/queuing#applicability"
-  },"79": {
+  },"78": {
     "doc": "Queuing",
     "title": "Code Example",
     "content": "package main import ( \"fmt\" \"sync\" \"time\" ) func process(payload int, queue chan struct{}, wg *sync.WaitGroup) { queue &lt;- struct{}{} go func() { defer wg.Done() fmt.Printf(\"Start processing of %d\\n\", payload) time.Sleep(time.Millisecond * 500) fmt.Printf(\"Completed processing of %d\\n\", payload) fmt.Printf(\"Queue length: %d\\n\\n\", len(queue)) &lt;-queue }() } func main() { const numWorkers = 3 const numMessages = 1000 var wg sync.WaitGroup fmt.Println(\"Queue of length numWorkers:\", numWorkers) // Buffered channel as semaphore queue := make(chan struct{}, numWorkers) wg.Add(numMessages) for w := 1; w &lt;= numMessages; w++ { process(w, queue, &amp;wg) } wg.Wait() close(queue) fmt.Println(\"Processing completed\") } . ",
     "url": "/go-patterns/parallel-computing/queuing#code-example",
     
     "relUrl": "/parallel-computing/queuing#code-example"
-  },"80": {
+  },"79": {
     "doc": "Semaphore (Rate Limiting)",
     "title": "Semaphore (Rate Limiting)",
     "content": "The Semaphore pattern is used to limit the number of concurrently running goroutines. It helps manage resource usage, such as limiting the number of simultaneous network requests or file operations. This is typically implemented using a buffered channel to act as a counting semaphore - each goroutine must acquire a slot before proceeding and release it when done. graph LR start[\"Start Tasks\"] --&gt; acquire[\"Acquire Semaphore (buffered channel)\"] acquire --&gt; worker[\"Do Work\"] worker --&gt; release[\"Release Semaphore\"] release --&gt; done[\"Done\"] . ",
     "url": "/go-patterns/sync/semaphore",
     
     "relUrl": "/sync/semaphore"
-  },"81": {
+  },"80": {
     "doc": "Semaphore (Rate Limiting)",
     "title": "Applicability",
     "content": ". | Limiting Concurrent Operations. Use when you need to restrict the number of concurrently running goroutines, such as database queries, HTTP requests, or file reads/writes. | Rate-Limiting External Services. Prevents overwhelming external APIs or services that have concurrency or rate limits. | Managing Resource-Intensive Tasks. Ideal when tasks consume significant system resources (CPU, memory, network) and running too many in parallel would degrade performance. | Avoiding System Overload. Helps ensure stability in applications that spawn many background jobs or workers by capping their concurrency. | Controlling Access to Shared Resources. Useful for limiting access to shared resources (e.g., open connections, memory pools) without full locking mechanisms. | . ",
     "url": "/go-patterns/sync/semaphore#applicability",
     
     "relUrl": "/sync/semaphore#applicability"
-  },"82": {
+  },"81": {
     "doc": "Semaphore (Rate Limiting)",
     "title": "Example",
     "content": "package main import ( \"fmt\" \"sync\" \"time\" ) type Result struct { Port int State bool } const ( maxGoroutines = 3 totalJobs = 10 ) func process(id int) Result { fmt.Printf(\"[%s]: running task %d\\n\", time.Now().Format(\"15:04:05\"), id) time.Sleep(time.Second) return Result{ Port: id, State: true, } } func main() { var wg sync.WaitGroup results := make([]Result, 0, totalJobs) resultChan := make(chan Result, totalJobs) // Semaphore to limit concurrent goroutines semaphore := make(chan struct{}, maxGoroutines) for i := 1; i &lt;= totalJobs; i++ { wg.Add(1) go func(id int) { defer wg.Done() // Acquire semaphore semaphore &lt;- struct{}{} defer func() { &lt;-semaphore // Release semaphore }() result := process(id) resultChan &lt;- result }(i) } // Close the result channel once all tasks are done go func() { wg.Wait() close(resultChan) }() // Collect results for res := range resultChan { if res.State { results = append(results, res) } } fmt.Println(\"Results:\", results) } . ",
     "url": "/go-patterns/sync/semaphore#example",
     
     "relUrl": "/sync/semaphore#example"
-  },"83": {
+  },"82": {
     "doc": "Caching with sync.Map",
     "title": "Caching with sync.Map",
     "content": "The sync.Map type in Go provides a concurrent map implementation optimized for scenarios with many goroutines accessing and modifying the map. It is particularly useful for caching, where reads dominate writes. Unlike a regular map with manual locking (sync.Mutex), sync.Map internally manages concurrency with minimal contention, making it more efficient for read-heavy workloads. Typical use cases for caching with sync.Map include memoization, lazy loading, and storing frequently accessed computed results. It supports safe concurrent Load, Store, LoadOrStore, and Delete operations without needing explicit locks. ",
     "url": "/go-patterns/stability/caching/with-sync-map",
     
     "relUrl": "/stability/caching/with-sync-map"
-  },"84": {
+  },"83": {
     "doc": "Caching with sync.Map",
     "title": "Benefits of sync.Map over map + sync.RWMutex",
     "content": ". | Built-in Concurrency Optimizations sync.Map internally reduces lock contention, especially for read-heavy scenarios. | Simpler Code for Concurrency No need to manage Lock, Unlock, RLock, or RUnlock manually - fewer chances for deadlocks or forgetting to release locks. | Ready-Made Utilities Methods like LoadOrStore, LoadAndDelete, and Range simplify common concurrent operations. | Better for Many Goroutines Handles extremely high concurrent access more efficiently than a map + RWMutex if reads dominate writes. | . ",
     "url": "/go-patterns/stability/caching/with-sync-map#benefits-of-syncmap-over-map--syncrwmutex",
     
     "relUrl": "/stability/caching/with-sync-map#benefits-of-syncmap-over-map--syncrwmutex"
-  },"85": {
+  },"84": {
     "doc": "Caching with sync.Map",
     "title": "Drawbacks of sync.Map compared to map + sync.RWMutex",
     "content": ". | No Type Safety Keys and values are interface{} - you must do type assertions manually (value.(YourType)). This can lead to runtime panics and harder-to-maintain code. | Worse Performance on Write-Heavy Workloads When there are lots of writes and deletes, sync.Map’s internal mechanics become less efficient than a simple RWMutex-guarded map. | More Boilerplate and Casting Extra lines for type checking and casting clutter your code. | Harder to Refactor Changing the type of values later is risky because the compiler won’t catch mistakes. | Higher Memory Overhead sync.Map maintains separate structures for “read” and “dirty” states, consuming more memory compared to a plain map. | Less Flexibility Fine-grained operations (like conditional updates, batch updates) are harder or impossible to implement cleanly. | . ",
     "url": "/go-patterns/stability/caching/with-sync-map#drawbacks-of-syncmap-compared-to-map--syncrwmutex",
     
     "relUrl": "/stability/caching/with-sync-map#drawbacks-of-syncmap-compared-to-map--syncrwmutex"
-  },"86": {
+  },"85": {
     "doc": "Caching with sync.Map",
     "title": "Example",
     "content": "package main import ( \"fmt\" \"sync\" ) type Cache struct { data sync.Map } func (c *Cache) Get(key string) (string, bool) { val, ok := c.data.Load(key) if !ok { return \"\", false } return val.(string), true } func (c *Cache) Set(key, value string) { c.data.Store(key, value) } func main() { cache := &amp;Cache{} cache.Set(\"language\", \"Go\") if val, found := cache.Get(\"language\"); found { fmt.Println(\"Found:\", val) } else { fmt.Println(\"Not found\") } } . ",
     "url": "/go-patterns/stability/caching/with-sync-map#example",
     
     "relUrl": "/stability/caching/with-sync-map#example"
-  },"87": {
+  },"86": {
     "doc": "Worker Pool",
     "title": "Worker Pool",
     "content": "Worker Pool is a concurrency pattern used to limit the number of goroutines that process tasks concurrently. It involves a fixed number of workers (goroutines) that listen on a jobs channel for incoming tasks and send results to a results channel. This pattern helps control resource usage and improves performance when handling a large number of tasks. graph LR A[\"Create Jobs\"] --&gt; B[jobs chan] subgraph Worker Pool [Workers] C[Worker 1] D[Worker 2] E[Worker N] end B --&gt; C B --&gt; D B --&gt; E C --&gt; F[results chan] D --&gt; F E --&gt; F F --&gt; G[Collect Results] . ",
     "url": "/go-patterns/parallel-computing/worker-pool",
     
     "relUrl": "/parallel-computing/worker-pool"
-  },"88": {
+  },"87": {
     "doc": "Worker Pool",
     "title": "Applicability",
     "content": ". | Rate-limiting Goroutines. When you need to control the number of concurrently running goroutines to avoid overwhelming system resources (e.g., memory, CPU, database connections). | Batch Processing of Tasks. Ideal for processing a queue of tasks like image processing, file parsing, or API calls, where each task is independent but resource-intensive. | Parallel I/O or Network Operations. Useful when performing concurrent network calls (e.g., calling external APIs, fetching data from multiple URLs), while limiting the number of simultaneous operations. | Controlled Concurrency in Server Applications. Prevents resource exhaustion in high-throughput systems like web servers or microservices by capping the number of tasks handled at once. | CPU-bound or Time-consuming Workloads. For long-running tasks like data transformations or simulations, the pattern helps keep the CPU busy without spawning excessive goroutines. | Worker Queues in Background Jobs. Perfect for job processing systems where tasks are submitted to a queue (e.g., background email sending, message processing). | . ",
     "url": "/go-patterns/parallel-computing/worker-pool#applicability",
     
     "relUrl": "/parallel-computing/worker-pool#applicability"
-  },"89": {
+  },"88": {
     "doc": "Worker Pool",
     "title": "Alternatives",
     "content": ". | Semaphore. Use a channel as a counting semaphore to limit concurrency | Error group with limit. | . ",
     "url": "/go-patterns/parallel-computing/worker-pool#alternatives",
     
     "relUrl": "/parallel-computing/worker-pool#alternatives"
-  },"90": {
+  },"89": {
     "doc": "Worker Pool",
     "title": "Example",
     "content": "package main import ( \"fmt\" \"time\" ) func worker(id int, jobs &lt;-chan int, results chan&lt;- int) { for j := range jobs { fmt.Println(\"worker\", id, \"started job\", j) time.Sleep(time.Second) fmt.Println(\"worker\", id, \"finished job\", j) results &lt;- j * 2 } } func main() { const numJobs = 5 const numWorkers = 3 jobs := make(chan int, numJobs) results := make(chan int, numJobs) for w := 1; w &lt;= numWorkers; w++ { go worker(w, jobs, results) } for j := 1; j &lt;= numJobs; j++ { jobs &lt;- j } close(jobs) for a := 1; a &lt;= numJobs; a++ { &lt;-results } } . ",
