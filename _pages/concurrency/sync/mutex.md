@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Mutex
+title: Mutex (Rate Limiting)
 nav_order: 1
 parent: Synchronization
 grand_parent: Concurrency Patterns
 permalink: /sync/mutex
 ---
 
-# Mutex
+# Mutex (Rate Limiting)
 
 The **Mutex** pattern is used to ensure that only one goroutine can access a shared resource at a time, 
 preventing data races and ensuring thread safety. 

@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Semaphore
+title: Semaphore (Rate Limiting)
 nav_order: 2
 parent: Synchronization
 grand_parent: Concurrency Patterns
 permalink: /sync/semaphore
 ---
 
-# Semaphore
+# Semaphore (Rate Limiting)
 The **Semaphore** pattern is used to **limit** the number of **concurrently running goroutines**. 
 
 It helps manage resource usage, such as limiting the number of simultaneous network requests or file operations. 

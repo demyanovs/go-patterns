@@ -100,5 +100,4 @@ func main() {
 	// Wait for both goroutines to finish
 	wg.Wait()
 }
-
 ```

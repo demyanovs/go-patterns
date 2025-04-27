@@ -4,7 +4,7 @@ title: Caching with sync.Map
 nav_order: 2
 parent: Caching Patterns
 grand_parent: Stability Patterns
-permalink: /stability/caching-with-sync-map
+permalink: /stability/caching/with-sync-map
 ---
 
 # Caching with sync.Map

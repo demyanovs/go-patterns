@@ -4,7 +4,7 @@ title: Caching with Map and sync.RWMutex
 nav_order: 1
 parent: Caching Patterns
 grand_parent: Stability Patterns
-permalink: /stability/caching-with-map-and-rwmutex
+permalink: /stability/caching/with-map-and-rwmutex
 ---
 
 # Caching with Map and sync.RWMutex

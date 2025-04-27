@@ -19,8 +19,8 @@ Explore categories:
     - [Fan Out]({{ site.baseurl }}/generative/fan-out)
     - [Pipeline]({{ site.baseurl }}/generative/pipeline)
   - [Synchronization Patterns]({{ site.baseurl }}/sync)
-    - [Mutex]({{ site.baseurl }}/sync/mutex)
-    - [Semaphore]({{ site.baseurl }}/sync/semaphore)
+    - [Mutex (Rate Limiting)]({{ site.baseurl }}/sync/mutex)
+    - [Semaphore (Rate Limiting)]({{ site.baseurl }}/sync/semaphore)
   - [Parallel Computing Patterns]({{ site.baseurl }}/parallel-computing)
     - [Worker Pool]({{ site.baseurl }}/parallel-computing/worker-pool)
     - [Queuing]({{ site.baseurl }}/parallel-computing/queuing)
@@ -37,8 +37,7 @@ Explore categories:
   - Circuit Breaker
   - Retry
   - Timeout
-  - Rate Limiter
   - [Caching]({{ site.baseurl }}/stability/caching)
-    - [With Map and sync.RWMutex]({{ site.baseurl }}/stability/caching-with-map-and-rwmutex)
-    - [With sync.Map]({{ site.baseurl }}/stability/caching-with-sync-map)
-    - [With Automatic Cleanup]({{ site.baseurl }}/stability/caching-with-expiration)
+    - [With Map and sync.RWMutex]({{ site.baseurl }}/stability/caching/with-map-and-rwmutex)
+    - [With sync.Map]({{ site.baseurl }}/stability/caching/with-sync-map)
+    - [With Automatic Cleanup]({{ site.baseurl }}/stability/caching/with-expiration)

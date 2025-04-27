@@ -4,7 +4,7 @@ title: Caching with Automatic Cleanup
 nav_order: 3
 parent: Caching Patterns
 grand_parent: Stability Patterns
-permalink: /stability/caching-with-expiration
+permalink: /stability/caching/with-expiration
 ---
 
 # Caching with Automatic Cleanup
