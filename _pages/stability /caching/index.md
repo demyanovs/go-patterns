@@ -4,6 +4,7 @@ title: Caching Patterns
 nav_order: 5
 parent: Stability Patterns
 permalink: /stability/caching
+has_children: true
 ---
 
 # Caching Patterns

@@ -3,7 +3,7 @@ layout: default
 title: Stability Patterns
 nav_order: 4
 permalink: /stability
-
+has_children: true
 ---
 
 # Stability Patterns
