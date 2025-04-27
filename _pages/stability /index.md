@@ -15,7 +15,7 @@ Prevents repeated calls to a failing service, avoiding cascading failures.
 ## 2. [Retry]({{ site.baseurl }}/stability/retry)
 Retries failed operations with optional backoff strategies.
 
-## 3. Timeout
+## 3. [Timeout]({{ site.baseurl }}/stability/timeout)
 Prevents operations from running indefinitely by enforcing time limits.
 
 ## 5. [Caching]({{ site.baseurl }}/stability/caching)

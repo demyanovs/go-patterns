@@ -36,7 +36,7 @@ Explore categories:
 - [Stability Patterns]({{ site.baseurl }}/stability)
   - Circuit Breaker
   - [Retry]({{ site.baseurl }}/stability/retry)
-  - Timeout
+  - [Timeout]({{ site.baseurl }}/stability/timeout)
   - [Caching]({{ site.baseurl }}/stability/caching)
     - [With Map and sync.RWMutex]({{ site.baseurl }}/stability/caching/with-map-and-rwmutex)
     - [With sync.Map]({{ site.baseurl }}/stability/caching/with-sync-map)

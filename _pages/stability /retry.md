@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Retry
-nav_order: 1
+nav_order: 2
 parent: Stability Patterns
 permalink: /stability/retry
 ---
