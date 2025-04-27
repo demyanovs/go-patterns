@@ -35,7 +35,7 @@ Explore categories:
   - [Fluent Interfaces]({{ site.baseurl }}/creational/fluent-interfaces)
 - [Stability Patterns]({{ site.baseurl }}/stability)
   - Circuit Breaker
-  - Retry
+  - [Retry]({{ site.baseurl }}/stability/retry)
   - Timeout
   - [Caching]({{ site.baseurl }}/stability/caching)
     - [With Map and sync.RWMutex]({{ site.baseurl }}/stability/caching/with-map-and-rwmutex)

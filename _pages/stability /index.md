@@ -12,14 +12,11 @@ Patterns focus on making systems more resilient, ensuring they handle failure gr
 ## 1. Circuit Breaker
 Prevents repeated calls to a failing service, avoiding cascading failures.
 
-## 2. Retry
+## 2. [Retry]({{ site.baseurl }}/stability/retry)
 Retries failed operations with optional backoff strategies.
 
 ## 3. Timeout
 Prevents operations from running indefinitely by enforcing time limits.
-
-## 4. Rate Limiting
-Controls the rate of requests to prevent system overload.
 
 ## 5. [Caching]({{ site.baseurl }}/stability/caching)
 Reduces repeated expensive computations or I/O.
