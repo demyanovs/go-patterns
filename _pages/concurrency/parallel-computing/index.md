@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Parallel Computing
+description: "Learn how to use Go’s concurrency primitives to perform efficient parallel computing tasks."
 nav_order: 3
 permalink: /parallel-computing
 parent: Concurrency Patterns

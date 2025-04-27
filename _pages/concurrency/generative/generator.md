@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Generator
+description: "Build efficient Go generators that produce values on demand using channels and goroutines."
 nav_order: 1
 parent: Generative Patterns
 grand_parent: Concurrency Patterns

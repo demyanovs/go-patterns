@@ -1,5 +1,7 @@
 title: Go Patterns
-description: A collection of patterns in Golang
+description: "A collection of idiomatic Go concurrency and design patterns with clear examples."
+lang: "en"
+
 # Local setup
 #theme: "just-the-docs"
 remote_theme: just-the-docs/just-the-docs@v0.5.4
@@ -29,6 +31,7 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-remote-theme
+  - jekyll-sitemap
 
 mermaid:
   # Version of mermaid library
@@ -43,3 +46,8 @@ logo: "/assets/images/logo.png"
 sass:
   load_paths:
     - _includes
+
+social:
+  name: "Go Patterns"
+  links:
+    - https://github.com/demyanovs/go-patterns

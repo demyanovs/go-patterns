@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Synchronization
+description: "Explore synchronization strategies like mutexes and semaphores to control concurrency in Go programs."
 nav_order: 2
 permalink: /sync
 parent: Concurrency Patterns

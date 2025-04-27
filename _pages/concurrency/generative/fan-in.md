@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Fan-In
+description: "Combine multiple Go channels into a single channel output using the Fan-In concurrency pattern."
 nav_order: 2
 parent: Generative Patterns
 grand_parent: Concurrency Patterns

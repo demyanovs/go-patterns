@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Configuration Struct + Factory
+description: "Create scalable object factories in Go using configuration structs for flexibility and clarity."
 nav_order: 2
 parent: Creational Patterns
 permalink: /creational/configuration-struct-factory

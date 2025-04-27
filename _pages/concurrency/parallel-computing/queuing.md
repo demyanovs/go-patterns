@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Queuing
+description: "Organize and manage concurrent tasks using buffered channels and queuing techniques in Go."
 nav_order: 2
 parent: Parallel Computing
 grand_parent: Concurrency Patterns

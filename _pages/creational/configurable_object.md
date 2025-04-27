@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Configurable Object
+description: "Implement configurable objects in Go to allow flexible runtime behavior without complex constructors."
 nav_order: 4
 parent: Creational Patterns
 permalink: /creational/configurable-object

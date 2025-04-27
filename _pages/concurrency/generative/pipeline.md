@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Pipeline
+description: "Connect multiple Go routines with channels to create flexible and scalable pipeline architectures."
 nav_order: 4
 parent: Generative Patterns
 grand_parent: Concurrency Patterns

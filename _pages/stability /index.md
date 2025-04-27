@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Stability Patterns
+description: "Implement patterns like circuit breakers and retries to build resilient and fault-tolerant Go systems."
 nav_order: 4
 permalink: /stability
 has_children: true

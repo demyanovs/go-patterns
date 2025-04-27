@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Creational Patterns
+description: "Discover Go design patterns for creating flexible, reusable, and testable object construction logic."
 nav_order: 3
 permalink: /creational
 has_children: true

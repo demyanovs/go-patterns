@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Generative Patterns
+description: "Learn how generative concurrency patterns create and manage Go routines and channels efficiently."
 nav_order: 1
 permalink: /generative
 parent: Concurrency Patterns

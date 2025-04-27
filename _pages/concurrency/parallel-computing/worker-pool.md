@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Worker Pool
+description: "Manage concurrent workloads with a scalable worker pool implementation in Go."
 nav_order: 1
 parent: Parallel Computing
 grand_parent: Concurrency Patterns

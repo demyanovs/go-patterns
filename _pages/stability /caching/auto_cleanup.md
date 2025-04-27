@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Caching with Automatic Cleanup
+description: "Implement automatic expiration and cleanup for cached items in Go to manage memory usage effectively."
 nav_order: 3
 parent: Caching Patterns
 grand_parent: Stability Patterns

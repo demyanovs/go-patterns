@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Future (Promise)
+description: "Learn how Futures (Promises) can be used in Go to handle asynchronous results."
 nav_order: 1
 parent: Delayed Computing
 grand_parent: Concurrency Patterns

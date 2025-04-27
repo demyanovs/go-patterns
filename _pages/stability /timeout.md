@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Timeout
+description: "Manage timeouts in Go to ensure responsiveness and prevent stuck operations."
 nav_order: 3
 parent: Stability Patterns
 permalink: /stability/timeout

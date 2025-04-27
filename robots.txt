@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://demyanovs.github.io/go-patterns/sitemap.xml

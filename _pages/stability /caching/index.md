@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Caching Patterns
+description: "Optimize performance in Go applications with caching strategies for repeated data access."
 nav_order: 5
 parent: Stability Patterns
 permalink: /stability/caching

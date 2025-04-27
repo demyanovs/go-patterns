@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Delayed Computing
+description: "Explore patterns like Futures and lazy evaluation to delay computation and optimize performance in Go."
 nav_order: 4
 permalink: /delayed-computing
 parent: Concurrency Patterns

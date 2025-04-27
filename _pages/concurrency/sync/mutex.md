@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Mutex (Rate Limiting)
+description: "Implement basic rate limiting and safe shared access in Go using Mutex locks."
 nav_order: 1
 parent: Synchronization
 grand_parent: Concurrency Patterns

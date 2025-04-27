@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Caching with Map and sync.RWMutex
+description: "Build concurrent-safe caches in Go using standard maps protected by sync.RWMutex."
 nav_order: 1
 parent: Caching Patterns
 grand_parent: Stability Patterns

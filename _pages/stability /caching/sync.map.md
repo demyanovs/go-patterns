@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Caching with sync.Map
+description: "Simplify concurrent cache access in Go by using the built-in sync.Map for thread-safe operations."
 nav_order: 2
 parent: Caching Patterns
 grand_parent: Stability Patterns

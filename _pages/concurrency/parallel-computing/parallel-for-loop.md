@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Parallel For Loop
+description: "Implement parallel for loops in Go for faster processing of large datasets and tasks."
 nav_order: 3
 parent: Parallel Computing
 grand_parent: Concurrency Patterns

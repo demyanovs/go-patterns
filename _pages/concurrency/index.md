@@ -1,6 +1,7 @@
 ---
 layout: home
 title: Concurrency Patterns
+description: "Explore foundational concurrency patterns in Go, including channel pipelines, fan-in, fan-out, and parallel processing."
 nav_order: 2
 permalink: /concurrency
 has_children: true

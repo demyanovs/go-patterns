@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Fluent Interfaces
+description: "Chain method calls gracefully using Fluent Interfaces to simplify Go code APIs."
 nav_order: 4
 parent: Creational Patterns
 permalink: /creational/fluent-interfaces

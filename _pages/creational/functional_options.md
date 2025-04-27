@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Functional Options
+description: "Build highly configurable Go structs and constructors using the Functional Options pattern."
 nav_order: 1
 parent: Creational Patterns
 permalink: /creational/functional-options

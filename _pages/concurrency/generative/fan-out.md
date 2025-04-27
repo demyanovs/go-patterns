@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Fan-Out
+description: "Distribute tasks across multiple goroutines efficiently with the Fan-Out concurrency pattern in Go."
 nav_order: 3
 parent: Generative Patterns
 grand_parent: Concurrency Patterns

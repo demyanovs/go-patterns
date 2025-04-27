@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Semaphore (Rate Limiting)
+description: "Control resource access and rate limiting in Go with the Semaphore synchronization primitive."
 nav_order: 2
 parent: Synchronization
 grand_parent: Concurrency Patterns
