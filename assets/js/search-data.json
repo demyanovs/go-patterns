@@ -615,27 +615,48 @@
     
     "relUrl": "/stability/caching/with-sync-map#example"
   },"88": {
+    "doc": "Timeout",
+    "title": "Timeout",
+    "content": "The timeout pattern is used to limit the amount of time an operation can take. If the operation doesn’t complete within the specified time, it is aborted or handled appropriately. This pattern is particularly useful for network requests, database queries, or any long-running processes that must not block indefinitely. ",
+    "url": "/go-patterns/stability/timeout",
+    
+    "relUrl": "/stability/timeout"
+  },"89": {
+    "doc": "Timeout",
+    "title": "Example 1: Using context.WithTimeout",
+    "content": "package main import ( \"context\" \"fmt\" \"time\" ) func longRunningOperation(ctx context.Context) error { select { case &lt;-time.After(5 * time.Second): // Simulates long work return nil case &lt;-ctx.Done(): // Context timeout/cancellation return ctx.Err() } } func main() { ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second) defer cancel() err := longRunningOperation(ctx) if err != nil { fmt.Println(\"Operation failed:\", err) } else { fmt.Println(\"Operation completed successfully\") } } . ",
+    "url": "/go-patterns/stability/timeout#example-1-using-contextwithtimeout",
+    
+    "relUrl": "/stability/timeout#example-1-using-contextwithtimeout"
+  },"90": {
+    "doc": "Timeout",
+    "title": "Example 2: Using select with time.After",
+    "content": "package main import ( \"fmt\" \"time\" ) func main() { resultChan := make(chan string) go func() { time.Sleep(3 * time.Second) // Simulate work resultChan &lt;- \"Success\" }() select { case result := &lt;-resultChan: fmt.Println(\"Received:\", result) case &lt;-time.After(2 * time.Second): fmt.Println(\"Timeout! Operation took too long.\") } } . ",
+    "url": "/go-patterns/stability/timeout#example-2-using-select-with-timeafter",
+    
+    "relUrl": "/stability/timeout#example-2-using-select-with-timeafter"
+  },"91": {
     "doc": "Worker Pool",
     "title": "Worker Pool",
     "content": "Worker Pool is a concurrency pattern used to limit the number of goroutines that process tasks concurrently. It involves a fixed number of workers (goroutines) that listen on a jobs channel for incoming tasks and send results to a results channel. This pattern helps control resource usage and improves performance when handling a large number of tasks. graph LR A[\"Create Jobs\"] --&gt; B[jobs chan] subgraph Worker Pool [Workers] C[Worker 1] D[Worker 2] E[Worker N] end B --&gt; C B --&gt; D B --&gt; E C --&gt; F[results chan] D --&gt; F E --&gt; F F --&gt; G[Collect Results] . ",
     "url": "/go-patterns/parallel-computing/worker-pool",
     
     "relUrl": "/parallel-computing/worker-pool"
-  },"89": {
+  },"92": {
     "doc": "Worker Pool",
     "title": "Applicability",
     "content": ". | Rate-limiting Goroutines. When you need to control the number of concurrently running goroutines to avoid overwhelming system resources (e.g., memory, CPU, database connections). | Batch Processing of Tasks. Ideal for processing a queue of tasks like image processing, file parsing, or API calls, where each task is independent but resource-intensive. | Parallel I/O or Network Operations. Useful when performing concurrent network calls (e.g., calling external APIs, fetching data from multiple URLs), while limiting the number of simultaneous operations. | Controlled Concurrency in Server Applications. Prevents resource exhaustion in high-throughput systems like web servers or microservices by capping the number of tasks handled at once. | CPU-bound or Time-consuming Workloads. For long-running tasks like data transformations or simulations, the pattern helps keep the CPU busy without spawning excessive goroutines. | Worker Queues in Background Jobs. Perfect for job processing systems where tasks are submitted to a queue (e.g., background email sending, message processing). | . ",
     "url": "/go-patterns/parallel-computing/worker-pool#applicability",
     
     "relUrl": "/parallel-computing/worker-pool#applicability"
-  },"90": {
+  },"93": {
     "doc": "Worker Pool",
     "title": "Alternatives",
     "content": ". | Semaphore. Use a channel as a counting semaphore to limit concurrency | Error group with limit. | . ",
     "url": "/go-patterns/parallel-computing/worker-pool#alternatives",
     
     "relUrl": "/parallel-computing/worker-pool#alternatives"
-  },"91": {
+  },"94": {
     "doc": "Worker Pool",
     "title": "Example",
     "content": "package main import ( \"fmt\" \"time\" ) func worker(id int, jobs &lt;-chan int, results chan&lt;- int) { for j := range jobs { fmt.Println(\"worker\", id, \"started job\", j) time.Sleep(time.Second) fmt.Println(\"worker\", id, \"finished job\", j) results &lt;- j * 2 } } func main() { const numJobs = 5 const numWorkers = 3 jobs := make(chan int, numJobs) results := make(chan int, numJobs) for w := 1; w &lt;= numWorkers; w++ { go worker(w, jobs, results) } for j := 1; j &lt;= numJobs; j++ { jobs &lt;- j } close(jobs) for a := 1; a &lt;= numJobs; a++ { &lt;-results } } . ",
