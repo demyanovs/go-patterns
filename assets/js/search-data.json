@@ -552,76 +552,90 @@
     
     "relUrl": "/parallel-computing/queuing#code-example"
   },"79": {
+    "doc": "Retry",
+    "title": "Retry",
+    "content": "The Retry pattern is a strategy for handling transient errors in distributed systems. It involves retrying an operation that has failed due to a temporary issue, such as network problems or service unavailability. ",
+    "url": "/go-patterns/stability/retry",
+    
+    "relUrl": "/stability/retry"
+  },"80": {
+    "doc": "Retry",
+    "title": "Example",
+    "content": "package main import ( \"context\" \"errors\" \"fmt\" \"log\" \"time\" ) type Effector func(ctx context.Context) (string, error) var count int func main() { r := Retry(EmulateTransientError, 5, 2*time.Second) res, err := r(context.Background()) fmt.Println(res, err) } func EmulateTransientError(ctx context.Context) (string, error) { count++ if count &lt;= 3 { return \"intentional fail\", errors.New(\"error\") } else { return \"success\", nil } } func Retry(effector Effector, retries int, delay time.Duration) Effector { return func(ctx context.Context) (string, error) { for r := 0; ; r++ { response, err := effector(ctx) if err == nil || r &gt;= retries { return response, err } log.Printf(\"Attempt %d failed; retrying in %v\", r+1, delay) select { case &lt;-time.After(delay): case &lt;-ctx.Done(): return \"\", ctx.Err() } } } } . ",
+    "url": "/go-patterns/stability/retry#example",
+    
+    "relUrl": "/stability/retry#example"
+  },"81": {
     "doc": "Semaphore (Rate Limiting)",
     "title": "Semaphore (Rate Limiting)",
     "content": "The Semaphore pattern is used to limit the number of concurrently running goroutines. It helps manage resource usage, such as limiting the number of simultaneous network requests or file operations. This is typically implemented using a buffered channel to act as a counting semaphore - each goroutine must acquire a slot before proceeding and release it when done. graph LR start[\"Start Tasks\"] --&gt; acquire[\"Acquire Semaphore (buffered channel)\"] acquire --&gt; worker[\"Do Work\"] worker --&gt; release[\"Release Semaphore\"] release --&gt; done[\"Done\"] . ",
     "url": "/go-patterns/sync/semaphore",
     
     "relUrl": "/sync/semaphore"
-  },"80": {
+  },"82": {
     "doc": "Semaphore (Rate Limiting)",
     "title": "Applicability",
     "content": ". | Limiting Concurrent Operations. Use when you need to restrict the number of concurrently running goroutines, such as database queries, HTTP requests, or file reads/writes. | Rate-Limiting External Services. Prevents overwhelming external APIs or services that have concurrency or rate limits. | Managing Resource-Intensive Tasks. Ideal when tasks consume significant system resources (CPU, memory, network) and running too many in parallel would degrade performance. | Avoiding System Overload. Helps ensure stability in applications that spawn many background jobs or workers by capping their concurrency. | Controlling Access to Shared Resources. Useful for limiting access to shared resources (e.g., open connections, memory pools) without full locking mechanisms. | . ",
     "url": "/go-patterns/sync/semaphore#applicability",
     
     "relUrl": "/sync/semaphore#applicability"
-  },"81": {
+  },"83": {
     "doc": "Semaphore (Rate Limiting)",
     "title": "Example",
     "content": "package main import ( \"fmt\" \"sync\" \"time\" ) type Result struct { Port int State bool } const ( maxGoroutines = 3 totalJobs = 10 ) func process(id int) Result { fmt.Printf(\"[%s]: running task %d\\n\", time.Now().Format(\"15:04:05\"), id) time.Sleep(time.Second) return Result{ Port: id, State: true, } } func main() { var wg sync.WaitGroup results := make([]Result, 0, totalJobs) resultChan := make(chan Result, totalJobs) // Semaphore to limit concurrent goroutines semaphore := make(chan struct{}, maxGoroutines) for i := 1; i &lt;= totalJobs; i++ { wg.Add(1) go func(id int) { defer wg.Done() // Acquire semaphore semaphore &lt;- struct{}{} defer func() { &lt;-semaphore // Release semaphore }() result := process(id) resultChan &lt;- result }(i) } // Close the result channel once all tasks are done go func() { wg.Wait() close(resultChan) }() // Collect results for res := range resultChan { if res.State { results = append(results, res) } } fmt.Println(\"Results:\", results) } . ",
     "url": "/go-patterns/sync/semaphore#example",
     
     "relUrl": "/sync/semaphore#example"
-  },"82": {
+  },"84": {
     "doc": "Caching with sync.Map",
     "title": "Caching with sync.Map",
     "content": "The sync.Map type in Go provides a concurrent map implementation optimized for scenarios with many goroutines accessing and modifying the map. It is particularly useful for caching, where reads dominate writes. Unlike a regular map with manual locking (sync.Mutex), sync.Map internally manages concurrency with minimal contention, making it more efficient for read-heavy workloads. Typical use cases for caching with sync.Map include memoization, lazy loading, and storing frequently accessed computed results. It supports safe concurrent Load, Store, LoadOrStore, and Delete operations without needing explicit locks. ",
     "url": "/go-patterns/stability/caching/with-sync-map",
     
     "relUrl": "/stability/caching/with-sync-map"
-  },"83": {
+  },"85": {
     "doc": "Caching with sync.Map",
     "title": "Benefits of sync.Map over map + sync.RWMutex",
     "content": ". | Built-in Concurrency Optimizations sync.Map internally reduces lock contention, especially for read-heavy scenarios. | Simpler Code for Concurrency No need to manage Lock, Unlock, RLock, or RUnlock manually - fewer chances for deadlocks or forgetting to release locks. | Ready-Made Utilities Methods like LoadOrStore, LoadAndDelete, and Range simplify common concurrent operations. | Better for Many Goroutines Handles extremely high concurrent access more efficiently than a map + RWMutex if reads dominate writes. | . ",
     "url": "/go-patterns/stability/caching/with-sync-map#benefits-of-syncmap-over-map--syncrwmutex",
     
     "relUrl": "/stability/caching/with-sync-map#benefits-of-syncmap-over-map--syncrwmutex"
-  },"84": {
+  },"86": {
     "doc": "Caching with sync.Map",
     "title": "Drawbacks of sync.Map compared to map + sync.RWMutex",
     "content": ". | No Type Safety Keys and values are interface{} - you must do type assertions manually (value.(YourType)). This can lead to runtime panics and harder-to-maintain code. | Worse Performance on Write-Heavy Workloads When there are lots of writes and deletes, sync.Map’s internal mechanics become less efficient than a simple RWMutex-guarded map. | More Boilerplate and Casting Extra lines for type checking and casting clutter your code. | Harder to Refactor Changing the type of values later is risky because the compiler won’t catch mistakes. | Higher Memory Overhead sync.Map maintains separate structures for “read” and “dirty” states, consuming more memory compared to a plain map. | Less Flexibility Fine-grained operations (like conditional updates, batch updates) are harder or impossible to implement cleanly. | . ",
     "url": "/go-patterns/stability/caching/with-sync-map#drawbacks-of-syncmap-compared-to-map--syncrwmutex",
     
     "relUrl": "/stability/caching/with-sync-map#drawbacks-of-syncmap-compared-to-map--syncrwmutex"
-  },"85": {
+  },"87": {
     "doc": "Caching with sync.Map",
     "title": "Example",
     "content": "package main import ( \"fmt\" \"sync\" ) type Cache struct { data sync.Map } func (c *Cache) Get(key string) (string, bool) { val, ok := c.data.Load(key) if !ok { return \"\", false } return val.(string), true } func (c *Cache) Set(key, value string) { c.data.Store(key, value) } func main() { cache := &amp;Cache{} cache.Set(\"language\", \"Go\") if val, found := cache.Get(\"language\"); found { fmt.Println(\"Found:\", val) } else { fmt.Println(\"Not found\") } } . ",
     "url": "/go-patterns/stability/caching/with-sync-map#example",
     
     "relUrl": "/stability/caching/with-sync-map#example"
-  },"86": {
+  },"88": {
     "doc": "Worker Pool",
     "title": "Worker Pool",
     "content": "Worker Pool is a concurrency pattern used to limit the number of goroutines that process tasks concurrently. It involves a fixed number of workers (goroutines) that listen on a jobs channel for incoming tasks and send results to a results channel. This pattern helps control resource usage and improves performance when handling a large number of tasks. graph LR A[\"Create Jobs\"] --&gt; B[jobs chan] subgraph Worker Pool [Workers] C[Worker 1] D[Worker 2] E[Worker N] end B --&gt; C B --&gt; D B --&gt; E C --&gt; F[results chan] D --&gt; F E --&gt; F F --&gt; G[Collect Results] . ",
     "url": "/go-patterns/parallel-computing/worker-pool",
     
     "relUrl": "/parallel-computing/worker-pool"
-  },"87": {
+  },"89": {
     "doc": "Worker Pool",
     "title": "Applicability",
     "content": ". | Rate-limiting Goroutines. When you need to control the number of concurrently running goroutines to avoid overwhelming system resources (e.g., memory, CPU, database connections). | Batch Processing of Tasks. Ideal for processing a queue of tasks like image processing, file parsing, or API calls, where each task is independent but resource-intensive. | Parallel I/O or Network Operations. Useful when performing concurrent network calls (e.g., calling external APIs, fetching data from multiple URLs), while limiting the number of simultaneous operations. | Controlled Concurrency in Server Applications. Prevents resource exhaustion in high-throughput systems like web servers or microservices by capping the number of tasks handled at once. | CPU-bound or Time-consuming Workloads. For long-running tasks like data transformations or simulations, the pattern helps keep the CPU busy without spawning excessive goroutines. | Worker Queues in Background Jobs. Perfect for job processing systems where tasks are submitted to a queue (e.g., background email sending, message processing). | . ",
     "url": "/go-patterns/parallel-computing/worker-pool#applicability",
     
     "relUrl": "/parallel-computing/worker-pool#applicability"
-  },"88": {
+  },"90": {
     "doc": "Worker Pool",
     "title": "Alternatives",
     "content": ". | Semaphore. Use a channel as a counting semaphore to limit concurrency | Error group with limit. | . ",
     "url": "/go-patterns/parallel-computing/worker-pool#alternatives",
     
     "relUrl": "/parallel-computing/worker-pool#alternatives"
-  },"89": {
+  },"91": {
     "doc": "Worker Pool",
     "title": "Example",
     "content": "package main import ( \"fmt\" \"time\" ) func worker(id int, jobs &lt;-chan int, results chan&lt;- int) { for j := range jobs { fmt.Println(\"worker\", id, \"started job\", j) time.Sleep(time.Second) fmt.Println(\"worker\", id, \"finished job\", j) results &lt;- j * 2 } } func main() { const numJobs = 5 const numWorkers = 3 jobs := make(chan int, numJobs) results := make(chan int, numJobs) for w := 1; w &lt;= numWorkers; w++ { go worker(w, jobs, results) } for j := 1; j &lt;= numJobs; j++ { jobs &lt;- j } close(jobs) for a := 1; a &lt;= numJobs; a++ { &lt;-results } } . ",
