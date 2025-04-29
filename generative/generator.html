@@ -15,7 +15,7 @@
 <span class="c">// The generator will handle only reading from the queue into a buffered channel. </span>
 <span class="c">// This way, writing to the channel won't block as long as there's space in the buffer for new messages (in our example, the buffer size is 1).</span>
 <span class="k">func</span> <span class="n">makeGenerator</span><span class="p">(</span><span class="n">stop</span> <span class="o">&lt;-</span><span class="k">chan</span> <span class="kt">string</span><span class="p">,</span> <span class="n">wg</span> <span class="o">*</span><span class="n">sync</span><span class="o">.</span><span class="n">WaitGroup</span><span class="p">)</span> <span class="o">&lt;-</span><span class="k">chan</span> <span class="kt">int</span> <span class="p">{</span>
-	<span class="n">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span> <span class="c">// Buffered channel with capacity 1</span>
+	<span class="n">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span>
 	<span class="n">i</span> <span class="o">:=</span> <span class="m">0</span>
 
 	<span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
@@ -23,7 +23,6 @@
 		<span class="k">for</span> <span class="p">{</span>
 			<span class="k">select</span> <span class="p">{</span>
 			<span class="k">case</span> <span class="n">msg</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="n">stop</span><span class="o">:</span>
-				<span class="c">// Stop signal received, print message and close the channel</span>
 				<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"done, got message: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
 				<span class="nb">close</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
 				<span class="k">return</span>
@@ -39,12 +38,10 @@
 <span class="p">}</span>
 
 <span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-	<span class="c">// Channel used to signal the generator to stop, with a message</span>
 	<span class="n">stop</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="kt">string</span><span class="p">)</span>
 
-	<span class="c">// WaitGroup to ensure all goroutines finish before exiting</span>
 	<span class="n">wg</span> <span class="o">:=</span> <span class="n">sync</span><span class="o">.</span><span class="n">WaitGroup</span><span class="p">{}</span>
-	<span class="n">wg</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="m">2</span><span class="p">)</span> <span class="c">// One for generator, one for consumer</span>
+	<span class="n">wg</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
 
 	<span class="c">// Start the generator</span>
 	<span class="n">ch</span> <span class="o">:=</span> <span class="n">makeGenerator</span><span class="p">(</span><span class="n">stop</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">wg</span><span class="p">)</span>
@@ -60,11 +57,10 @@
 	<span class="c">// Let the generator run for a bit</span>
 	<span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Second</span> <span class="o">*</span> <span class="m">1</span><span class="p">)</span>
 
-	<span class="c">// Send a stop signal with a message, then close the stop channel</span>
+	<span class="c">// Send a stop signal with a message</span>
 	<span class="n">stop</span> <span class="o">&lt;-</span> <span class="s">"finish job"</span>
 	<span class="nb">close</span><span class="p">(</span><span class="n">stop</span><span class="p">)</span>
 
-	<span class="c">// Wait for both goroutines to finish</span>
 	<span class="n">wg</span><span class="o">.</span><span class="n">Wait</span><span class="p">()</span>
 <span class="p">}</span>
 </code></pre></div></div> </main> <hr> <footer> <p class="text-small text-grey-dk-100 mb-0">This site is open source! You can contribute or suggest changes by editing the <a href="https://github.com/demyanovs/go-patterns" target="_blank">GitHub repository</a>.<br/>Copyright &copy; 2025 Viacheslav Demianov. Distributed by an <a href="https://github.com/demyanovs/go-patterns/tree/main/LICENSE.md" target="_blank">MIT license.</a></p> </footer> </div> </div> <div class="search-overlay"></div> </div> <script type="module"> import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.6.0/dist/mermaid.esm.min.mjs'; var config = {} ; mermaid.initialize(config); mermaid.run({ querySelector: '.language-mermaid', }); </script> </body> </html>
