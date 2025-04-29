@@ -21,7 +21,7 @@ include:
 just_the_docs:
   collections:
     _pages:
-      name: Pages
+#      name: Articles
       nav_exclude: false
   nav_auto_expand: true
   collapsible_nav: false
