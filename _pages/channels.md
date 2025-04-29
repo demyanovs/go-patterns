@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Channels
-description: ""
+description: "Learn how to use channels in Go for effective goroutine communication. Explore unbuffered and buffered channels with examples, best practices, and recommendations."
 nav_order: 50
 permalink: /articles/channels
 nav_exclude: true
@@ -9,11 +9,11 @@ nav_exclude: true
 
 # Channels
 
-Channels in Go are a powerful concurrency primitive that allow goroutines to communicate by sending and receiving values. Channels can be either unbuffered or buffered:
+Channels in Go are a powerful concurrency primitive that allow goroutines to communicate by sending and receiving values. Channels can be either **unbuffered** or **buffered**.
 
-Unbuffered channels require both a sender and receiver to be ready at the same time. Sending blocks until another goroutine receives, and receiving blocks until a value is sent.
+**Unbuffered** channels require both a sender and receiver to be ready at the same time. Sending blocks until another goroutine receives, and receiving blocks until a value is sent.
 
-Buffered channels have a fixed capacity. Sending blocks only when the buffer is full, and receiving blocks only when the buffer is empty.
+**Buffered** channels have a fixed capacity. Sending blocks only when the buffer is full, and receiving blocks only when the buffer is empty.
 
 This table summarizes the behavior of channel operations (`close`, `send`, and `receive`), depending on the channel state:
 
