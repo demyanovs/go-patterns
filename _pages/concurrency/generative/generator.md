@@ -49,7 +49,7 @@ import (
 // The generator will handle only reading from the queue into a buffered channel. 
 // This way, writing to the channel won't block as long as there's space in the buffer for new messages (in our example, the buffer size is 1).
 func makeGenerator(stop <-chan string, wg *sync.WaitGroup) <-chan int {
-	ch := make(chan int, 1) // Buffered channel with capacity 1
+	ch := make(chan int, 1)
 	i := 0
 
 	go func() {
@@ -57,7 +57,6 @@ func makeGenerator(stop <-chan string, wg *sync.WaitGroup) <-chan int {
 		for {
 			select {
 			case msg := <-stop:
-				// Stop signal received, print message and close the channel
 				fmt.Printf("done, got message: %s\n", msg)
 				close(ch)
 				return
@@ -73,12 +72,10 @@ func makeGenerator(stop <-chan string, wg *sync.WaitGroup) <-chan int {
 }
 
 func main() {
-	// Channel used to signal the generator to stop, with a message
 	stop := make(chan string)
 
-	// WaitGroup to ensure all goroutines finish before exiting
 	wg := sync.WaitGroup{}
-	wg.Add(2) // One for generator, one for consumer
+	wg.Add(2)
 
 	// Start the generator
 	ch := makeGenerator(stop, &wg)
@@ -94,11 +91,10 @@ func main() {
 	// Let the generator run for a bit
 	time.Sleep(time.Second * 1)
 
-	// Send a stop signal with a message, then close the stop channel
+	// Send a stop signal with a message
 	stop <- "finish job"
 	close(stop)
 
-	// Wait for both goroutines to finish
 	wg.Wait()
 }
 ```
