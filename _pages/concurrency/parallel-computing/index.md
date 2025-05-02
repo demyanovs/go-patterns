@@ -21,5 +21,8 @@ Buffers tasks for controlled, sequential or concurrent processing.
 ## 3. [Parallel For Loop]({{ site.baseurl }}/parallel-computing/parallel-for-loop)
 Runs loop iterations concurrently using goroutines.
 
-## 4. [ErrGroup]({{ site.baseurl }}/parallel-computing/errgroup)
+## 4. [Future (Promise)]({{ site.baseurl }}/parallel-computing/future)
+Represents a value that will be available at some point in the future, allowing asynchronous computation.
+
+## 5. [Error Group]({{ site.baseurl }}/parallel-computing/errgroup)
 Runs goroutines in parallel with error handling and cancellation.

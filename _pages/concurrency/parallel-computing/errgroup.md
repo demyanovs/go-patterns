@@ -1,20 +1,20 @@
 ---
 layout: default
-title: ErrGroup
+title: Error Group
 description: "Handle multiple concurrent Go routines and propagate errors cleanly using Go’s errgroup package."
-nav_order: 4
+nav_order: 5
 parent: Parallel Computing
 grand_parent: Concurrency Patterns
 permalink: /parallel-computing/errgroup
 ---
 
-# ErrGroup
+# Error Group
 
-**ErrGroup** is a concurrency coordination pattern in Go, often used for parallel task execution with error management.
+**Error Group** is a concurrency coordination pattern in Go, often used for parallel task execution with error management.
 
 Useful when there is a large task that can be split into several subtasks.
 
-There are two ways to use errgroup:
+There are two ways to use `errgroup`:
 1. Using the WithContext method, which allows to pass the context to the group.
 2. Without using the WithContext method.
 

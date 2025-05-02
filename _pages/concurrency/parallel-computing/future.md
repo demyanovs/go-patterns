@@ -1,11 +1,11 @@
 ---
 layout: default
 title: Future (Promise)
-description: "Learn how Futures (Promises) can be used in Go to handle asynchronous results."
-nav_order: 1
-parent: Delayed Computing
+description: "Learn how Future (Promise) can be used in Go to handle asynchronous results."
+nav_order: 4
+parent: Parallel Computing
 grand_parent: Concurrency Patterns
-permalink: /delayed-computing/future
+permalink: /parallel-computing/future
 ---
 
 # Future (Promise)

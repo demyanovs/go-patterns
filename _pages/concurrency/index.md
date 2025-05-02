@@ -23,8 +23,7 @@ Explore categories:
   - [Worker Pool]({{ site.baseurl }}/parallel-computing/worker-pool)
   - [Queuing]({{ site.baseurl }}/parallel-computing/queuing)
   - [Parallel For Loop]({{ site.baseurl }}/parallel-computing/parallel-for-loop)
+  - [Future (Promise)]({{ site.baseurl }}/parallel-computing/future)
   - [Error Group]({{ site.baseurl }}/parallel-computing/errgroup)
-- [Delayed Computing]({{ site.baseurl }}/delayed-computing)
-  - [Future (Promise)]({{ site.baseurl }}/delayed-computing/future)
 
 ![Concurrency Patterns]({{ site.baseurl }}/assets/images/concurrent_patterns_01.png)
