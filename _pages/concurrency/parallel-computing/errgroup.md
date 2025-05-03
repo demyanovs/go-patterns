@@ -2,7 +2,7 @@
 layout: default
 title: Error Group
 description: "Handle multiple concurrent Go routines and propagate errors cleanly using Go’s errgroup package."
-nav_order: 5
+nav_order: 6
 parent: Parallel Computing
 grand_parent: Concurrency Patterns
 permalink: /parallel-computing/errgroup

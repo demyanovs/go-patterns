@@ -2,7 +2,7 @@
 layout: default
 title: Future (Promise)
 description: "Learn how Future (Promise) can be used in Go to handle asynchronous results."
-nav_order: 4
+nav_order: 5
 parent: Parallel Computing
 grand_parent: Concurrency Patterns
 permalink: /parallel-computing/future

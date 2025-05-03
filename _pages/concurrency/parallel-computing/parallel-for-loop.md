@@ -63,6 +63,13 @@ When designing systems that need to scale efficiently across multiple cores, mac
 **Batch Processing**.
 Well-suited for scenarios where tasks can be grouped into smaller batches, allowing each batch to be processed in parallel to optimize overall throughput.
 
+## Key difference compared to the [Map-Reduce]({{ site.baseurl }}/parallel-computing/map-reduce)
+
+- **Parallel For Loop** = "do many independent jobs in parallel"
+- **Map-Reduce** = "do many independent jobs (Map) + combine them into a final result (Reduce)"
+
+**Map-Reduce always has a "combination" (reduction) step. Parallel For Loop doesn't necessarily**.
+
 ## Example
 
 ```go
@@ -70,39 +77,38 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
-type empty struct{}
-
-const DATA_SIZE = 4
+const dataSize = 4
 
 func calculate(val int) int {
-	time.Sleep(time.Millisecond * 500)
+	time.Sleep(500 * time.Millisecond)
 	return val * 2
 }
 
 func main() {
-	data := make([]int, 0, DATA_SIZE)
-	for i := 0; i < DATA_SIZE; i++ {
-		data = append(data, i+10)
+	data := make([]int, dataSize)
+	for i := range data {
+		data[i] = i + 10
 	}
-	results := make([]int, DATA_SIZE)
-	semaphore := make(chan empty, DATA_SIZE)
+	results := make([]int, dataSize)
 
 	fmt.Printf("Before: %v\n", data)
 	start := time.Now()
 
+	var wg sync.WaitGroup
+	wg.Add(dataSize)
+
 	for i, xi := range data {
-		go func(i int, xi int) {
+		go func(i, xi int) {
+			defer wg.Done()
 			results[i] = calculate(xi)
-			semaphore <- empty{}
 		}(i, xi)
 	}
 
-	for i := 0; i < DATA_SIZE; i++ {
-		<-semaphore
-	}
+	wg.Wait()
 
 	fmt.Printf(" After: %v\n", results)
 	fmt.Printf(" Elapsed: %s\n", time.Since(start))

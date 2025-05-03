@@ -25,6 +25,7 @@ Explore categories:
     - [Worker Pool]({{ site.baseurl }}/parallel-computing/worker-pool)
     - [Queuing]({{ site.baseurl }}/parallel-computing/queuing)
     - [Parallel For Loop]({{ site.baseurl }}/parallel-computing/parallel-for-loop)
+    - [Map-Reduce]({{ site.baseurl }}/parallel-computing/map-reduce)
     - [Future (Promise)]({{ site.baseurl }}/parallel-computing/future)
     - [Error Group]({{ site.baseurl }}/parallel-computing/error-group)
 - [Creational Patterns]({{ site.baseurl }}/creational)
