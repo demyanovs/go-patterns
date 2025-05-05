@@ -31,7 +31,7 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-remote-theme
-  - jekyll-sitemap
+#  - jekyll-sitemap
 
 mermaid:
   # Version of mermaid library
