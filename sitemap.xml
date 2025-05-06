@@ -4,7 +4,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/stability/caching/with-expiration</loc>
+        <loc>https:/go-patterns.dev/stability/caching/with-expiration</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -13,7 +13,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/articles/channels</loc>
+        <loc>https:/go-patterns.dev/articles/channels</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -22,7 +22,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/stability/circuit-breaker</loc>
+        <loc>https:/go-patterns.dev/stability/circuit-breaker</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -31,7 +31,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/creational/configurable-object</loc>
+        <loc>https:/go-patterns.dev/creational/configurable-object</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -40,7 +40,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/creational/configuration-struct-factory</loc>
+        <loc>https:/go-patterns.dev/creational/configuration-struct-factory</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -49,7 +49,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/parallel-computing/errgroup</loc>
+        <loc>https:/go-patterns.dev/parallel-computing/errgroup</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -58,7 +58,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/generative/fan-in</loc>
+        <loc>https:/go-patterns.dev/generative/fan-in</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -67,7 +67,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/generative/fan-out</loc>
+        <loc>https:/go-patterns.dev/generative/fan-out</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -76,7 +76,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/creational/fluent-interfaces</loc>
+        <loc>https:/go-patterns.dev/creational/fluent-interfaces</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -85,7 +85,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/creational/functional-options</loc>
+        <loc>https:/go-patterns.dev/creational/functional-options</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -94,7 +94,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/parallel-computing/future</loc>
+        <loc>https:/go-patterns.dev/parallel-computing/future</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -103,7 +103,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/generative/generator</loc>
+        <loc>https:/go-patterns.dev/generative/generator</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -112,7 +112,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/stability/caching</loc>
+        <loc>https:/go-patterns.dev/stability/caching</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -121,7 +121,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/stability</loc>
+        <loc>https:/go-patterns.dev/stability</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -130,7 +130,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/parallel-computing</loc>
+        <loc>https:/go-patterns.dev/parallel-computing</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -139,7 +139,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/generative</loc>
+        <loc>https:/go-patterns.dev/generative</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -148,7 +148,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/sync</loc>
+        <loc>https:/go-patterns.dev/sync</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -157,7 +157,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/concurrency</loc>
+        <loc>https:/go-patterns.dev/concurrency</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -166,7 +166,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/creational</loc>
+        <loc>https:/go-patterns.dev/creational</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -175,7 +175,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/</loc>
+        <loc>https:/go-patterns.dev/</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -184,7 +184,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/creational/lazy-initialization</loc>
+        <loc>https:/go-patterns.dev/creational/lazy-initialization</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -193,7 +193,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/parallel-computing/map-reduce</loc>
+        <loc>https:/go-patterns.dev/parallel-computing/map-reduce</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -202,7 +202,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/stability/caching/with-map-and-rwmutex</loc>
+        <loc>https:/go-patterns.dev/stability/caching/with-map-and-rwmutex</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -211,7 +211,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/sync/mutex</loc>
+        <loc>https:/go-patterns.dev/sync/mutex</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -220,7 +220,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/parallel-computing/parallel-for-loop</loc>
+        <loc>https:/go-patterns.dev/parallel-computing/parallel-for-loop</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -229,7 +229,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/generative/pipeline</loc>
+        <loc>https:/go-patterns.dev/generative/pipeline</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -238,7 +238,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/parallel-computing/queuing</loc>
+        <loc>https:/go-patterns.dev/parallel-computing/queuing</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -247,7 +247,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/stability/retry</loc>
+        <loc>https:/go-patterns.dev/stability/retry</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -256,7 +256,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/sync/semaphore</loc>
+        <loc>https:/go-patterns.dev/sync/semaphore</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -265,7 +265,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/sitemap.xml</loc>
+        <loc>https:/go-patterns.dev/sitemap.xml</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -274,7 +274,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/stability/caching/with-sync-map</loc>
+        <loc>https:/go-patterns.dev/stability/caching/with-sync-map</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -283,7 +283,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/stability/timeout</loc>
+        <loc>https:/go-patterns.dev/stability/timeout</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -292,7 +292,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/parallel-computing/worker-pool</loc>
+        <loc>https:/go-patterns.dev/parallel-computing/worker-pool</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -301,7 +301,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/assets/css/just-the-docs-dark.css</loc>
+        <loc>https:/go-patterns.dev/assets/css/just-the-docs-dark.css</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -310,7 +310,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/assets/css/just-the-docs-default.css</loc>
+        <loc>https:/go-patterns.dev/assets/css/just-the-docs-default.css</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -319,7 +319,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/assets/css/just-the-docs-light.css</loc>
+        <loc>https:/go-patterns.dev/assets/css/just-the-docs-light.css</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -328,7 +328,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/assets/js/just-the-docs.js</loc>
+        <loc>https:/go-patterns.dev/assets/js/just-the-docs.js</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -337,7 +337,7 @@
     
     
     <url>
-        <loc>https:/demyanovs.github.io/go-patterns/assets/js/search-data.json</loc>
+        <loc>https:/go-patterns.dev/assets/js/search-data.json</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
