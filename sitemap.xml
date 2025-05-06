@@ -8,7 +8,7 @@ permalink: /sitemap.xml
     {% for page in pages %}
     {% if page.url != nil and page.sitemap != false %}
     <url>
-        <loc>{{ site.url | append: site.baseurl | append: page.url | replace: ':/', '://' | xml_escape }}</loc>
+        <loc>{{ site.url }}{{ page.url | xml_escape }}</loc>
         {% if page.last_modified_at %}
         <lastmod>{{ page.last_modified_at | date_to_xmlschema }}</lastmod>
         {% elsif page.date %}
