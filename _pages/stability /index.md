@@ -10,16 +10,16 @@ has_children: true
 # Stability Patterns
 Patterns focus on making systems more resilient, ensuring they handle failure gracefully.
 
-## 1. Circuit Breaker
-Prevents repeated calls to a failing service, avoiding cascading failures.
-
-## 2. [Retry]({{ site.baseurl }}/stability/retry)
+## 1. [Retry]({{ site.baseurl }}/stability/retry)
 Retries failed operations with optional backoff strategies.
 
-## 3. [Timeout]({{ site.baseurl }}/stability/timeout)
+## 2. [Timeout]({{ site.baseurl }}/stability/timeout)
 Prevents operations from running indefinitely by enforcing time limits.
 
-## 5. [Caching]({{ site.baseurl }}/stability/caching)
+## 3. [Circuit Breaker]({{ site.baseurl }}/stability/circuit-breaker)
+Prevents further attempts to execute an operation after a certain number of failures, allowing the system to recover.
+
+## 4. [Caching]({{ site.baseurl }}/stability/caching)
 Reduces repeated expensive computations or I/O.
  - [With Map and sync.RWMutex]({{ site.baseurl }}/stability/caching/with-map-and-rwmutex)
  - [With sync.Map]({{ site.baseurl }}/stability/caching/with-sync-map)

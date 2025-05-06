@@ -35,9 +35,9 @@ Explore categories:
   - [Lazy Initialization]({{ site.baseurl }}/creational/lazy-initialization)
   - [Fluent Interfaces]({{ site.baseurl }}/creational/fluent-interfaces)
 - [Stability Patterns]({{ site.baseurl }}/stability)
-  - Circuit Breaker
   - [Retry]({{ site.baseurl }}/stability/retry)
   - [Timeout]({{ site.baseurl }}/stability/timeout)
+  - [Circuit Breaker]({{ site.baseurl }}/stability/circuit-breaker)
   - [Caching]({{ site.baseurl }}/stability/caching)
     - [With Map and sync.RWMutex]({{ site.baseurl }}/stability/caching/with-map-and-rwmutex)
     - [With sync.Map]({{ site.baseurl }}/stability/caching/with-sync-map)

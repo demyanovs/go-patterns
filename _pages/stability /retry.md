@@ -2,7 +2,7 @@
 layout: default
 title: Retry
 description: "Increase resilience in Go programs by automatically retrying failed operations with controlled strategies."
-nav_order: 2
+nav_order: 1
 parent: Stability Patterns
 permalink: /stability/retry
 ---
