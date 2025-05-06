@@ -328,173 +328,173 @@
     
     "relUrl": "/stability#4-caching"
   },"47": {
-    "doc": "Parallel Computing",
-    "title": "Parallel Computing Patterns",
-    "content": "Patterns that involve running multiple independent tasks concurrently to improve performance. ",
-    "url": "/parallel-computing#parallel-computing-patterns",
-    
-    "relUrl": "/parallel-computing#parallel-computing-patterns"
-  },"48": {
-    "doc": "Parallel Computing",
-    "title": "1. Worker Pool",
-    "content": "Limits concurrency by reusing a fixed number of goroutines to process tasks. ",
-    "url": "/parallel-computing#1-worker-pool",
-    
-    "relUrl": "/parallel-computing#1-worker-pool"
-  },"49": {
-    "doc": "Parallel Computing",
-    "title": "2. Queuing",
-    "content": "Buffers tasks for controlled, sequential or concurrent processing. ",
-    "url": "/parallel-computing#2-queuing",
-    
-    "relUrl": "/parallel-computing#2-queuing"
-  },"50": {
-    "doc": "Parallel Computing",
-    "title": "3. Parallel For Loop",
-    "content": "Runs loop iterations concurrently using goroutines. ",
-    "url": "/parallel-computing#3-parallel-for-loop",
-    
-    "relUrl": "/parallel-computing#3-parallel-for-loop"
-  },"51": {
-    "doc": "Parallel Computing",
-    "title": "4. Map-Reduce",
-    "content": "Distributes tasks across multiple workers and aggregates results. ",
-    "url": "/parallel-computing#4-map-reduce",
-    
-    "relUrl": "/parallel-computing#4-map-reduce"
-  },"52": {
-    "doc": "Parallel Computing",
-    "title": "5. Future (Promise)",
-    "content": "Represents a value that will be available at some point in the future, allowing asynchronous computation. ",
-    "url": "/parallel-computing#5-future-promise",
-    
-    "relUrl": "/parallel-computing#5-future-promise"
-  },"53": {
-    "doc": "Parallel Computing",
-    "title": "6. Error Group",
-    "content": "Runs goroutines in parallel with error handling and cancellation. ",
-    "url": "/parallel-computing#6-error-group",
-    
-    "relUrl": "/parallel-computing#6-error-group"
-  },"54": {
-    "doc": "Parallel Computing",
-    "title": "Parallel Computing",
-    "content": " ",
-    "url": "/parallel-computing",
-    
-    "relUrl": "/parallel-computing"
-  },"55": {
-    "doc": "Generative Patterns",
-    "title": "Generative Patterns",
-    "content": "Patterns focused on spawning new goroutines, often involving channels or dynamic generation. ",
-    "url": "/generative",
-    
-    "relUrl": "/generative"
-  },"56": {
-    "doc": "Generative Patterns",
-    "title": "1. Generator",
-    "content": "Simple value producer using goroutines and channels. ",
-    "url": "/generative#1-generator",
-    
-    "relUrl": "/generative#1-generator"
-  },"57": {
-    "doc": "Generative Patterns",
-    "title": "2. Fan In",
-    "content": "Merging multiple inputs into one output. ",
-    "url": "/generative#2-fan-in",
-    
-    "relUrl": "/generative#2-fan-in"
-  },"58": {
-    "doc": "Generative Patterns",
-    "title": "3. Fan Out",
-    "content": "Splitting one input to multiple outputs. ",
-    "url": "/generative#3-fan-out",
-    
-    "relUrl": "/generative#3-fan-out"
-  },"59": {
-    "doc": "Generative Patterns",
-    "title": "4. Pipeline",
-    "content": "Series of stages connected by channels. ",
-    "url": "/generative#4-pipeline",
-    
-    "relUrl": "/generative#4-pipeline"
-  },"60": {
-    "doc": "Synchronization",
-    "title": "Synchronization Patterns",
-    "content": "Patterns involving coordinating shared state between goroutines. ",
-    "url": "/sync#synchronization-patterns",
-    
-    "relUrl": "/sync#synchronization-patterns"
-  },"61": {
-    "doc": "Synchronization",
-    "title": "1. Mutex",
-    "content": "Ensures exclusive access to a resource by one goroutine at a time. ",
-    "url": "/sync#1-mutex",
-    
-    "relUrl": "/sync#1-mutex"
-  },"62": {
-    "doc": "Synchronization",
-    "title": "2. Semaphore",
-    "content": "Controls the number of goroutines allowed to access a resource at once. ",
-    "url": "/sync#2-semaphore",
-    
-    "relUrl": "/sync#2-semaphore"
-  },"63": {
-    "doc": "Synchronization",
-    "title": "Synchronization",
-    "content": " ",
-    "url": "/sync",
-    
-    "relUrl": "/sync"
-  },"64": {
-    "doc": "Concurrency Patterns",
-    "title": "Concurrency Patterns",
-    "content": "Patterns address managing multiple tasks concurrently, leveraging its built-in goroutines and channels for efficient parallelism. Explore categories: . | Generative . | Generator | Fan In | Fan Out | Pipeline | . | Synchronization . | Mutex | Semaphore | . | Parallel Computing . | Worker Pool | Queuing | Parallel For Loop | Map-Reduce | Future (Promise) | Error Group | . | . ",
-    "url": "/concurrency",
-    
-    "relUrl": "/concurrency"
-  },"65": {
     "doc": "Creational Patterns",
     "title": "Creational Patterns",
     "content": "Patterns focus on flexible and controlled object creation, often using interfaces, functions, and struct composition rather than traditional class-based inheritance. ",
     "url": "/creational",
     
     "relUrl": "/creational"
-  },"66": {
+  },"48": {
     "doc": "Creational Patterns",
     "title": "1. Functional Options",
     "content": "Uses variadic option functions to configure an object. ",
     "url": "/creational#1-functional-options",
     
     "relUrl": "/creational#1-functional-options"
-  },"67": {
+  },"49": {
     "doc": "Creational Patterns",
     "title": "2. Configuration Struct + Factory",
     "content": "Mimics traditional builders with method chaining. ",
     "url": "/creational#2-configuration-struct--factory",
     
     "relUrl": "/creational#2-configuration-struct--factory"
-  },"68": {
+  },"50": {
     "doc": "Creational Patterns",
     "title": "3. Configurable Object",
     "content": "Allows an object to be created with default values and then configured step-by-step through setter methods. ",
     "url": "/creational#3-configurable-object",
     
     "relUrl": "/creational#3-configurable-object"
-  },"69": {
+  },"51": {
     "doc": "Creational Patterns",
     "title": "4. Lazy Initialization",
     "content": "Delays object creation until it’s needed. ",
     "url": "/creational#4-lazy-initialization",
     
     "relUrl": "/creational#4-lazy-initialization"
-  },"70": {
+  },"52": {
     "doc": "Creational Patterns",
     "title": "5. Fluent Interfaces",
     "content": "Chaining method calls on the same object, often seen in SQL builders or HTTP clients. ",
     "url": "/creational#5-fluent-interfaces",
     
     "relUrl": "/creational#5-fluent-interfaces"
+  },"53": {
+    "doc": "Synchronization",
+    "title": "Synchronization Patterns",
+    "content": "Patterns involving coordinating shared state between goroutines. ",
+    "url": "/sync#synchronization-patterns",
+    
+    "relUrl": "/sync#synchronization-patterns"
+  },"54": {
+    "doc": "Synchronization",
+    "title": "1. Mutex",
+    "content": "Ensures exclusive access to a resource by one goroutine at a time. ",
+    "url": "/sync#1-mutex",
+    
+    "relUrl": "/sync#1-mutex"
+  },"55": {
+    "doc": "Synchronization",
+    "title": "2. Semaphore",
+    "content": "Controls the number of goroutines allowed to access a resource at once. ",
+    "url": "/sync#2-semaphore",
+    
+    "relUrl": "/sync#2-semaphore"
+  },"56": {
+    "doc": "Synchronization",
+    "title": "Synchronization",
+    "content": " ",
+    "url": "/sync",
+    
+    "relUrl": "/sync"
+  },"57": {
+    "doc": "Generative Patterns",
+    "title": "Generative Patterns",
+    "content": "Patterns focused on spawning new goroutines, often involving channels or dynamic generation. ",
+    "url": "/generative",
+    
+    "relUrl": "/generative"
+  },"58": {
+    "doc": "Generative Patterns",
+    "title": "1. Generator",
+    "content": "Simple value producer using goroutines and channels. ",
+    "url": "/generative#1-generator",
+    
+    "relUrl": "/generative#1-generator"
+  },"59": {
+    "doc": "Generative Patterns",
+    "title": "2. Fan In",
+    "content": "Merging multiple inputs into one output. ",
+    "url": "/generative#2-fan-in",
+    
+    "relUrl": "/generative#2-fan-in"
+  },"60": {
+    "doc": "Generative Patterns",
+    "title": "3. Fan Out",
+    "content": "Splitting one input to multiple outputs. ",
+    "url": "/generative#3-fan-out",
+    
+    "relUrl": "/generative#3-fan-out"
+  },"61": {
+    "doc": "Generative Patterns",
+    "title": "4. Pipeline",
+    "content": "Series of stages connected by channels. ",
+    "url": "/generative#4-pipeline",
+    
+    "relUrl": "/generative#4-pipeline"
+  },"62": {
+    "doc": "Parallel Computing",
+    "title": "Parallel Computing Patterns",
+    "content": "Patterns that involve running multiple independent tasks concurrently to improve performance. ",
+    "url": "/parallel-computing#parallel-computing-patterns",
+    
+    "relUrl": "/parallel-computing#parallel-computing-patterns"
+  },"63": {
+    "doc": "Parallel Computing",
+    "title": "1. Worker Pool",
+    "content": "Limits concurrency by reusing a fixed number of goroutines to process tasks. ",
+    "url": "/parallel-computing#1-worker-pool",
+    
+    "relUrl": "/parallel-computing#1-worker-pool"
+  },"64": {
+    "doc": "Parallel Computing",
+    "title": "2. Queuing",
+    "content": "Buffers tasks for controlled, sequential or concurrent processing. ",
+    "url": "/parallel-computing#2-queuing",
+    
+    "relUrl": "/parallel-computing#2-queuing"
+  },"65": {
+    "doc": "Parallel Computing",
+    "title": "3. Parallel For Loop",
+    "content": "Runs loop iterations concurrently using goroutines. ",
+    "url": "/parallel-computing#3-parallel-for-loop",
+    
+    "relUrl": "/parallel-computing#3-parallel-for-loop"
+  },"66": {
+    "doc": "Parallel Computing",
+    "title": "4. Map-Reduce",
+    "content": "Distributes tasks across multiple workers and aggregates results. ",
+    "url": "/parallel-computing#4-map-reduce",
+    
+    "relUrl": "/parallel-computing#4-map-reduce"
+  },"67": {
+    "doc": "Parallel Computing",
+    "title": "5. Future (Promise)",
+    "content": "Represents a value that will be available at some point in the future, allowing asynchronous computation. ",
+    "url": "/parallel-computing#5-future-promise",
+    
+    "relUrl": "/parallel-computing#5-future-promise"
+  },"68": {
+    "doc": "Parallel Computing",
+    "title": "6. Error Group",
+    "content": "Runs goroutines in parallel with error handling and cancellation. ",
+    "url": "/parallel-computing#6-error-group",
+    
+    "relUrl": "/parallel-computing#6-error-group"
+  },"69": {
+    "doc": "Parallel Computing",
+    "title": "Parallel Computing",
+    "content": " ",
+    "url": "/parallel-computing",
+    
+    "relUrl": "/parallel-computing"
+  },"70": {
+    "doc": "Concurrency Patterns",
+    "title": "Concurrency Patterns",
+    "content": "Patterns address managing multiple tasks concurrently, leveraging its built-in goroutines and channels for efficient parallelism. Explore categories: . | Generative . | Generator | Fan In | Fan Out | Pipeline | . | Synchronization . | Mutex | Semaphore | . | Parallel Computing . | Worker Pool | Queuing | Parallel For Loop | Map-Reduce | Future (Promise) | Error Group | . | . ",
+    "url": "/concurrency",
+    
+    "relUrl": "/concurrency"
   },"71": {
     "doc": "Home",
     "title": "Welcome to Go Patterns",
