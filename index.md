@@ -27,7 +27,7 @@ Explore categories:
     - [Parallel For Loop]({{ site.baseurl }}/parallel-computing/parallel-for-loop)
     - [Map-Reduce]({{ site.baseurl }}/parallel-computing/map-reduce)
     - [Future (Promise)]({{ site.baseurl }}/parallel-computing/future)
-    - [Error Group]({{ site.baseurl }}/parallel-computing/error-group)
+    - [Error Group]({{ site.baseurl }}/parallel-computing/errgroup)
 - [Creational Patterns]({{ site.baseurl }}/creational)
   - [Functional Options]({{ site.baseurl }}/creational/functional-options)
   - [Configuration Struct + Factory]({{ site.baseurl }}/creational/configuration-struct-factory)
