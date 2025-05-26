@@ -1,14 +1,15 @@
 # gRPC !
 
 # Data structures
-    [*] Типы данных в го (Целочисленные, с плавающей точкой, комплексные числа, bool, Строки)
+    [*] Типы данных в го (Boolean, Numeric,  String, Array, Slice, Map, Struct, Pointer, Function, Interface, Channel)
+
     [*] Устройство slice
         [*] Как работает append?
         [*] Default value for a slice/map? (nil)
         [*] Slice/arrays comparable? (Array values are comparable if values of the array element type are comparable. Two array values are equal if their corresponding elements are equal).
     [*] Устройство map 
         [*] Разрешение коллизий: метод открытой адресации, метод цепочек
-        [*] Какой порядок обхода ключей map? 
+        [*] Какой порядок обхода ключей map?
         [*] В каком порядке выводит map функция fmt.Println? (всегда отсортированный список по ключам)
         [*] Почему стандартный порядок обхода ключей именно такой? (Зависит от многих факторов - какая хэш ф-ция использовалась, были ли эвакуации (итератор ходит по бакетам - старым и новым))
         [*] Можно ли взять адрес от элемента map? Почему? (Нет, Может произойти эвакуация данных в новые бакеты и в ссылка изменится)
@@ -16,6 +17,13 @@
         [*] Доступ к элементам осуществляется за О(1) в идеальном случае.
     [*] Устройство string
     [*] есть ли потокобезопасные структуры данных в го? Map? (Go не имеет предопределенных lock-free структур данных в стандартной библиотеке). sync.Pool потокобезопасный (но дорогой), но не гарантирует хранение данных, GC может удалить их.
+    [*] Как устроены структуры данных в go (https://www.youtube.com/watch?v=0b1a2d8c3e4)
+    [*]  Non-comparable types in Go (https://go.dev/doc/faq#non_comparable_types)
+        * Maps, slices, and functions are not comparable. 
+        * Channels are not comparable.
+        * Structs with uncomparable fields are not comparable.
+        * Arrays with uncomparable elements are not comparable.
+        * Interfaces with uncomparable types are not comparable.
 
 # Error
     * Error is vs Error as (

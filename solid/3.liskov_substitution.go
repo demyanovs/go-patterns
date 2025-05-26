@@ -26,3 +26,10 @@ package solid
 
 Выходные условия могут быть равными или более сильными.
 */
+
+
+DECOUPLING
+Another important use case is about decoupling our code from an implementation. If
+we rely on an abstraction instead of a concrete implementation, the implementation
+itself can be replaced with another without even having to change our code. This is the
+Liskov Substitution Principle (the L in Robert C. Martin’s SOLID design principles).

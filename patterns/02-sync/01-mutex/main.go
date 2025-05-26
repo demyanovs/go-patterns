@@ -5,40 +5,37 @@ import (
 	"sync"
 )
 
-type mutexType chan struct{}
-
-type mutex struct {
-	s mutexType
+type Mutex struct {
+	s chan struct{}
 }
 
-func NewMutex() mutex {
-	return mutex{
-		s: make(mutexType, 1),
+func NewMutex() *Mutex {
+	return &Mutex{
+		s: make(chan struct{}, 1),
 	}
 }
 
-func (m mutex) Lock() {
-	e := struct{}{}
-	m.s <- e
+func (m *Mutex) Lock() {
+	m.s <- struct{}{}
 }
 
-func (m mutex) Unlock() {
+func (m *Mutex) Unlock() {
 	<-m.s
 }
 
-const N = 1000
+const numGoroutines = 1000
 
 func main() {
 	m := NewMutex()
 	counter := 0
-	wg := sync.WaitGroup{}
+	var wg sync.WaitGroup
 
-	wg.Add(N)
-	for i := 1; i <= N; i++ {
+	wg.Add(numGoroutines)
+	for i := 0; i < numGoroutines; i++ {
 		go func() {
 			m.Lock()
+			defer m.Unlock()
 			counter++
-			m.Unlock()
 			wg.Done()
 		}()
 	}

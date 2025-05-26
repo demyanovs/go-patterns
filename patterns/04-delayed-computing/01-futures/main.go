@@ -5,12 +5,6 @@ import (
 	"time"
 )
 
-/*
-Или промис.
-Позволяет запустить вычисление некоторых данных в фоне не дожидаясь их обработки. В случае, если мы знаем, что эти
-данные нам потребуются в дальнейшем, но не прямо сейчас.
-*/
-
 type data struct {
 	Body  string
 	Error error
@@ -30,18 +24,24 @@ func main() {
 }
 
 func future(url string) <-chan data {
-	c := make(chan data, 1)
+	resultChan := make(chan data, 1)
 
 	go func() {
 		body, err := doGet(url)
 
-		c <- data{Body: body, Error: err}
+		resultChan <- data{Body: body, Error: err}
 	}()
 
-	return c
+	return resultChan
 }
 
 func doGet(url string) (string, error) {
 	time.Sleep(time.Millisecond * 200)
 	return fmt.Sprintf("Response of %s", url), nil
 }
+
+/*
+Или промис.
+Позволяет запустить вычисление некоторых данных в фоне не дожидаясь их обработки. В случае, если мы знаем, что эти
+данные нам потребуются в дальнейшем, но не прямо сейчас.
+*/

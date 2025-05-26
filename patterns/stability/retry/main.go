@@ -12,9 +12,6 @@ type Effector func(ctx context.Context) (string, error)
 
 var count int
 
-/*
-Retry accounts for a possible transient fault in a distributed system by transparently retrying a failed operation.
-*/
 func main() {
 	r := Retry(EmulateTransientError, 5, 2*time.Second)
 	res, err := r(context.Background())
