@@ -1,0 +1,814 @@
+{"0": {
+    "doc": "Caching with Automatic Cleanup",
+    "title": "Caching with Automatic Cleanup",
+    "content": "This caching pattern stores data with a time-to-live (TTL) and automatically removes expired entries in the background. A separate goroutine periodically scans the cache and deletes outdated items, keeping memory usage efficient without requiring manual checks during Get operations. ",
+    "url": "/stability/caching/with-expiration",
+    
+    "relUrl": "/stability/caching/with-expiration"
+  },"1": {
+    "doc": "Caching with Automatic Cleanup",
+    "title": "Example",
+    "content": "package main import ( \"fmt\" \"sync\" \"time\" ) type Item struct { Value string Expiration int64 } func (item Item) Expired() bool { return time.Now().UnixNano() &gt; item.Expiration } type AutoCleanupCache struct { data map[string]Item mu sync.RWMutex ttl time.Duration cleanup time.Duration stop chan struct{} } func NewAutoCleanupCache(ttl, cleanupInterval time.Duration) *AutoCleanupCache { cache := &amp;AutoCleanupCache{ data: make(map[string]Item), ttl: ttl, cleanup: cleanupInterval, stop: make(chan struct{}), } go cache.startCleanup() return cache } func (c *AutoCleanupCache) Set(key, value string) { c.mu.Lock() defer c.mu.Unlock() c.data[key] = Item{ Value: value, Expiration: time.Now().Add(c.ttl).UnixNano(), } } func (c *AutoCleanupCache) Get(key string) (string, bool) { c.mu.RLock() defer c.mu.RUnlock() item, found := c.data[key] if !found || item.Expired() { return \"\", false } return item.Value, true } func (c *AutoCleanupCache) startCleanup() { ticker := time.NewTicker(c.cleanup) for { select { case &lt;-ticker.C: c.deleteExpired() case &lt;-c.stop: ticker.Stop() return } } } func (c *AutoCleanupCache) deleteExpired() { c.mu.Lock() defer c.mu.Unlock() now := time.Now().UnixNano() for key, item := range c.data { if item.Expiration &lt;= now { delete(c.data, key) } } } func (c *AutoCleanupCache) Stop() { close(c.stop) } func main() { cache := NewAutoCleanupCache(2*time.Second, 1*time.Second) cache.Set(\"token\", \"xyz789\") time.Sleep(1 * time.Second) if val, found := cache.Get(\"token\"); found { fmt.Println(\"Found before expiration:\", val) } time.Sleep(2 * time.Second) if val, found := cache.Get(\"token\"); found { fmt.Println(\"Still found:\", val) } else { fmt.Println(\"Expired and cleaned up!\") } cache.Stop() } . ",
+    "url": "/stability/caching/with-expiration#example",
+    
+    "relUrl": "/stability/caching/with-expiration#example"
+  },"2": {
+    "doc": "Channels",
+    "title": "Channels",
+    "content": "Channels in Go are a powerful concurrency primitive that allow goroutines to communicate by sending and receiving values. Channels can be either unbuffered or buffered. Unbuffered channels require both a sender and receiver to be ready at the same time. Sending blocks until another goroutine receives, and receiving blocks until a value is sent. Buffered channels have a fixed capacity. Sending blocks only when the buffer is full, and receiving blocks only when the buffer is empty. This table summarizes the behavior of channel operations (close, send, and receive), depending on the channel state: . | Operation | Nil Channel | Closed Channel | Open Channel | . | Close | Panic | Panic | Succeeds | . | Send | Blocks forever | Panics | Blocks (if full) or sends | . | Receive | Blocks forever | Never blocks (returns zero value) | Blocks (if empty) or receives | . ",
+    "url": "/articles/channels",
+    
+    "relUrl": "/articles/channels"
+  },"3": {
+    "doc": "Channels",
+    "title": "Recommendations for Using Channels",
+    "content": ". | Close channels only where they are created. The responsibility for closing a channel should stay with the sender (creator), not receivers. | Receiving goroutines should never attempt to close a channel. Closing from multiple places can cause panics (“close of closed channel”) and is hard to coordinate safely. | . ",
+    "url": "/articles/channels#recommendations-for-using-channels",
+    
+    "relUrl": "/articles/channels#recommendations-for-using-channels"
+  },"4": {
+    "doc": "Channels",
+    "title": "Example 1: Unbuffered Channel",
+    "content": "package main import \"fmt\" func main() { ch := make(chan int) // unbuffered channel // Sender goroutine go func() { fmt.Println(\"Sending 123...\") ch &lt;- 123 // blocks until another goroutine receives fmt.Println(\"Sent 123\") }() // Receiver (in main goroutine) value := &lt;-ch // blocks until a value is sent fmt.Println(\"Received:\", value) } . ",
+    "url": "/articles/channels#example-1-unbuffered-channel",
+    
+    "relUrl": "/articles/channels#example-1-unbuffered-channel"
+  },"5": {
+    "doc": "Channels",
+    "title": "Example 2: Buffered Channel",
+    "content": "package main import \"fmt\" func main() { ch := make(chan int, 2) // buffered channel with capacity 2 ch &lt;- 1 // succeeds immediately (buffer has space) fmt.Println(\"Sent 1\") ch &lt;- 2 // succeeds immediately (buffer still has space) fmt.Println(\"Sent 2\") // Next send would block because buffer is full // ch &lt;- 3 // would block here if uncommented fmt.Println(&lt;-ch) // receives 1 fmt.Println(&lt;-ch) // receives 2 } . ",
+    "url": "/articles/channels#example-2-buffered-channel",
+    
+    "relUrl": "/articles/channels#example-2-buffered-channel"
+  },"6": {
+    "doc": "Circuit Breaker",
+    "title": "Circuit Breaker",
+    "content": "The Circuit Breaker pattern prevents an application from repeatedly trying to execute an operation that’s likely to fail. It detects failures and stops further attempts for a period, allowing the system to recover or degrade gracefully. ",
+    "url": "/stability/circuit-breaker",
+    
+    "relUrl": "/stability/circuit-breaker"
+  },"7": {
+    "doc": "Circuit Breaker",
+    "title": "Applicability",
+    "content": ". | Call external services (like APIs or databases) that might become unavailable. | Want to avoid cascading failures in distributed systems. | Need to quickly fail operations instead of waiting for timeouts. | . ",
+    "url": "/stability/circuit-breaker#applicability",
+    
+    "relUrl": "/stability/circuit-breaker#applicability"
+  },"8": {
+    "doc": "Circuit Breaker",
+    "title": "Example",
+    "content": "package main import ( \"errors\" \"fmt\" \"time\" ) type CircuitBreaker struct { failures int state string lastAttempt time.Time } func NewCircuitBreaker() *CircuitBreaker { return &amp;CircuitBreaker{state: \"CLOSED\"} } func (cb *CircuitBreaker) Call(fn func() error) error { now := time.Now() if cb.state == \"OPEN\" &amp;&amp; now.Sub(cb.lastAttempt) &lt; 5*time.Second { return errors.New(\"circuit is open, request blocked\") } err := fn() if err != nil { cb.failures++ cb.lastAttempt = now if cb.failures &gt;= 3 { cb.state = \"OPEN\" } return err } cb.reset() return nil } func (cb *CircuitBreaker) reset() { cb.failures = 0 cb.state = \"CLOSED\" } func main() { cb := NewCircuitBreaker() service := func() error { return errors.New(\"service down\") } for i := 0; i &lt; 5; i++ { err := cb.Call(service) if err != nil { fmt.Println(\"Attempt\", i+1, \":\", err) } time.Sleep(1 * time.Second) } } . ",
+    "url": "/stability/circuit-breaker#example",
+    
+    "relUrl": "/stability/circuit-breaker#example"
+  },"9": {
+    "doc": "Configurable Object",
+    "title": "Configurable Object",
+    "content": "The Configurable Object pattern involves creating a struct (or object) with fields that can be modified after initialization. These fields are often set through methods that modify the internal state of the object. This pattern allows for flexible configuration of an object, where the user can set various parameters in any order. For example, you might have an object where various options can be set through methods, and those options can be added or changed over time. ",
+    "url": "/creational/configurable-object",
+    
+    "relUrl": "/creational/configurable-object"
+  },"10": {
+    "doc": "Configurable Object",
+    "title": "Applicability",
+    "content": ". | Default construction is simple, but configuration is optional. Use when an object can be created with defaults and configured step-by-step using setters. | Clear and readable configuration phase. Especially useful when the object will be configured at different points in time, possibly conditionally. | Mutability is acceptable. This pattern assumes the object’s internal state can be modified after creation. | To avoid complex constructors. Instead of passing many parameters to a constructor, you provide setters to configure as needed. | . ",
+    "url": "/creational/configurable-object#applicability",
+    
+    "relUrl": "/creational/configurable-object#applicability"
+  },"11": {
+    "doc": "Configurable Object",
+    "title": "Example",
+    "content": "package main type Database struct { host string port int username string password string } func NewDatabase() *Database { return &amp;Database{} } func (db *Database) SetHost(host string) { db.host = host } func (db *Database) SetPort(port int) { db.port = port } func (db *Database) SetUsername(username string) { db.username = username } func (db *Database) SetPassword(password string) { db.password = password } . ",
+    "url": "/creational/configurable-object#example",
+    
+    "relUrl": "/creational/configurable-object#example"
+  },"12": {
+    "doc": "Configuration Struct + Factory",
+    "title": "Configuration Struct + Factory",
+    "content": "The Configuration Struct + Factory pattern uses a struct to hold configuration options and a factory function to create and initialize the object. ",
+    "url": "/creational/configuration-struct-factory",
+    
+    "relUrl": "/creational/configuration-struct-factory"
+  },"13": {
+    "doc": "Configuration Struct + Factory",
+    "title": "Applicability",
+    "content": ". | When configuration values are grouped and passed together. | When you want simple and readable object creation. | When you need to validate or process config before object creation. | Useful for passing options across layers or packages. | . ",
+    "url": "/creational/configuration-struct-factory#applicability",
+    
+    "relUrl": "/creational/configuration-struct-factory#applicability"
+  },"14": {
+    "doc": "Configuration Struct + Factory",
+    "title": "Example",
+    "content": "package main type Config struct { Host string Port int } type Server struct { host string port int } func NewServer(cfg Config) *Server { return &amp;Server{ host: cfg.Host, port: cfg.Port, } } . ",
+    "url": "/creational/configuration-struct-factory#example",
+    
+    "relUrl": "/creational/configuration-struct-factory#example"
+  },"15": {
+    "doc": "Drop",
+    "title": "Drop",
+    "content": "The Drop pattern is used to protect a system from overload by discarding incoming data when the processing queue or buffer is full. Instead of blocking or waiting, new input is immediately dropped, allowing the system to continue operating under high load without being overwhelmed. This pattern is especially useful in time-sensitive systems where stale data is less valuable than responsiveness. It is typically implemented using a buffered channel with a select and default clause. If the channel is full, the default case handles the drop logic. ",
+    "url": "/stability/drop",
+    
+    "relUrl": "/stability/drop"
+  },"16": {
+    "doc": "Drop",
+    "title": "Difference from other patterns",
+    "content": ". | Retry: attempt again later | Timeout: give up after a duration | Circuit Breaker: stop requests temporarily | Drop: give up immediately if the system is overloaded | . ",
+    "url": "/stability/drop#difference-from-other-patterns",
+    
+    "relUrl": "/stability/drop#difference-from-other-patterns"
+  },"17": {
+    "doc": "Drop",
+    "title": "Example",
+    "content": "func drop() { const cap = 100 ch := make(chan string, capacity) go func() { for p := range ch { fmt.Println(\"child: received signal:\", p) } }() const work = 2000 for w := 0; w &lt; work; w++ { select { case ch &lt;- fmt.Sprintf(\"data %d\", w): fmt.Println(\"parent: sent signal:\", w) default: fmt.Println(\"parent: dropped data due to full buffer:\", w) } } close(ch) fmt.Println(\"parent: sent shutdown signal\") time.Sleep(time.Second) } . ",
+    "url": "/stability/drop#example",
+    
+    "relUrl": "/stability/drop#example"
+  },"18": {
+    "doc": "Error Group",
+    "title": "Error Group",
+    "content": "Error Group is a concurrency coordination pattern in Go, often used for parallel task execution with error management. Useful when there is a large task that can be split into several subtasks. There are two ways to use errgroup: . | Using the WithContext method, which allows to pass the context to the group. | Without using the WithContext method. | . In the first case, if one of the goroutines fails, all other goroutines will be cancelled. In the second case, if one of the goroutines fails, all other goroutines will continue to run. The following example demonstrates the use of both methods. ",
+    "url": "/parallel-computing/errgroup",
+    
+    "relUrl": "/parallel-computing/errgroup"
+  },"19": {
+    "doc": "Error Group",
+    "title": "Applicability",
+    "content": "Parallel Execution of Independent Tasks. When you need to run multiple tasks concurrently and wait for all of them to complete. Early Cancellation on Failure. When one failing task should cancel all other ongoing tasks—especially useful with errgroup.WithContext. Error Aggregation and Propagation. When you want to collect the first error encountered from a group of goroutines and return it. Concurrent I/O or Network Calls. Ideal for making multiple API calls, database queries, or file reads concurrently. Fan-out/Fan-in Workflows. When a task fans out into multiple subtasks that need to be gathered back (fan-in) after completion. Improving Performance Through Concurrency. When subtasks can be done in parallel to reduce overall execution time. Graceful Shutdown of Goroutines. When managing lifecycles of concurrent operations that should terminate cleanly if one fails. Simplified Goroutine Management. When you want to avoid manually tracking goroutines and their errors, and instead use structured concurrency. Context-Aware Concurrency. When the tasks should respect cancellation signals or timeouts via context.Context. package main import ( \"context\" \"errors\" \"fmt\" \"time\" \"golang.org/x/sync/errgroup\" ) var errFailure = errors.New(\"some error\") func main() { ctx := context.Background() err := FetchUserDataWithError(ctx) // err := FetchUserDataWithoutError(ctx) if err != nil { fmt.Println(\"Error fetching user data:\", err) } fmt.Println(\"Done\") } func FetchUserDataWithError(ctx context.Context) error { group, ctx := errgroup.WithContext(ctx) // Run the first periodic task. group.Go(func() error { firstTask(ctx) return nil }) // Run the second task that returns an error. group.Go(func() error { return secondTask() }) // Wait for all goroutines to finish and return the first error (if any). return group.Wait() } func FetchUserDataWithoutError(ctx context.Context) error { var group errgroup.Group // Run the third periodic task. group.Go(func() error { thirdTask(ctx) return nil }) // Run the fourth task that logs an error but doesn't return it. group.Go(func() error { fourthTask() return nil }) // Wait for all goroutines to finish. return group.Wait() } func firstTask(ctx context.Context) { counter := 0 for { select { case &lt;-ctx.Done(): return case &lt;-time.After(500 * time.Millisecond): fmt.Println(\"first task running\") if counter &gt; 10 { return } counter++ } } } func secondTask() error { fmt.Println(\"second task started\") time.Sleep(3 * time.Second) fmt.Println(\"second task log error:\", errFailure) return errFailure } func thirdTask(ctx context.Context) { counter := 0 for { select { case &lt;-ctx.Done(): return case &lt;-time.After(500 * time.Millisecond): fmt.Println(\"third task running\") if counter &gt; 10 { fmt.Println(\"third task finished\") return } counter++ } } } func fourthTask() { fmt.Println(\"fourth task started\") time.Sleep(3 * time.Second) fmt.Println(\"fourth task log error:\", errFailure) } . ",
+    "url": "/parallel-computing/errgroup#applicability",
+    
+    "relUrl": "/parallel-computing/errgroup#applicability"
+  },"20": {
+    "doc": "Fan-In",
+    "title": "Fan-In",
+    "content": "Fan-In multiplexes several inputs channels into a single output channel. It’s useful when we’re dealing with concurrent tasks that all produce data we want to collect in one place. The order of output is not guaranteed! . graph LR in1((In Channel 1)) in2((In Channel 2)) in3((In Channel N)) in1 --&gt; mux[Fan-In Multiplexer] in2 --&gt; mux in3 --&gt; mux mux --&gt; out((Out Channel)) . ",
+    "url": "/generative/fan-in",
+    
+    "relUrl": "/generative/fan-in"
+  },"21": {
+    "doc": "Fan-In",
+    "title": "Applicability",
+    "content": ". | Log Aggregation. Multiple microservices or log producers are writing logs concurrently. | Emails sending. Several queues form the message body, header, recipients, etc. | Low-latency DNS lookups across multiple resolvers. Calling redundant services and accepting the first response that returns. | . ",
+    "url": "/generative/fan-in#applicability",
+    
+    "relUrl": "/generative/fan-in#applicability"
+  },"22": {
+    "doc": "Fan-In",
+    "title": "Complementary",
+    "content": ". | Fan-In | Worker Pool | . ",
+    "url": "/generative/fan-in#complementary",
+    
+    "relUrl": "/generative/fan-in#complementary"
+  },"23": {
+    "doc": "Fan-In",
+    "title": "Example",
+    "content": "package main import ( \"fmt\" \"sync\" \"time\" ) type payload struct { name string value int } func fanIn(sources []&lt;-chan payload) &lt;-chan payload { dest := make(chan payload) var wg sync.WaitGroup wg.Add(len(sources)) for _, ch := range sources { go func(c &lt;-chan payload) { defer wg.Done() for n := range c { dest &lt;- n } }(ch) } go func() { wg.Wait() close(dest) }() return dest } func main() { sources := make([]&lt;-chan payload, 0) for i := 0; i &lt; 3; i++ { ch := make(chan payload) sources = append(sources, ch) go func() { defer close(ch) time.Sleep(time.Second) ch &lt;- payload{ name: fmt.Sprintf(\"Job #%d\", i), value: i, } }() } dest := fanIn(sources) for d := range dest { fmt.Println(d) } } . ",
+    "url": "/generative/fan-in#example",
+    
+    "relUrl": "/generative/fan-in#example"
+  },"24": {
+    "doc": "Fan-Out",
+    "title": "Fan-Out",
+    "content": "Fan-Out evenly distributes messages from an input channel to multiple output channels. Using Fan-Out, you can distribute these tasks across multiple worker goroutines. This can drastically reduce the time required to process all the tasks, as the work is done in parallel. graph LR in((In Channel)) --&gt; dispatcher[Fan-Out Dispatcher] out1((Out Channel 1)) out2((Out Channel 2)) out3((Out Channel N)) dispatcher --&gt; out1 dispatcher --&gt; out2 dispatcher --&gt; out3 . ",
+    "url": "/generative/fan-out",
+    
+    "relUrl": "/generative/fan-out"
+  },"25": {
+    "doc": "Fan-Out",
+    "title": "Applicability",
+    "content": ". | Parallel processing of tasks (e.g., data transformation, I/O bound work, CPU-bound operations). | API aggregation to call several services at once. | Batch processing when dealing with a large queue of items. | Web scraping, where each worker fetches data from a different URL. | Image/video processing tasks across multiple files or frames. | . ",
+    "url": "/generative/fan-out#applicability",
+    
+    "relUrl": "/generative/fan-out#applicability"
+  },"26": {
+    "doc": "Fan-Out",
+    "title": "Complementary",
+    "content": ". | Fan-In | Worker Pool | Rate Limiter | . ",
+    "url": "/generative/fan-out#complementary",
+    
+    "relUrl": "/generative/fan-out#complementary"
+  },"27": {
+    "doc": "Fan-Out",
+    "title": "Example 1: General Implementation",
+    "content": "package main import ( \"fmt\" \"sync\" ) func split(source &lt;-chan int, numWorkers int) []&lt;-chan int { results := make([]&lt;-chan int, 0) // Fan-out: start workers for i := 0; i &lt; numWorkers; i++ { ch := make(chan int) results = append(results, ch) go func() { defer close(ch) for val := range source { ch &lt;- val } }() } return results } func main() { const numWorkers = 5 const numJobs = 10 source := make(chan int) results := split(source, numWorkers) go func() { for i := 0; i &lt; numJobs; i++ { source &lt;- i } close(source) }() var wg sync.WaitGroup wg.Add(len(results)) for i, ch := range results { go func(i int, d &lt;-chan int) { defer wg.Done() for val := range d { fmt.Printf(\"Worker %d got value %d\\n\", i, val) } }(i, ch) } wg.Wait() } . ",
+    "url": "/generative/fan-out#example-1-general-implementation",
+    
+    "relUrl": "/generative/fan-out#example-1-general-implementation"
+  },"28": {
+    "doc": "Fan-Out",
+    "title": "Example 2: Web Scraping with Fan-Out",
+    "content": "package main import ( \"fmt\" \"net/http\" \"time\" ) func fetchURL(id int, url string, results chan&lt;- string) { start := time.Now() resp, err := http.Get(url) if err != nil { results &lt;- fmt.Sprintf(\"Worker %d: Error fetching %s: %v\", id, url, err) return } defer resp.Body.Close() duration := time.Since(start) results &lt;- fmt.Sprintf(\"Worker %d: Fetched %s in %v\", id, url, duration) } func main() { urls := []string{ \"https://example.com\", \"https://golang.org\", \"https://httpbin.org/delay/1\", } results := make(chan string, len(urls)) // Buffered so no blocking for i, url := range urls { go fetchURL(i, url, results) // Fan-out: multiple goroutines } for i := 0; i &lt; len(urls); i++ { fmt.Println(&lt;-results) // Fan-in: collecting results } } . ",
+    "url": "/generative/fan-out#example-2-web-scraping-with-fan-out",
+    
+    "relUrl": "/generative/fan-out#example-2-web-scraping-with-fan-out"
+  },"29": {
+    "doc": "Fluent Interfaces",
+    "title": "Fluent Interfaces",
+    "content": "A Fluent Interface pattern enables method chaining by returning the object itself from methods. This results in readable and expressive code, resembling natural language. In Go, it’s often used in builders, configurations, or setup code. ",
+    "url": "/creational/fluent-interfaces",
+    
+    "relUrl": "/creational/fluent-interfaces"
+  },"30": {
+    "doc": "Fluent Interfaces",
+    "title": "Applicability",
+    "content": ". | Builder patterns. Creating complex objects step-by-step (e.g., SQL queries, HTTP requests). | Configuration APIs. Setting up structs with multiple optional parameters. | Test DSLs. Creating expressive test cases. | . ",
+    "url": "/creational/fluent-interfaces#applicability",
+    
+    "relUrl": "/creational/fluent-interfaces#applicability"
+  },"31": {
+    "doc": "Fluent Interfaces",
+    "title": "Example",
+    "content": "package main import \"fmt\" type QueryBuilder struct { query string } func NewQuery() *QueryBuilder { return &amp;QueryBuilder{} } func (q *QueryBuilder) Select(fields string) *QueryBuilder { q.query += \"SELECT \" + fields + \" \" return q } func (q *QueryBuilder) From(table string) *QueryBuilder { q.query += \"FROM \" + table + \" \" return q } func (q *QueryBuilder) Where(condition string) *QueryBuilder { q.query += \"WHERE \" + condition + \" \" return q } func (q *QueryBuilder) Build() string { return q.query } func main() { q := NewQuery().Select(\"*\").From(\"users\").Where(\"age &gt; 18\").Build() fmt.Println(q) // Output: SELECT * FROM users WHERE age &gt; 18 } . ",
+    "url": "/creational/fluent-interfaces#example",
+    
+    "relUrl": "/creational/fluent-interfaces#example"
+  },"32": {
+    "doc": "Functional Options",
+    "title": "Functional Options",
+    "content": "The Functional Options pattern is flexible and extensible approach, where functions (often called “option functions”) are used to configure an object. Each option function takes a pointer to the object and modifies it, allowing for a chainable and fluent interface. This is often preferred when you have multiple optional parameters and want to avoid a large constructor function with many parameters. In Go, this is typically implemented by passing functions that set fields of a struct, rather than using setter methods. ",
+    "url": "/creational/functional-options",
+    
+    "relUrl": "/creational/functional-options"
+  },"33": {
+    "doc": "Functional Options",
+    "title": "Applicability",
+    "content": ". | There are many optional parameters. Instead of overloading constructors or using large config structs, use option functions for clarity. | To enforce immutability after creation. The object can be created in a fully configured state with no need for mutable setters afterward. | The configuration logic is complex or reusable. Each option function can encapsulate reusable logic, e.g., validation or derived values. | Provide a clean and fluent API. Makes the construction of objects readable, composable, and extendable. | Backward compatibility is important. Adding a new option doesn’t change the constructor’s signature, reducing the chance of breaking changes. | . ",
+    "url": "/creational/functional-options#applicability",
+    
+    "relUrl": "/creational/functional-options#applicability"
+  },"34": {
+    "doc": "Functional Options",
+    "title": "Example",
+    "content": "package main type Database struct { host string port int username string password string } type Option func(*Database) func NewDatabase(options ...Option) *Database { db := &amp;Database{} for _, option := range options { option(db) } return db } func WithHost(host string) Option { return func(db *Database) { db.host = host } } func WithPort(port int) Option { return func(db *Database) { db.port = port } } func WithUsername(username string) Option { return func(db *Database) { db.username = username } } func WithPassword(password string) Option { return func(db *Database) { db.password = password } } . ",
+    "url": "/creational/functional-options#example",
+    
+    "relUrl": "/creational/functional-options#example"
+  },"35": {
+    "doc": "Future (Promise)",
+    "title": "Future (Promise)",
+    "content": "The Future pattern allows starting a computation in the background and retrieve the result later, allowing other work to continue in the meantime. graph LR start[\"Start Task\"] --&gt; initiate[\"Initiate Future (async)\"] initiate --&gt; task[\"Do Task (in goroutine)\"] task --&gt; future[\"Future (holds result)\"] future --&gt; result[\"Get Result (from future)\"] result --&gt; done[\"Done\"] . ",
+    "url": "/parallel-computing/future",
+    
+    "relUrl": "/parallel-computing/future"
+  },"36": {
+    "doc": "Future (Promise)",
+    "title": "Applicability",
+    "content": ". | Deferred Computation. When you know you’ll need a result later, but don’t want to block the current execution. | Concurrent I/O Operations. Useful for performing multiple network requests or disk reads in parallel. | Parallel Task Execution. When you can execute independent tasks simultaneously to improve performance. | UI or API Responsiveness. Helps avoid blocking the main thread or request handler while a background job is running. | Lazy Initialization. Start expensive setup only when the result is eventually needed, without blocking early. | . ",
+    "url": "/parallel-computing/future#applicability",
+    
+    "relUrl": "/parallel-computing/future#applicability"
+  },"37": {
+    "doc": "Future (Promise)",
+    "title": "Example",
+    "content": "package main import ( \"fmt\" \"time\" ) type data struct { Body string Error error } func main() { future1 := future(\"https://example1.com\") future2 := future(\"https://example2.com\") fmt.Println(\"Requests started\") body1 := &lt;-future1 body2 := &lt;-future2 fmt.Printf(\"Response 1: %v\\n\", body1) fmt.Printf(\"Response 2: %v\\n\", body2) } func future(url string) &lt;-chan data { resultChan := make(chan data, 1) go func() { body, err := doGet(url) resultChan &lt;- data{Body: body, Error: err} }() return resultChan } func doGet(url string) (string, error) { time.Sleep(time.Millisecond * 200) return fmt.Sprintf(\"Response of %s\", url), nil } . ",
+    "url": "/parallel-computing/future#example",
+    
+    "relUrl": "/parallel-computing/future#example"
+  },"38": {
+    "doc": "Generator",
+    "title": "Generator",
+    "content": "Generator is used to produce a stream of values on demand. It enables lazy evaluation and efficient resource usage by generating data only when needed, rather than computing an entire dataset upfront. graph LR input[\"Input\"] --&gt; generator[\"Generator\"] generator --&gt; channel[\"Channel\"] channel --&gt; recipient[\"Recipient\"] . ",
+    "url": "/generative/generator",
+    
+    "relUrl": "/generative/generator"
+  },"39": {
+    "doc": "Generator",
+    "title": "Applicability",
+    "content": ". | When generating a sequence of data lazily (e.g. Fibonacci numbers, file lines). | When dealing with asynchronous data production. | When you need to separate data production from consumption logic. | For streaming large datasets without loading everything into memory. | . ",
+    "url": "/generative/generator#applicability",
+    
+    "relUrl": "/generative/generator#applicability"
+  },"40": {
+    "doc": "Generator",
+    "title": "Example",
+    "content": "Useful when you need to read from a message queue and process messages in separate goroutines without blocking the queue reading. package main import ( \"fmt\" \"sync\" \"time\" ) // makeGenerator starts a goroutine that generates an increasing sequence of integers. // It writes them to a buffered channel, and stops when it receives a message on the stop channel. // The generator will handle only reading from the queue into a buffered channel. // This way, writing to the channel won't block as long as there's space in the buffer for new messages (in our example, the buffer size is 1). func makeGenerator(stop &lt;-chan string, wg *sync.WaitGroup) &lt;-chan int { ch := make(chan int, 1) i := 0 go func() { defer wg.Done() for { select { case msg := &lt;-stop: fmt.Printf(\"done, got message: %s\\n\", msg) close(ch) return default: time.Sleep(time.Millisecond * 250) ch &lt;- i i++ } } }() return ch } func main() { stop := make(chan string) wg := sync.WaitGroup{} wg.Add(2) // Start the generator ch := makeGenerator(stop, &amp;wg) // Consumer goroutine go func() { defer wg.Done() for v := range ch { fmt.Println(\"value:\", v) } }() // Let the generator run for a bit time.Sleep(time.Second * 1) // Send a stop signal with a message stop &lt;- \"finish job\" close(stop) wg.Wait() } . ",
+    "url": "/generative/generator#example",
+    
+    "relUrl": "/generative/generator#example"
+  },"41": {
+    "doc": "Generative Patterns",
+    "title": "Generative Patterns",
+    "content": "Patterns focused on spawning new goroutines, often involving channels or dynamic generation. ",
+    "url": "/generative",
+    
+    "relUrl": "/generative"
+  },"42": {
+    "doc": "Generative Patterns",
+    "title": "1. Generator",
+    "content": "Simple value producer using goroutines and channels. ",
+    "url": "/generative#1-generator",
+    
+    "relUrl": "/generative#1-generator"
+  },"43": {
+    "doc": "Generative Patterns",
+    "title": "2. Fan In",
+    "content": "Merging multiple inputs into one output. ",
+    "url": "/generative#2-fan-in",
+    
+    "relUrl": "/generative#2-fan-in"
+  },"44": {
+    "doc": "Generative Patterns",
+    "title": "3. Fan Out",
+    "content": "Splitting one input to multiple outputs. ",
+    "url": "/generative#3-fan-out",
+    
+    "relUrl": "/generative#3-fan-out"
+  },"45": {
+    "doc": "Generative Patterns",
+    "title": "4. Pipeline",
+    "content": "Series of stages connected by channels. ",
+    "url": "/generative#4-pipeline",
+    
+    "relUrl": "/generative#4-pipeline"
+  },"46": {
+    "doc": "Parallel Computing",
+    "title": "Parallel Computing Patterns",
+    "content": "Patterns that involve running multiple independent tasks concurrently to improve performance. ",
+    "url": "/parallel-computing#parallel-computing-patterns",
+    
+    "relUrl": "/parallel-computing#parallel-computing-patterns"
+  },"47": {
+    "doc": "Parallel Computing",
+    "title": "1. Worker Pool",
+    "content": "Limits concurrency by reusing a fixed number of goroutines to process tasks. ",
+    "url": "/parallel-computing#1-worker-pool",
+    
+    "relUrl": "/parallel-computing#1-worker-pool"
+  },"48": {
+    "doc": "Parallel Computing",
+    "title": "2. Queuing",
+    "content": "Buffers tasks for controlled, sequential or concurrent processing. ",
+    "url": "/parallel-computing#2-queuing",
+    
+    "relUrl": "/parallel-computing#2-queuing"
+  },"49": {
+    "doc": "Parallel Computing",
+    "title": "3. Parallel For Loop",
+    "content": "Runs loop iterations concurrently using goroutines. ",
+    "url": "/parallel-computing#3-parallel-for-loop",
+    
+    "relUrl": "/parallel-computing#3-parallel-for-loop"
+  },"50": {
+    "doc": "Parallel Computing",
+    "title": "4. Map-Reduce",
+    "content": "Distributes tasks across multiple workers and aggregates results. ",
+    "url": "/parallel-computing#4-map-reduce",
+    
+    "relUrl": "/parallel-computing#4-map-reduce"
+  },"51": {
+    "doc": "Parallel Computing",
+    "title": "5. Future (Promise)",
+    "content": "Represents a value that will be available at some point in the future, allowing asynchronous computation. ",
+    "url": "/parallel-computing#5-future-promise",
+    
+    "relUrl": "/parallel-computing#5-future-promise"
+  },"52": {
+    "doc": "Parallel Computing",
+    "title": "6. Error Group",
+    "content": "Runs goroutines in parallel with error handling and cancellation. ",
+    "url": "/parallel-computing#6-error-group",
+    
+    "relUrl": "/parallel-computing#6-error-group"
+  },"53": {
+    "doc": "Parallel Computing",
+    "title": "Parallel Computing",
+    "content": " ",
+    "url": "/parallel-computing",
+    
+    "relUrl": "/parallel-computing"
+  },"54": {
+    "doc": "Synchronization",
+    "title": "Synchronization Patterns",
+    "content": "Patterns involving coordinating shared state between goroutines. ",
+    "url": "/sync#synchronization-patterns",
+    
+    "relUrl": "/sync#synchronization-patterns"
+  },"55": {
+    "doc": "Synchronization",
+    "title": "1. Mutex",
+    "content": "Ensures exclusive access to a resource by one goroutine at a time. ",
+    "url": "/sync#1-mutex",
+    
+    "relUrl": "/sync#1-mutex"
+  },"56": {
+    "doc": "Synchronization",
+    "title": "2. Semaphore",
+    "content": "Controls the number of goroutines allowed to access a resource at once. ",
+    "url": "/sync#2-semaphore",
+    
+    "relUrl": "/sync#2-semaphore"
+  },"57": {
+    "doc": "Synchronization",
+    "title": "Synchronization",
+    "content": " ",
+    "url": "/sync",
+    
+    "relUrl": "/sync"
+  },"58": {
+    "doc": "Concurrency Patterns",
+    "title": "Concurrency Patterns",
+    "content": "Patterns address managing multiple tasks concurrently, leveraging its built-in goroutines and channels for efficient parallelism. Explore categories: . | Generative . | Generator | Fan In | Fan Out | Pipeline | . | Synchronization . | Mutex | Semaphore | . | Parallel Computing . | Worker Pool | Queuing | Parallel For Loop | Map-Reduce | Future (Promise) | Error Group | . | . ",
+    "url": "/concurrency",
+    
+    "relUrl": "/concurrency"
+  },"59": {
+    "doc": "Creational Patterns",
+    "title": "Creational Patterns",
+    "content": "Patterns focus on flexible and controlled object creation, often using interfaces, functions, and struct composition rather than traditional class-based inheritance. ",
+    "url": "/creational",
+    
+    "relUrl": "/creational"
+  },"60": {
+    "doc": "Creational Patterns",
+    "title": "1. Functional Options",
+    "content": "Uses variadic option functions to configure an object. ",
+    "url": "/creational#1-functional-options",
+    
+    "relUrl": "/creational#1-functional-options"
+  },"61": {
+    "doc": "Creational Patterns",
+    "title": "2. Configuration Struct + Factory",
+    "content": "Mimics traditional builders with method chaining. ",
+    "url": "/creational#2-configuration-struct--factory",
+    
+    "relUrl": "/creational#2-configuration-struct--factory"
+  },"62": {
+    "doc": "Creational Patterns",
+    "title": "3. Configurable Object",
+    "content": "Allows an object to be created with default values and then configured step-by-step through setter methods. ",
+    "url": "/creational#3-configurable-object",
+    
+    "relUrl": "/creational#3-configurable-object"
+  },"63": {
+    "doc": "Creational Patterns",
+    "title": "4. Lazy Initialization",
+    "content": "Delays object creation until it’s needed. ",
+    "url": "/creational#4-lazy-initialization",
+    
+    "relUrl": "/creational#4-lazy-initialization"
+  },"64": {
+    "doc": "Creational Patterns",
+    "title": "5. Fluent Interfaces",
+    "content": "Chaining method calls on the same object, often seen in SQL builders or HTTP clients. ",
+    "url": "/creational#5-fluent-interfaces",
+    
+    "relUrl": "/creational#5-fluent-interfaces"
+  },"65": {
+    "doc": "Caching Patterns",
+    "title": "Caching Patterns",
+    "content": "Caching Patterns store expensive or frequently requested data in memory to improve performance and reduce repeated computations or data fetching. ",
+    "url": "/stability/caching",
+    
+    "relUrl": "/stability/caching"
+  },"66": {
+    "doc": "Caching Patterns",
+    "title": "1. With Map and sync.RWMutex",
+    "content": "Thread-safe cache with manual locking. ",
+    "url": "/stability/caching#1-with-map-and-syncrwmutex",
+    
+    "relUrl": "/stability/caching#1-with-map-and-syncrwmutex"
+  },"67": {
+    "doc": "Caching Patterns",
+    "title": "2. With sync.Map",
+    "content": "Concurrent cache with built-in locking. ",
+    "url": "/stability/caching#2-with-syncmap",
+    
+    "relUrl": "/stability/caching#2-with-syncmap"
+  },"68": {
+    "doc": "Caching Patterns",
+    "title": "3. With Automatic Cleanup",
+    "content": "Cache with background removal of stale data. ",
+    "url": "/stability/caching#3-with-automatic-cleanup",
+    
+    "relUrl": "/stability/caching#3-with-automatic-cleanup"
+  },"69": {
+    "doc": "Stability Patterns",
+    "title": "Stability Patterns",
+    "content": "Patterns focus on making systems more resilient, ensuring they handle failure gracefully. ",
+    "url": "/stability",
+    
+    "relUrl": "/stability"
+  },"70": {
+    "doc": "Stability Patterns",
+    "title": "1. Retry",
+    "content": "Retries failed operations with optional backoff strategies. ",
+    "url": "/stability#1-retry",
+    
+    "relUrl": "/stability#1-retry"
+  },"71": {
+    "doc": "Stability Patterns",
+    "title": "2. Timeout",
+    "content": "Prevents operations from running indefinitely by enforcing time limits. ",
+    "url": "/stability#2-timeout",
+    
+    "relUrl": "/stability#2-timeout"
+  },"72": {
+    "doc": "Stability Patterns",
+    "title": "3. Drop",
+    "content": "Drops incoming data when the system is overloaded, preventing it from being overwhelmed. ",
+    "url": "/stability#3-drop",
+    
+    "relUrl": "/stability#3-drop"
+  },"73": {
+    "doc": "Stability Patterns",
+    "title": "4. Circuit Breaker",
+    "content": "Prevents further attempts to execute an operation after a certain number of failures, allowing the system to recover. ",
+    "url": "/stability#4-circuit-breaker",
+    
+    "relUrl": "/stability#4-circuit-breaker"
+  },"74": {
+    "doc": "Stability Patterns",
+    "title": "5. Caching",
+    "content": "Reduces repeated expensive computations or I/O. | With Map and sync.RWMutex | With sync.Map | With Automatic Cleanup | . ",
+    "url": "/stability#5-caching",
+    
+    "relUrl": "/stability#5-caching"
+  },"75": {
+    "doc": "Home",
+    "title": "Welcome to Go Patterns",
+    "content": "Welcome to the collection of idiomatic Go design patterns! This site gathers a variety of Go patterns, each with clear, practical code examples. Designed for clarity, learning, and collaboration. Inspired by effective Go idioms and concurrency best practices. Explore categories: . | Concurrency Patterns . | Generative . | Generator | Fan In | Fan Out | Pipeline | . | Synchronization Patterns . | Mutex (Rate Limiting) | Semaphore (Rate Limiting) | . | Parallel Computing Patterns . | Worker Pool | Queuing | Parallel For Loop | Map-Reduce | Future (Promise) | Error Group | . | . | Creational Patterns . | Functional Options | Configuration Struct + Factory | Configurable Object | Lazy Initialization | Fluent Interfaces | . | Stability Patterns . | Retry | Timeout | Drop | Circuit Breaker | Caching . | With Map and sync.RWMutex | With sync.Map | With Automatic Cleanup | . | . | . ",
+    "url": "/#welcome-to-go-patterns",
+    
+    "relUrl": "/#welcome-to-go-patterns"
+  },"76": {
+    "doc": "Home",
+    "title": "Articles",
+    "content": ". | Channels | . ",
+    "url": "/#articles",
+    
+    "relUrl": "/#articles"
+  },"77": {
+    "doc": "Home",
+    "title": "Home",
+    "content": " ",
+    "url": "/",
+    
+    "relUrl": "/"
+  },"78": {
+    "doc": "Lazy Initialization",
+    "title": "Lazy Initialization",
+    "content": "Lazy Initialization is a pattern where an object or resource is not created until it is actually needed. This helps improve performance and resource usage, especially when the creation is expensive and not always required. ",
+    "url": "/creational/lazy-initialization",
+    
+    "relUrl": "/creational/lazy-initialization"
+  },"79": {
+    "doc": "Lazy Initialization",
+    "title": "Applicability",
+    "content": ". | Creating an object is expensive and may not be needed. | Delay resource allocation until first use. | Thread-safe, one-time initialization. | . ",
+    "url": "/creational/lazy-initialization#applicability",
+    
+    "relUrl": "/creational/lazy-initialization#applicability"
+  },"80": {
+    "doc": "Lazy Initialization",
+    "title": "Example",
+    "content": "package main import ( \"fmt\" \"sync\" ) type Config struct { data string } var ( config *Config configOnce sync.Once ) func GetConfig() *Config { configOnce.Do(func() { fmt.Println(\"Initializing config...\") config = &amp;Config{data: \"Loaded configuration\"} }) return config } func main() { fmt.Println(\"First call:\") cfg1 := GetConfig() fmt.Println(cfg1.data) fmt.Println(\"\\nSecond call:\") cfg2 := GetConfig() fmt.Println(cfg2.data) } . Output . First call: Initializing config... Loaded configuration Second call: Loaded configuration . ",
+    "url": "/creational/lazy-initialization#example",
+    
+    "relUrl": "/creational/lazy-initialization#example"
+  },"81": {
+    "doc": "Map-Reduce",
+    "title": "Map-Reduce",
+    "content": "Map-Reduce is a parallel computing pattern where independent tasks are mapped across multiple workers and their results are reduced (aggregated) into a final outcome. It efficiently distributes work and then combines partial results, making it ideal for scalable, parallel data processing. graph LR A[\"Input Data\"] --&gt; B[\"Map Phase: Goroutines\"] subgraph \"Map Workers\" [Workers] C[\"Worker 1\"] D[\"Worker 2\"] E[\"Worker N\"] end B --&gt; C B --&gt; D B --&gt; E C --&gt; F[\"Intermediate Results Channel\"] D --&gt; F E --&gt; F F --&gt; G[\"Reduce Phase: Aggregate Results\"] G --&gt; H[\"Final Result\"] . ",
+    "url": "/parallel-computing/map-reduce",
+    
+    "relUrl": "/parallel-computing/map-reduce"
+  },"82": {
+    "doc": "Map-Reduce",
+    "title": "Applicability",
+    "content": ". | Have a large dataset that can be processed independently in parts. | Need to aggregate results after parallel processing (sum, merge, concatenate, etc.). | To maximize CPU utilization by splitting work across goroutines or workers. | The “map” phase and “reduce” phase are separable (i.e., the work can be performed independently before aggregation). | . ",
+    "url": "/parallel-computing/map-reduce#applicability",
+    
+    "relUrl": "/parallel-computing/map-reduce#applicability"
+  },"83": {
+    "doc": "Map-Reduce",
+    "title": "Key difference compared to the Parallel For Loop",
+    "content": ". | Parallel For Loop = “do many independent jobs in parallel” | Map-Reduce = “do many independent jobs (Map) + combine them into a final result (Reduce)” | . Map-Reduce always has a “combination” (reduction) step. Parallel For Loop doesn’t necessarily. ",
+    "url": "/parallel-computing/map-reduce#key-difference-compared-to-the-parallel-for-loop",
+    
+    "relUrl": "/parallel-computing/map-reduce#key-difference-compared-to-the-parallel-for-loop"
+  },"84": {
+    "doc": "Map-Reduce",
+    "title": "Example",
+    "content": "package main import ( \"fmt\" \"sync\" ) // Map function: squares a number func mapFunc(n int) int { return n * n } // Reduce function: sums a slice of numbers func reduceFunc(results []int) int { sum := 0 for _, v := range results { sum += v } return sum } func main() { numbers := []int{1, 2, 3, 4, 5} var wg sync.WaitGroup resultCh := make(chan int, len(numbers)) // Map Phase: start a goroutine for each number for _, n := range numbers { wg.Add(1) go func(num int) { defer wg.Done() resultCh &lt;- mapFunc(num) }(n) } wg.Wait() close(resultCh) // Collect results var intermediate []int for res := range resultCh { intermediate = append(intermediate, res) } // Reduce Phase: aggregate all results finalResult := reduceFunc(intermediate) fmt.Println(\"Final result:\", finalResult) } . Output . Final result: 55 . (1² + 2² + 3² + 4² + 5² = 55) . ",
+    "url": "/parallel-computing/map-reduce#example",
+    
+    "relUrl": "/parallel-computing/map-reduce#example"
+  },"85": {
+    "doc": "Caching with Map and sync.RWMutex",
+    "title": "Caching with Map and sync.RWMutex",
+    "content": "A simple and efficient caching technique in Go where a map is used to store key-value pairs, and a sync.RWMutex protects concurrent access. RLock is used for reads to allow multiple readers simultaneously, and Lock is used for writes to ensure exclusive access when modifying the cache. ",
+    "url": "/stability/caching/with-map-and-rwmutex",
+    
+    "relUrl": "/stability/caching/with-map-and-rwmutex"
+  },"86": {
+    "doc": "Caching with Map and sync.RWMutex",
+    "title": "Example",
+    "content": "package main import ( \"fmt\" \"sync\" ) type Cache struct { data map[string]string mu sync.RWMutex } func NewCache() *Cache { return &amp;Cache{ data: make(map[string]string), } } func (c *Cache) Get(key string) (string, bool) { c.mu.RLock() defer c.mu.RUnlock() val, found := c.data[key] return val, found } func (c *Cache) Set(key, value string) { c.mu.Lock() defer c.mu.Unlock() c.data[key] = value } func main() { cache := NewCache() cache.Set(\"username\", \"gopher\") if val, found := cache.Get(\"username\"); found { fmt.Println(\"Found:\", val) } else { fmt.Println(\"Not found\") } } . ",
+    "url": "/stability/caching/with-map-and-rwmutex#example",
+    
+    "relUrl": "/stability/caching/with-map-and-rwmutex#example"
+  },"87": {
+    "doc": "Mutex (Rate Limiting)",
+    "title": "Mutex (Rate Limiting)",
+    "content": "The Mutex pattern is used to ensure that only one goroutine can access a shared resource at a time, preventing data races and ensuring thread safety. In Go, this can be implemented using channels as semaphores, where the mutex allows goroutines to “lock” a critical section and “unlock” it once done. ",
+    "url": "/sync/mutex",
+    
+    "relUrl": "/sync/mutex"
+  },"88": {
+    "doc": "Mutex (Rate Limiting)",
+    "title": "Applicability",
+    "content": ". | Shared Resource Protection. Ensures only one goroutine accesses a shared resource at a time, preventing race conditions. | Critical Section Management. Serializes access to a block of code, ensuring safe execution in concurrent environments. | Custom Locking. Implements lightweight or custom locks using channels, without relying on sync.Mutex. | Concurrency Control. Manages high concurrent access to shared resources, avoiding performance issues. | Deadlock Prevention. Helps avoid deadlocks by managing resource access order in complex systems. | . ",
+    "url": "/sync/mutex#applicability",
+    
+    "relUrl": "/sync/mutex#applicability"
+  },"89": {
+    "doc": "Mutex (Rate Limiting)",
+    "title": "Example",
+    "content": "package main import ( \"fmt\" \"sync\" ) type Mutex struct { s chan struct{} } func NewMutex() *Mutex { return &amp;Mutex{ s: make(chan struct{}, 1), } } func (m *Mutex) Lock() { m.s &lt;- struct{}{} } func (m *Mutex) Unlock() { &lt;-m.s } const numGoroutines = 1000 func main() { m := NewMutex() counter := 0 var wg sync.WaitGroup wg.Add(numGoroutines) for i := 0; i &lt; numGoroutines; i++ { go func() { m.Lock() defer m.Unlock() counter++ wg.Done() }() } wg.Wait() fmt.Printf(\"Mutex counter: %d\\n\", counter) } . ",
+    "url": "/sync/mutex#example",
+    
+    "relUrl": "/sync/mutex#example"
+  },"90": {
+    "doc": "Parallel For Loop",
+    "title": "Parallel For Loop",
+    "content": "Parallel For Loop pattern is useful when you need to perform many computations over a stream of input data, and each computation is independent of the others — a scenario similar to vectorization. You have a slice of inputs and want to process each item in parallel to speed up execution. Since each operation is isolated and has no side effects on others, you can safely run them concurrently using goroutines. graph LR A[\"Create Jobs\"] --&gt; B[jobs chan] subgraph Worker Pool [Workers] C[Worker 1] D[Worker 2] E[Worker N] end B --&gt; C B --&gt; D B --&gt; E C --&gt; F[results chan] D --&gt; F E --&gt; F F --&gt; G[Collect Results] . ",
+    "url": "/parallel-computing/parallel-for-loop",
+    
+    "relUrl": "/parallel-computing/parallel-for-loop"
+  },"91": {
+    "doc": "Parallel For Loop",
+    "title": "Applicability",
+    "content": "Independent Computations. Ideal for scenarios where each iteration of the loop is independent of the others. Each task can run concurrently without affecting the others’ results. CPU-bound Tasks. Suitable for computationally expensive operations (e.g., data processing, mathematical calculations) where each operation can be parallelized to improve performance. I/O-bound Operations. Works well for tasks that are waiting for external resources (e.g., network requests, file processing). Each task can run concurrently, improving throughput without blocking. Large Data Sets. When you have large datasets (arrays, slices, etc.), the pattern helps divide the work among multiple goroutines, speeding up the process by utilizing multiple CPU cores. Multiple Tasks with Similar Complexity. Effective when all iterations are of similar complexity and execution time, as the workload is evenly distributed among the goroutines. Non-blocking Parallelism. Ideal when you want to avoid blocking the main thread, and the results can be computed concurrently without needing to synchronize frequently during the process. Time-sensitive Operations. Useful when you need to optimize time-sensitive tasks (e.g., real-time data processing), where parallelism can significantly reduce processing time. Scalable Systems. When designing systems that need to scale efficiently across multiple cores, machines, or services, this pattern helps with the parallelization of tasks. Batch Processing. Well-suited for scenarios where tasks can be grouped into smaller batches, allowing each batch to be processed in parallel to optimize overall throughput. ",
+    "url": "/parallel-computing/parallel-for-loop#applicability",
+    
+    "relUrl": "/parallel-computing/parallel-for-loop#applicability"
+  },"92": {
+    "doc": "Parallel For Loop",
+    "title": "Key difference compared to the Map-Reduce",
+    "content": ". | Parallel For Loop = “do many independent jobs in parallel” | Map-Reduce = “do many independent jobs (Map) + combine them into a final result (Reduce)” | . Map-Reduce always has a “combination” (reduction) step. Parallel For Loop doesn’t necessarily. ",
+    "url": "/parallel-computing/parallel-for-loop#key-difference-compared-to-the-map-reduce",
+    
+    "relUrl": "/parallel-computing/parallel-for-loop#key-difference-compared-to-the-map-reduce"
+  },"93": {
+    "doc": "Parallel For Loop",
+    "title": "Example",
+    "content": "package main import ( \"fmt\" \"sync\" \"time\" ) const dataSize = 4 func calculate(val int) int { time.Sleep(500 * time.Millisecond) return val * 2 } func main() { data := make([]int, dataSize) for i := range data { data[i] = i + 10 } results := make([]int, dataSize) fmt.Printf(\"Before: %v\\n\", data) start := time.Now() var wg sync.WaitGroup wg.Add(dataSize) for i, xi := range data { go func(i, xi int) { defer wg.Done() results[i] = calculate(xi) }(i, xi) } wg.Wait() fmt.Printf(\" After: %v\\n\", results) fmt.Printf(\" Elapsed: %s\\n\", time.Since(start)) } . ",
+    "url": "/parallel-computing/parallel-for-loop#example",
+    
+    "relUrl": "/parallel-computing/parallel-for-loop#example"
+  },"94": {
+    "doc": "Pipeline",
+    "title": "Pipeline",
+    "content": "Pipeline is a sequence of stages connected by channels. It breaks down a task into discrete stages connected by channels, where each stage runs as a goroutine and passes data to the next. graph LR input((Input Channel)) --&gt; stage1[Stage 1] stage1 --&gt; ch1((Channel 1)) ch1 --&gt; stage2[Stage 2] stage2 --&gt; ch2((Channel 2)) ch2 --&gt; stage3[Stage 3] stage3 --&gt; output((Output Channel)) . ",
+    "url": "/generative/pipeline",
+    
+    "relUrl": "/generative/pipeline"
+  },"95": {
+    "doc": "Pipeline",
+    "title": "Applicability",
+    "content": ". | Data Processing Pipelines. Multiple microservices or log producers are writing logs concurrently. | Image or Video Processing. A frame goes through stages like decoding → resizing → filtering → encoding. | Compilers or Interpreters. Lexing → Parsing → Analyzing → Code generation. | . ",
+    "url": "/generative/pipeline#applicability",
+    
+    "relUrl": "/generative/pipeline#applicability"
+  },"96": {
+    "doc": "Pipeline",
+    "title": "Code Example",
+    "content": "package main import ( \"fmt\" \"math\" ) func main() { in := generateWork([]int{0, 1, 2, 3, 4, 5, 6, 7, 8}) out := filterOdd(in) // even numbers out = square(out) // square out = half(out) // divide in half for value := range out { fmt.Println(value) } } func filterOdd(in &lt;-chan int) &lt;-chan int { out := make(chan int) go func() { defer close(out) for i := range in { if i%2 == 0 { out &lt;- i } } }() return out } func square(in &lt;-chan int) &lt;-chan int { out := make(chan int) go func() { defer close(out) for i := range in { value := math.Pow(float64(i), 2) out &lt;- int(value) } }() return out } func half(in &lt;-chan int) &lt;-chan int { out := make(chan int) go func() { defer close(out) for i := range in { value := i / 2 out &lt;- value } }() return out } func generateWork(work []int) &lt;-chan int { ch := make(chan int) go func() { defer close(ch) for _, w := range work { ch &lt;- w } }() return ch } . ",
+    "url": "/generative/pipeline#code-example",
+    
+    "relUrl": "/generative/pipeline#code-example"
+  },"97": {
+    "doc": "Queuing",
+    "title": "Queuing",
+    "content": "The Queuing pattern allows you to accept up to N messages for processing simultaneously without waiting for them to be processed. A buffered channel is commonly used as a semaphore to throttle the number of active goroutines, providing backpressure and preventing resource exhaustion. This pattern separates the submission of work from its execution, helping manage load and ensuring the system remains responsive under high demand. graph TD jobGen[\"Generate Tasks\"] --&gt; sem[Acquire Semaphore Slot] sem --&gt; spawn[Start Goroutine] subgraph Goroutine spawn --&gt; work[Process Task] work --&gt; release[Release Semaphore Slot] end release --&gt; wait[Wait for All Tasks] wait --&gt; finish[Processing Complete] . ",
+    "url": "/parallel-computing/queuing",
+    
+    "relUrl": "/parallel-computing/queuing"
+  },"98": {
+    "doc": "Queuing",
+    "title": "Applicability",
+    "content": ". | Throttling Concurrency. When you need to limit the number of concurrent goroutines (e.g., for controlling resource usage or preventing overloading external systems). | Job Queuing. For managing tasks that need to be processed in parallel, such as background jobs or worker pools, with a fixed number of workers. | Rate Limiting. When you need to apply rate limits to the number of concurrent operations (e.g., API calls, database queries). | Preventing Resource Exhaustion. To ensure that the system does not spawn too many goroutines and exhaust available resources like memory or CPU. | Decoupling Producers and Consumers. When you want to decouple the generation of work (producers) from its processing (consumers), allowing for better load balancing and control. | Load Balancing. When tasks are processed in parallel, and you want to manage the load effectively across workers to ensure no one worker is overwhelmed. | . ",
+    "url": "/parallel-computing/queuing#applicability",
+    
+    "relUrl": "/parallel-computing/queuing#applicability"
+  },"99": {
+    "doc": "Queuing",
+    "title": "Code Example",
+    "content": "package main import ( \"fmt\" \"sync\" \"time\" ) func process(payload int, queue chan struct{}, wg *sync.WaitGroup) { queue &lt;- struct{}{} go func() { defer wg.Done() fmt.Printf(\"Start processing of %d\\n\", payload) time.Sleep(time.Millisecond * 500) fmt.Printf(\"Completed processing of %d\\n\", payload) fmt.Printf(\"Queue length: %d\\n\\n\", len(queue)) &lt;-queue }() } func main() { const numWorkers = 3 const numMessages = 1000 var wg sync.WaitGroup fmt.Println(\"Queue of length numWorkers:\", numWorkers) // Buffered channel as semaphore queue := make(chan struct{}, numWorkers) wg.Add(numMessages) for w := 1; w &lt;= numMessages; w++ { process(w, queue, &amp;wg) } wg.Wait() close(queue) fmt.Println(\"Processing completed\") } . ",
+    "url": "/parallel-computing/queuing#code-example",
+    
+    "relUrl": "/parallel-computing/queuing#code-example"
+  },"100": {
+    "doc": "Retry",
+    "title": "Retry",
+    "content": "The Retry pattern is a strategy for handling transient errors in distributed systems. It involves retrying an operation that has failed due to a temporary issue, such as network problems or service unavailability. ",
+    "url": "/stability/retry",
+    
+    "relUrl": "/stability/retry"
+  },"101": {
+    "doc": "Retry",
+    "title": "Example",
+    "content": "package main import ( \"context\" \"errors\" \"fmt\" \"log\" \"time\" ) type Effector func(ctx context.Context) (string, error) var count int func main() { r := Retry(EmulateTransientError, 5, 2*time.Second) res, err := r(context.Background()) fmt.Println(res, err) } func EmulateTransientError(ctx context.Context) (string, error) { count++ if count &lt;= 3 { return \"intentional fail\", errors.New(\"error\") } else { return \"success\", nil } } func Retry(effector Effector, retries int, delay time.Duration) Effector { return func(ctx context.Context) (string, error) { for r := 0; ; r++ { response, err := effector(ctx) if err == nil || r &gt;= retries { return response, err } log.Printf(\"Attempt %d failed; retrying in %v\", r+1, delay) select { case &lt;-time.After(delay): case &lt;-ctx.Done(): return \"\", ctx.Err() } } } } . ",
+    "url": "/stability/retry#example",
+    
+    "relUrl": "/stability/retry#example"
+  },"102": {
+    "doc": "Semaphore (Rate Limiting)",
+    "title": "Semaphore (Rate Limiting)",
+    "content": "The Semaphore pattern is used to limit the number of concurrently running goroutines. It helps manage resource usage, such as limiting the number of simultaneous network requests or file operations. This is typically implemented using a buffered channel to act as a counting semaphore - each goroutine must acquire a slot before proceeding and release it when done. graph LR start[\"Start Tasks\"] --&gt; acquire[\"Acquire Semaphore (buffered channel)\"] acquire --&gt; worker[\"Do Work\"] worker --&gt; release[\"Release Semaphore\"] release --&gt; done[\"Done\"] . ",
+    "url": "/sync/semaphore",
+    
+    "relUrl": "/sync/semaphore"
+  },"103": {
+    "doc": "Semaphore (Rate Limiting)",
+    "title": "Applicability",
+    "content": ". | Limiting Concurrent Operations. Use when you need to restrict the number of concurrently running goroutines, such as database queries, HTTP requests, or file reads/writes. | Rate-Limiting External Services. Prevents overwhelming external APIs or services that have concurrency or rate limits. | Managing Resource-Intensive Tasks. Ideal when tasks consume significant system resources (CPU, memory, network) and running too many in parallel would degrade performance. | Avoiding System Overload. Helps ensure stability in applications that spawn many background jobs or workers by capping their concurrency. | Controlling Access to Shared Resources. Useful for limiting access to shared resources (e.g., open connections, memory pools) without full locking mechanisms. | . ",
+    "url": "/sync/semaphore#applicability",
+    
+    "relUrl": "/sync/semaphore#applicability"
+  },"104": {
+    "doc": "Semaphore (Rate Limiting)",
+    "title": "Example",
+    "content": "package main import ( \"fmt\" \"sync\" \"time\" ) type Result struct { Port int State bool } const ( maxGoroutines = 3 totalJobs = 10 ) func process(id int) Result { fmt.Printf(\"[%s]: running task %d\\n\", time.Now().Format(\"15:04:05\"), id) time.Sleep(time.Second) return Result{ Port: id, State: true, } } func main() { var wg sync.WaitGroup results := make([]Result, 0, totalJobs) resultChan := make(chan Result, totalJobs) // Semaphore to limit concurrent goroutines semaphore := make(chan struct{}, maxGoroutines) for i := 1; i &lt;= totalJobs; i++ { wg.Add(1) go func(id int) { defer wg.Done() // Acquire semaphore semaphore &lt;- struct{}{} defer func() { &lt;-semaphore // Release semaphore }() result := process(id) resultChan &lt;- result }(i) } // Close the result channel once all tasks are done go func() { wg.Wait() close(resultChan) }() // Collect results for res := range resultChan { if res.State { results = append(results, res) } } fmt.Println(\"Results:\", results) } . ",
+    "url": "/sync/semaphore#example",
+    
+    "relUrl": "/sync/semaphore#example"
+  },"105": {
+    "doc": "Caching with sync.Map",
+    "title": "Caching with sync.Map",
+    "content": "The sync.Map type in Go provides a concurrent map implementation optimized for scenarios with many goroutines accessing and modifying the map. It is particularly useful for caching, where reads dominate writes. Unlike a regular map with manual locking (sync.Mutex), sync.Map internally manages concurrency with minimal contention, making it more efficient for read-heavy workloads. Typical use cases for caching with sync.Map include memoization, lazy loading, and storing frequently accessed computed results. It supports safe concurrent Load, Store, LoadOrStore, and Delete operations without needing explicit locks. ",
+    "url": "/stability/caching/with-sync-map",
+    
+    "relUrl": "/stability/caching/with-sync-map"
+  },"106": {
+    "doc": "Caching with sync.Map",
+    "title": "Benefits of sync.Map over map + sync.RWMutex",
+    "content": ". | Built-in Concurrency Optimizations sync.Map internally reduces lock contention, especially for read-heavy scenarios. | Simpler Code for Concurrency No need to manage Lock, Unlock, RLock, or RUnlock manually - fewer chances for deadlocks or forgetting to release locks. | Ready-Made Utilities Methods like LoadOrStore, LoadAndDelete, and Range simplify common concurrent operations. | Better for Many Goroutines Handles extremely high concurrent access more efficiently than a map + RWMutex if reads dominate writes. | . ",
+    "url": "/stability/caching/with-sync-map#benefits-of-syncmap-over-map--syncrwmutex",
+    
+    "relUrl": "/stability/caching/with-sync-map#benefits-of-syncmap-over-map--syncrwmutex"
+  },"107": {
+    "doc": "Caching with sync.Map",
+    "title": "Drawbacks of sync.Map compared to map + sync.RWMutex",
+    "content": ". | No Type Safety Keys and values are interface{} - you must do type assertions manually (value.(YourType)). This can lead to runtime panics and harder-to-maintain code. | Worse Performance on Write-Heavy Workloads When there are lots of writes and deletes, sync.Map’s internal mechanics become less efficient than a simple RWMutex-guarded map. | More Boilerplate and Casting Extra lines for type checking and casting clutter your code. | Harder to Refactor Changing the type of values later is risky because the compiler won’t catch mistakes. | Higher Memory Overhead sync.Map maintains separate structures for “read” and “dirty” states, consuming more memory compared to a plain map. | Less Flexibility Fine-grained operations (like conditional updates, batch updates) are harder or impossible to implement cleanly. | . ",
+    "url": "/stability/caching/with-sync-map#drawbacks-of-syncmap-compared-to-map--syncrwmutex",
+    
+    "relUrl": "/stability/caching/with-sync-map#drawbacks-of-syncmap-compared-to-map--syncrwmutex"
+  },"108": {
+    "doc": "Caching with sync.Map",
+    "title": "Example",
+    "content": "package main import ( \"fmt\" \"sync\" ) type Cache struct { data sync.Map } func (c *Cache) Get(key string) (string, bool) { val, ok := c.data.Load(key) if !ok { return \"\", false } return val.(string), true } func (c *Cache) Set(key, value string) { c.data.Store(key, value) } func main() { cache := &amp;Cache{} cache.Set(\"language\", \"Go\") if val, found := cache.Get(\"language\"); found { fmt.Println(\"Found:\", val) } else { fmt.Println(\"Not found\") } } . ",
+    "url": "/stability/caching/with-sync-map#example",
+    
+    "relUrl": "/stability/caching/with-sync-map#example"
+  },"109": {
+    "doc": "Timeout",
+    "title": "Timeout",
+    "content": "The timeout pattern is used to limit the amount of time an operation can take. If the operation doesn’t complete within the specified time, it is aborted or handled appropriately. This pattern is particularly useful for network requests, database queries, or any long-running processes that must not block indefinitely. ",
+    "url": "/stability/timeout",
+    
+    "relUrl": "/stability/timeout"
+  },"110": {
+    "doc": "Timeout",
+    "title": "Example 1: Using context.WithTimeout",
+    "content": "package main import ( \"context\" \"fmt\" \"time\" ) func longRunningOperation(ctx context.Context) error { select { case &lt;-time.After(5 * time.Second): // Simulates long work return nil case &lt;-ctx.Done(): // Context timeout/cancellation return ctx.Err() } } func main() { ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second) defer cancel() err := longRunningOperation(ctx) if err != nil { fmt.Println(\"Operation failed:\", err) } else { fmt.Println(\"Operation completed successfully\") } } . ",
+    "url": "/stability/timeout#example-1-using-contextwithtimeout",
+    
+    "relUrl": "/stability/timeout#example-1-using-contextwithtimeout"
+  },"111": {
+    "doc": "Timeout",
+    "title": "Example 2: Using select with time.After",
+    "content": "package main import ( \"fmt\" \"time\" ) func main() { resultChan := make(chan string) go func() { time.Sleep(3 * time.Second) // Simulate work resultChan &lt;- \"Success\" }() select { case result := &lt;-resultChan: fmt.Println(\"Received:\", result) case &lt;-time.After(2 * time.Second): fmt.Println(\"Timeout! Operation took too long.\") } } . ",
+    "url": "/stability/timeout#example-2-using-select-with-timeafter",
+    
+    "relUrl": "/stability/timeout#example-2-using-select-with-timeafter"
+  },"112": {
+    "doc": "Worker Pool",
+    "title": "Worker Pool",
+    "content": "Worker Pool is a concurrency pattern used to limit the number of goroutines that process tasks concurrently. It involves a fixed number of workers (goroutines) that listen on a jobs channel for incoming tasks and send results to a results channel. This pattern helps control resource usage and improves performance when handling a large number of tasks. graph LR A[\"Create Jobs\"] --&gt; B[jobs chan] subgraph Worker Pool [Workers] C[Worker 1] D[Worker 2] E[Worker N] end B --&gt; C B --&gt; D B --&gt; E C --&gt; F[results chan] D --&gt; F E --&gt; F F --&gt; G[Collect Results] . ",
+    "url": "/parallel-computing/worker-pool",
+    
+    "relUrl": "/parallel-computing/worker-pool"
+  },"113": {
+    "doc": "Worker Pool",
+    "title": "Applicability",
+    "content": ". | Rate-limiting Goroutines. When you need to control the number of concurrently running goroutines to avoid overwhelming system resources (e.g., memory, CPU, database connections). | Batch Processing of Tasks. Ideal for processing a queue of tasks like image processing, file parsing, or API calls, where each task is independent but resource-intensive. | Parallel I/O or Network Operations. Useful when performing concurrent network calls (e.g., calling external APIs, fetching data from multiple URLs), while limiting the number of simultaneous operations. | Controlled Concurrency in Server Applications. Prevents resource exhaustion in high-throughput systems like web servers or microservices by capping the number of tasks handled at once. | CPU-bound or Time-consuming Workloads. For long-running tasks like data transformations or simulations, the pattern helps keep the CPU busy without spawning excessive goroutines. | Worker Queues in Background Jobs. Perfect for job processing systems where tasks are submitted to a queue (e.g., background email sending, message processing). | . ",
+    "url": "/parallel-computing/worker-pool#applicability",
+    
+    "relUrl": "/parallel-computing/worker-pool#applicability"
+  },"114": {
+    "doc": "Worker Pool",
+    "title": "Alternatives",
+    "content": ". | Semaphore. Use a channel as a counting semaphore to limit concurrency | Error group with limit. | . ",
+    "url": "/parallel-computing/worker-pool#alternatives",
+    
+    "relUrl": "/parallel-computing/worker-pool#alternatives"
+  },"115": {
+    "doc": "Worker Pool",
+    "title": "Example",
+    "content": "package main import ( \"fmt\" \"time\" ) func worker(id int, jobs &lt;-chan int, results chan&lt;- int) { for j := range jobs { fmt.Println(\"worker\", id, \"started job\", j) time.Sleep(time.Second) fmt.Println(\"worker\", id, \"finished job\", j) results &lt;- j * 2 } } func main() { const numJobs = 5 const numWorkers = 3 jobs := make(chan int, numJobs) results := make(chan int, numJobs) for w := 1; w &lt;= numWorkers; w++ { go worker(w, jobs, results) } for j := 1; j &lt;= numJobs; j++ { jobs &lt;- j } close(jobs) for a := 1; a &lt;= numJobs; a++ { &lt;-results } } . ",
+    "url": "/parallel-computing/worker-pool#example",
+    
+    "relUrl": "/parallel-computing/worker-pool#example"
+  }
+}
