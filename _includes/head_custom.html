@@ -1,0 +1,56 @@
+<link rel="icon" type="image/x-icon" href="{{ '/assets/images/favicon.ico' | relative_url }}">
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const logo = document.querySelector(".site-logo");
+        if (logo) {
+            const siteTitle = document.createElement("span");
+            siteTitle.textContent = "Go Patterns"; // Your site title here
+            siteTitle.className = "site-title-custom";
+            logo.after(siteTitle);
+        }
+    });
+</script>
+<style>
+    .site-title-custom {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-left: 0.5rem;
+        vertical-align: middle;
+        color: var(--sidebar-color);
+    }
+
+    .site-logo {
+        vertical-align: middle;
+        max-height: 52px;
+    }
+</style>
+
+<style>
+    .site-logo::after {
+        content: "Go Patterns";
+        font-weight: 600;
+        font-size: 1.4rem;
+        margin-left: 4.9rem;
+        color: var(--sidebar-color);
+        vertical-align: middle;
+    }
+</style>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(101405076, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+    });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/101405076" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->

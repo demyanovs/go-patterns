@@ -1,0 +1,53 @@
+title: Go Patterns
+description: "A collection of idiomatic Go concurrency and design patterns with clear examples."
+lang: "en"
+
+# Local setup
+#theme: "just-the-docs"
+remote_theme: just-the-docs/just-the-docs@v0.5.4
+g
+# Local setup (baseurl empty for local dev)
+url: "https://go-patterns.dev"
+baseurl: ""
+
+collections:
+  _pages:
+    output: true
+    permalink: /:path/
+
+include:
+  - _pages
+
+just_the_docs:
+  collections:
+    _pages:
+#      name: Articles
+      nav_exclude: false
+  nav_auto_expand: true
+  collapsible_nav: false
+  include_head: head_custom.html
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-remote-theme
+#  - jekyll-sitemap
+
+mermaid:
+  # Version of mermaid library
+  # Pick an available version from https://cdn.jsdelivr.net/npm/mermaid/
+  version: "11.6.0"
+
+footer_content: "This site is open source! You can contribute or suggest changes by editing the <a href=\"https://github.com/demyanovs/go-patterns\" target=\"_blank\">GitHub repository</a>.<br/>Copyright &copy; 2025. Distributed by an <a href=\"https://github.com/demyanovs/go-patterns/tree/main/LICENSE.md\" target=\"_blank\">MIT license.</a>"
+
+logo: "/assets/images/logo.png"
+#color_scheme: dark
+
+sass:
+  load_paths:
+    - _includes
+
+social:
+  name: "Go Patterns"
+  links:
+    - https://github.com/demyanovs/go-patterns
