@@ -5,7 +5,7 @@ lang: "en"
 # Local setup
 #theme: "just-the-docs"
 remote_theme: just-the-docs/just-the-docs@v0.5.4
-g
+
 # Local setup (baseurl empty for local dev)
 url: "https://go-patterns.dev"
 baseurl: ""
