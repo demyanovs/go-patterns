@@ -121,7 +121,7 @@
     
     
     <url>
-        <loc>https://go-patterns.dev/generative</loc>
+        <loc>https://go-patterns.dev/database</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -148,7 +148,7 @@
     
     
     <url>
-        <loc>https://go-patterns.dev/concurrency</loc>
+        <loc>https://go-patterns.dev/generative</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -157,7 +157,7 @@
     
     
     <url>
-        <loc>https://go-patterns.dev/creational</loc>
+        <loc>https://go-patterns.dev/concurrency</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -176,6 +176,15 @@
     
     <url>
         <loc>https://go-patterns.dev/stability</loc>
+        
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    
+    
+    
+    <url>
+        <loc>https://go-patterns.dev/creational</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -293,6 +302,15 @@
     
     <url>
         <loc>https://go-patterns.dev/stability/timeout</loc>
+        
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    
+    
+    
+    <url>
+        <loc>https://go-patterns.dev/database/unit-of-work</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>

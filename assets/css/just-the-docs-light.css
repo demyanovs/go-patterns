@@ -588,12 +588,14 @@ template {
 
 html {
   font-size: 0.875rem !important;
-  scroll-behavior: smooth;
 }
 @media (min-width: 31.25rem) {
   html {
     font-size: 1rem !important;
   }
+}
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -728,14 +730,16 @@ blockquote {
 .main-content-wrap {
   padding-right: 1rem;
   padding-left: 1rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
 }
 @media (min-width: 50rem) {
   .main-content-wrap {
     padding-right: 2rem;
     padding-left: 2rem;
   }
+}
+.main-content-wrap {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 @media (min-width: 50rem) {
   .main-content-wrap {
@@ -812,6 +816,14 @@ blockquote {
 .site-title {
   padding-right: 1rem;
   padding-left: 1rem;
+}
+@media (min-width: 50rem) {
+  .site-title {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+}
+.site-title {
   flex-grow: 1;
   display: flex;
   height: 100%;
@@ -820,12 +832,6 @@ blockquote {
   padding-bottom: 0.75rem;
   color: #27262b;
   font-size: 1.125rem !important;
-}
-@media (min-width: 50rem) {
-  .site-title {
-    padding-right: 2rem;
-    padding-left: 2rem;
-  }
 }
 @media (min-width: 31.25rem) {
   .site-title {
@@ -884,6 +890,14 @@ body {
 .site-footer {
   padding-right: 1rem;
   padding-left: 1rem;
+}
+@media (min-width: 50rem) {
+  .site-footer {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+}
+.site-footer {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -891,12 +905,6 @@ body {
   padding-bottom: 1rem;
   color: #959396;
   font-size: 0.6875rem !important;
-}
-@media (min-width: 50rem) {
-  .site-footer {
-    padding-right: 2rem;
-    padding-left: 2rem;
-  }
 }
 @media (min-width: 31.25rem) {
   .site-footer {
@@ -1156,13 +1164,15 @@ body {
 }
 .nav-list .nav-list-item {
   font-size: 0.875rem !important;
-  position: relative;
-  margin: 0;
 }
 @media (min-width: 31.25rem) {
   .nav-list .nav-list-item {
     font-size: 1rem !important;
   }
+}
+.nav-list .nav-list-item {
+  position: relative;
+  margin: 0;
 }
 @media (min-width: 50rem) {
   .nav-list .nav-list-item {
@@ -1350,13 +1360,16 @@ h1,
 .text-alpha {
   font-size: 2rem !important;
   line-height: 1.25;
-  font-weight: 300;
 }
 @media (min-width: 31.25rem) {
   h1,
   .text-alpha {
     font-size: 2.25rem !important;
   }
+}
+h1,
+.text-alpha {
+  font-weight: 300;
 }
 
 h2,
@@ -1387,15 +1400,18 @@ h3,
 h4,
 .text-delta {
   font-size: 0.6875rem !important;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
 }
 @media (min-width: 31.25rem) {
   h4,
   .text-delta {
     font-size: 0.75rem !important;
   }
+}
+h4,
+.text-delta {
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 h4 code {
@@ -1460,13 +1476,16 @@ h6,
   vertical-align: middle;
   background-color: #2869e6;
   font-size: 0.6875rem !important;
-  border-radius: 12px;
 }
 @media (min-width: 31.25rem) {
   .label:not(g),
   .label-blue:not(g) {
     font-size: 0.75rem !important;
   }
+}
+.label:not(g),
+.label-blue:not(g) {
+  border-radius: 12px;
 }
 
 .label-green:not(g) {
@@ -2004,17 +2023,20 @@ table {
 th,
 td {
   font-size: 0.75rem !important;
-  min-width: 7.5rem;
-  padding: 0.5rem 0.75rem;
-  background-color: #fff;
-  border-bottom: 1px solid rgba(238, 235, 238, 0.5);
-  border-left: 1px solid #eeebee;
 }
 @media (min-width: 31.25rem) {
   th,
   td {
     font-size: 0.875rem !important;
   }
+}
+th,
+td {
+  min-width: 7.5rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #fff;
+  border-bottom: 1px solid rgba(238, 235, 238, 0.5);
+  border-left: 1px solid #eeebee;
 }
 th:first-of-type,
 td:first-of-type {
@@ -2107,10 +2129,6 @@ div.highlighter-rouge code {
   border: 0;
 }
 
-div.listingblock {
-  margin-top: 0;
-  margin-bottom: 0.75rem;
-}
 div.listingblock div.content {
   overflow-x: auto;
   padding: 0.75rem;
@@ -2122,6 +2140,10 @@ div.listingblock code {
   padding: 0;
   margin: 0;
   border: 0;
+}
+div.listingblock {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
 }
 
 figure.highlight pre,
@@ -2141,16 +2163,19 @@ figure.highlight :not(pre) > code {
 .highlight .table-wrapper td,
 .highlight .table-wrapper pre {
   font-size: 0.6875rem !important;
-  min-width: 0;
-  padding: 0;
-  background-color: #f5f6fa;
-  border: 0;
 }
 @media (min-width: 31.25rem) {
   .highlight .table-wrapper td,
   .highlight .table-wrapper pre {
     font-size: 0.75rem !important;
   }
+}
+.highlight .table-wrapper td,
+.highlight .table-wrapper pre {
+  min-width: 0;
+  padding: 0;
+  background-color: #f5f6fa;
+  border: 0;
 }
 .highlight .table-wrapper td.gl {
   width: 1em;
