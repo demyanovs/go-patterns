@@ -43,6 +43,8 @@ Explore categories:
     - [With Map and sync.RWMutex]({{ site.baseurl }}/stability/caching/with-map-and-rwmutex)
     - [With sync.Map]({{ site.baseurl }}/stability/caching/with-sync-map)
     - [With Automatic Cleanup]({{ site.baseurl }}/stability/caching/with-expiration)
+- [Database Patterns]({{ site.baseurl }}/database)
+  - [Unit of Work (Transaction Manager)]({{ site.baseurl }}/database/unit-of-work)
 
 ## Articles
   - [Channels]({{ site.baseurl }}/articles/channels)
