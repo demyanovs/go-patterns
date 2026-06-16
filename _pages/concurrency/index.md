@@ -19,6 +19,7 @@ Explore categories:
 - [Synchronization]({{ site.baseurl }}/sync)
   - [Mutex]({{ site.baseurl }}/sync/mutex)
   - [Semaphore]({{ site.baseurl }}/sync/semaphore)
+  - [Singleflight]({{ site.baseurl }}/sync/singleflight)
 - [Parallel Computing]({{ site.baseurl }}/parallel-computing)
   - [Worker Pool]({{ site.baseurl }}/parallel-computing/worker-pool)
   - [Queuing]({{ site.baseurl }}/parallel-computing/queuing)

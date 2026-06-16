@@ -17,3 +17,6 @@ Ensures exclusive access to a resource by one goroutine at a time.
 
 ## 2. [Semaphore]({{ site.baseurl }}/sync/semaphore)
 Controls the number of goroutines allowed to access a resource at once.
+
+## 3. [Singleflight]({{ site.baseurl }}/sync/singleflight)
+Deduplicates concurrent identical calls so only one executes and all callers share the result.

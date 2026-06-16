@@ -8,9 +8,6 @@ nav_order: 1
 
 Welcome to the collection of idiomatic Go design patterns! This site gathers a variety of Go patterns, each with clear, practical code examples.
 
-Designed for clarity, learning, and collaboration.
-Inspired by effective Go idioms and concurrency best practices.
-
 Explore categories:
 - [Concurrency Patterns]({{ site.baseurl }}/concurrency)
   - [Generative]({{ site.baseurl }}/generative)
@@ -21,6 +18,7 @@ Explore categories:
   - [Synchronization Patterns]({{ site.baseurl }}/sync)
     - [Mutex (Rate Limiting)]({{ site.baseurl }}/sync/mutex)
     - [Semaphore (Rate Limiting)]({{ site.baseurl }}/sync/semaphore)
+    - [Singleflight]({{ site.baseurl }}/sync/singleflight)
   - [Parallel Computing Patterns]({{ site.baseurl }}/parallel-computing)
     - [Worker Pool]({{ site.baseurl }}/parallel-computing/worker-pool)
     - [Queuing]({{ site.baseurl }}/parallel-computing/queuing)
