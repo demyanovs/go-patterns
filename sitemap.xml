@@ -121,7 +121,7 @@
     
     
     <url>
-        <loc>https://go-patterns.dev/database</loc>
+        <loc>https://go-patterns.dev/stability/caching</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -130,7 +130,16 @@
     
     
     <url>
-        <loc>https://go-patterns.dev/parallel-computing</loc>
+        <loc>https://go-patterns.dev/stability</loc>
+        
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    
+    
+    
+    <url>
+        <loc>https://go-patterns.dev/creational</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -140,6 +149,15 @@
     
     <url>
         <loc>https://go-patterns.dev/sync</loc>
+        
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    
+    
+    
+    <url>
+        <loc>https://go-patterns.dev/parallel-computing</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -166,25 +184,7 @@
     
     
     <url>
-        <loc>https://go-patterns.dev/stability/caching</loc>
-        
-        <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
-    </url>
-    
-    
-    
-    <url>
-        <loc>https://go-patterns.dev/stability</loc>
-        
-        <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
-    </url>
-    
-    
-    
-    <url>
-        <loc>https://go-patterns.dev/creational</loc>
+        <loc>https://go-patterns.dev/database</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
@@ -275,6 +275,15 @@
     
     <url>
         <loc>https://go-patterns.dev/sync/semaphore</loc>
+        
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    
+    
+    
+    <url>
+        <loc>https://go-patterns.dev/sync/singleflight</loc>
         
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
